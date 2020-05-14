@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Calendrier Potager</string>
+    <string name="tab_text_1">Calendrier</string>
+    <string name="calendar_heading1">Légume</string>
+    <string name="calendar_heading2">January</string>
+    <string name="calendar_heading3">February</string>
+    <string name="calendar_heading4">March</string>
+    <string name="calendar_heading5">April</string>
+    <string name="calendar_heading6">May</string>
+    <string name="calendar_heading7">June</string>
+    <string name="calendar_heading8">July</string>
+    <string name="calendar_heading9">August</string>
+    <string name="calendar_heading10">September</string>
+    <string name="calendar_heading11">October</string>
+    <string name="calendar_heading12">November</string>
+    <string name="calendar_heading13">December</string>
+
+
+    <string name="tab_text_2">Paramètres</string>
+    <string name="calendar_heading">en tête</string>
+    <string name="loading_msg">loading please wait</string>
+</resources>
