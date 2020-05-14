@@ -124,42 +124,42 @@ public class MainActivity extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
                 }
                 //tv January
-                final LinearLayout laySPH = new LinearLayout(this);
-                laySPH.setOrientation(LinearLayout.VERTICAL);
-                laySPH.setGravity(Gravity.RIGHT);
-                laySPH.setPadding(0, 10, 0, 10);
-                laySPH.setLayoutParams(new
+                final LinearLayout layJanuarySPH = new LinearLayout(this);
+                layJanuarySPH.setOrientation(LinearLayout.VERTICAL);
+                layJanuarySPH.setGravity(Gravity.RIGHT);
+                layJanuarySPH.setPadding(0, 10, 0, 10);
+                layJanuarySPH.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT));
-                laySPH.setBackgroundColor(Color.parseColor("#ffffff"));
+                layJanuarySPH.setBackgroundColor(Color.parseColor("#ffffff"));
 
-                final TextView tvS = new TextView(this);
-                tvS.setLayoutParams(new
+                final TextView tvSJanuary = new TextView(this);
+                tvSJanuary.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
-                tvS.setPadding(5, 0, 1, 5);
+                tvSJanuary.setPadding(5, 0, 1, 5);
                 if (i == -1) {
-                    tvS.setLayoutParams(new
+                    tvSJanuary.setLayoutParams(new
                             TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                             TableRow.LayoutParams.WRAP_CONTENT));
-                    tvS.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
+                    tvSJanuary.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 } else {
-                    tvS.setLayoutParams(new
+                    tvSJanuary.setLayoutParams(new
                             TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                             TableRow.LayoutParams.MATCH_PARENT));
-                    tvS.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                    tvSJanuary.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
                 }
-                tvS.setGravity(Gravity.LEFT);
-                tvS.setPadding(5, 15, 0, 15);
+                tvSJanuary.setGravity(Gravity.LEFT);
+                tvSJanuary.setPadding(5, 15, 0, 15);
 
 
 
-                tvS.setGravity(Gravity.RIGHT);
-                tvS.setBackgroundColor(Color.parseColor("#ffffff"));
+                tvSJanuary.setGravity(Gravity.RIGHT);
+                tvSJanuary.setBackgroundColor(Color.parseColor("#ffffff"));
 
                 if (i == -1) {
-                    tvS.setText(getResources().getString(R.string.calendar_heading2));
-                    tvS.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                    tvSJanuary.setText(getResources().getString(R.string.calendar_heading2));
+                    tvSJanuary.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else {
                     final TextView tvP = new TextView(this);
                     tvP.setLayoutParams(new
