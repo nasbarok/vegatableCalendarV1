@@ -1,9 +1,12 @@
-Aneth1,March:April,,September:October:March:April
-Aneth2,March:April,,September:October:March:April
-Aneth3,March:April,,September:October:March:April
-Aneth4,March:April,,September:October:March:April
-Aneth5,March:April,,September:October:March:April
-Aneth6,March:April,,September:October:March:April
-Aneth7,March:April,,September:October:March:April
-Aneth8,March:April,,September:October:March:April
-Aneth9,March:April,,September:October:March:April
+Ail,NONE,OS,OS,NONE,NONE,H,H,HAS,NONE,OSAE,OS,OSAS
+Amarante,NONE,NONE,NONE,IS,OS-T,OS-H,H,H,H,H,NONE,NONE
+Aneth,NONE,NONE,IS,ISAS-OSAE-T,OS-TAS,OS-H,OS-H,OS-H,H,H,NONE,NONE
+Arroche,NONE,NONE,IS,IS-T,OS-TAS-H,OS-H,H,H,H,H,NONE,NONE
+Artichaut,NONE,NONE,NONE,T,H,H,H,H,H,NONE,NONE,NONE
+Asperge,NONE,NONE,T,T-H,H,H,NONE,NONE,NONE,NONE,NONE,NONE
+Aubergine,NONE,IS,NONE,NONE,TAE,NONE,H,H,H,H,NONE,NONE
+Baselle,NONE,NONE,IS,OS-TAE,TAS,HAE,H,H,H,H,NONE,NONE
+Basilic,NONE,NONE,IS,IS,T,H,H,H,H,NONE,NONE,NONE
+Betterave,NONE,NONE,IS,OS-T,OS,OS,H,H,H,H,H,NONE
+Brocoli,NONE,NONE,IS,IS-TAE,OS-T-H,OS-T-H,T,TAS-HAE,TAE-H,TAS-H,H,H
+Capucine Tub,NONE,NONE,IS,ISAS-OSAE,OSAS-TAE,NONE,NONE,NONE,NONE,NONE,H,H

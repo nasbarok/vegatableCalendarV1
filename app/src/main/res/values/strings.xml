@@ -18,5 +18,5 @@
 
     <string name="tab_text_2">Paramètres</string>
     <string name="calendar_heading">en tête</string>
-    <string name="loading_msg">loading please wait</string>
+    <string name="loading_msg">Chargement ..</string>
 </resources>

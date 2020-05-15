@@ -6,7 +6,8 @@
     <color name="colorCalendarBackground">#31C500</color>
     <color name="colorCalendarTextColor">#ED92C4</color>
     <color name="isp_home_color">#31C500</color>
-    <color name="table_color_sowing">#EDCD02</color>
-    <color name="table_color_plantations">#B56606</color>
+    <color name="table_color_oseeding">#ECCC06</color>
+    <color name="table_color_iseeding">#673AB7</color>
+    <color name="table_color_transplantation">#B56606</color>
     <color name="table_color_harvest">#38D304</color>
 </resources>
