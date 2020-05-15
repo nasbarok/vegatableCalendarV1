@@ -533,6 +533,40 @@ public class MainActivity extends AppCompatActivity {
                     );
             tvS.setPadding(5, 0, 1, 5);
             tvS.setGravity(Gravity.RIGHT);
+
+            final TextView tvOS = new TextView(this);
+            tvOS.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            tvOS.setPadding(5, 0, 1, 5);
+            tvOS.setGravity(Gravity.RIGHT);
+
+            final TextView tvAEmpty = new TextView(this);
+            tvAEmpty.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            tvAEmpty.setPadding(5, 0, 1, 5);
+            tvAEmpty.setGravity(Gravity.RIGHT);
+
+            final TableRow trS = new TableRow(this);
+            final TableRow trT = new TableRow(this);
+            final TableRow trH = new TableRow(this);
+
+
+            final TextView tvT = new TextView(this);
+            tvT.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            tvT.setPadding(5, 0, 1, 5);
+            tvT.setGravity(Gravity.RIGHT);
+
+            final TextView tvH = new TextView(this);
+            tvH.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            tvH.setPadding(5, 0, 1, 5);
+            tvH.setGravity(Gravity.RIGHT);
+
             if(monthInformation==null){
                 monthInformation="";
             }
@@ -542,46 +576,20 @@ public class MainActivity extends AppCompatActivity {
                 linearLayout.addView(tvS);
             }
             if(monthInformation.contains("ISAE")&&monthInformation.contains("OSAE")) {
-                final TableRow tr = new TableRow(this);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-
-                final TextView tvOS = new TextView(this);
-                tvOS.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvOS.setPadding(5, 0, 1, 5);
-                tvOS.setGravity(Gravity.RIGHT);
-                tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-                tvOS.setText(" ");
+                tvOS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
                 tr.addView(tvS);
                 tr.addView(tvOS);
                 linearLayout.addView(tr);
             }
             if(monthInformation.contains("ISAS")&&!monthInformation.contains("OSAE")) {
-                final TableRow tr = new TableRow(this);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
-                tvAEmpty.setText(" ");
                 tr.addView(tvS);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
             if(monthInformation.contains("ISAE")) {
-                final TableRow tr = new TableRow(this);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvAEmpty.setText(" ");
                 tr.addView(tvAEmpty);
                 tr.addView(tvS);
@@ -592,117 +600,57 @@ public class MainActivity extends AppCompatActivity {
                 linearLayout.addView(tvS);
             }
             if(monthInformation.contains("OSAS")) {
-                final TableRow tr = new TableRow(this);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvAEmpty.setText(" ");
                 tr.addView(tvS);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
             if(monthInformation.contains("OSAE")&&monthInformation.contains("ISAS")) {
-                final TableRow tr = new TableRow(this);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
-                tvAEmpty.setText(" ");
                 tr.addView(tvAEmpty);
                 tr.addView(tvS);
                 linearLayout.addView(tr);
             }
 
             //T
-            final TextView tvT = new TextView(this);
-            tvT.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-            tvT.setPadding(5, 0, 1, 5);
-            tvT.setGravity(Gravity.RIGHT);
-            tvT.setText(" ");
+
             if(monthInformation.contains("T")&&!monthInformation.contains("TAS")&&!monthInformation.contains("TAE")) {
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
                 linearLayout.addView(tvT);
             }
             if(monthInformation.contains("TAS")) {
-                final TableRow tr = new TableRow(this);
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tr.addView(tvT);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
             if(monthInformation.contains("TAE")) {
-                final TableRow tr = new TableRow(this);
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tr.addView(tvT);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
             //H
-            final TextView tvH = new TextView(this);
-            tvH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-            tvH.setPadding(5, 0, 1, 5);
-            tvH.setGravity(Gravity.RIGHT);
-            tvH.setText(" ");
 
             if(monthInformation.contains("H")&&!monthInformation.contains("HAS")&&!monthInformation.contains("HAE")) {
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
                 linearLayout.addView(tvH);
             }
             if(monthInformation.contains("HAS")) {
-                final TableRow tr = new TableRow(this);
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tr.addView(tvH);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
             if(monthInformation.contains("HAE")) {
-                final TableRow tr = new TableRow(this);
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
-
-                final TextView tvAEmpty = new TextView(this);
-                tvAEmpty.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-                tvAEmpty.setPadding(5, 0, 1, 5);
-                tvAEmpty.setGravity(Gravity.RIGHT);
                 tr.addView(tvH);
                 tr.addView(tvAEmpty);
                 linearLayout.addView(tr);
             }
+
+            //fill linearLayout
             return linearLayout;
         }
 
