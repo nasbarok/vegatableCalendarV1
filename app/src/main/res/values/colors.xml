@@ -6,8 +6,14 @@
     <color name="colorCalendarBackground">#31C500</color>
     <color name="colorCalendarTextColor">#ED92C4</color>
     <color name="isp_home_color">#31C500</color>
-    <color name="table_color_oseeding">#ECCC06</color>
-    <color name="table_color_iseeding">#673AB7</color>
-    <color name="table_color_transplantation">#B56606</color>
-    <color name="table_color_harvest">#38D304</color>
+    <color name="table_color_oseeding">#DC044E</color>
+    <color name="table_color_iseeding">#03B600</color>
+    <color name="table_color_transplantation">#F3A43E</color>
+    <color name="table_color_harvest">#FBDA1C</color>
+    <color name="table_color_default_bright">#f7f7f7</color>
+    <color name="table_color_default_dark">#f0f0f0</color>
+    <color name="table_color_default_bright2">#ffffff</color>
+    <color name="table_color_default_dark2">#d9d9d9</color>
+    <color name="table_color_vegetable_column">#EACAFA92</color>
+    <color name="table_color_vegetable_head">#EAABD17F</color>
 </resources>

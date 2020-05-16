@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mTableLayout = (TableLayout) findViewById(R.id.tableVegetables);
         mTableLayout.setStretchAllColumns(true);
 
-
-        //initiates db
+        //initiate db
         InputStream inputStream = getResources().openRawResource(R.raw.vegetable_calendar_db);
         vegetableCalendarDB = new VegetableCalendarDBHelper(this.getApplicationContext());
         vegetableCalendarDB.createDB(inputStream);
@@ -78,19 +77,20 @@ public class MainActivity extends AppCompatActivity {
                 textSpacer.setText("");
             }
             // data columns
-            //LinearLayout vegetable name
+            //LinearLayout vegetable Name
             final TextView tv = new TextView(this);
             tv.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             tv.setGravity(Gravity.LEFT);
             tv.setPadding(5, 15, 0, 15);
+
             if (i == -1) {
                 tv.setText(getResources().getString(R.string.calendar_heading1));
-                tv.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tv.setBackgroundColor(getResources().getColor(R.color.table_color_vegetable_head));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
             } else {
-                tv.setBackgroundColor(Color.parseColor("#f8f8f8"));
+                tv.setBackgroundColor(getResources().getColor(R.color.table_color_vegetable_column));
                 tv.setText(String.valueOf(row.getVegetableCalendarName()));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             }
@@ -98,368 +98,293 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout layJanuarySTH = new LinearLayout(this);
             layJanuarySTH.setOrientation(LinearLayout.VERTICAL);
             layJanuarySTH.setGravity(Gravity.LEFT);
-            layJanuarySTH.setPadding(0, 10, 0, 10);
+            layJanuarySTH.setPadding(0, 0, 0, 10);
             layJanuarySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.MATCH_PARENT));
+            layJanuarySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             final TextView tvJanuary = new TextView(this);
-            tvJanuary.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
             tvJanuary.setGravity(Gravity.LEFT);
             tvJanuary.setPadding(5, 15, 0, 15);
+
             if (i == -1) {
                 tvJanuary.setText(getResources().getString(R.string.calendar_heading2));
-                tvJanuary.setBackgroundColor(Color.parseColor("#f0f0f0"));
+                tvJanuary.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
                 tvJanuary.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 layJanuarySTH.addView(tvJanuary);
             } else {
-                tvJanuary.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layJanuarySTH = fillCurrentMonth(tvJanuary,row.getVegetableCalendarJanuary(),layJanuarySTH);
+                layJanuarySTH = fillCurrentMonth(row.getVegetableCalendarJanuary(),layJanuarySTH);
             }
 
             //LinearLayout February
             LinearLayout layFebruarySTH = new LinearLayout(this);
             layFebruarySTH.setOrientation(LinearLayout.VERTICAL);
-            layFebruarySTH.setGravity(Gravity.RIGHT);
-            layFebruarySTH.setPadding(0, 10, 0, 10);
+            layFebruarySTH.setGravity(Gravity.LEFT);
+            layFebruarySTH.setPadding(0, 0, 0, 10);
             layFebruarySTH.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
+            layFebruarySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvFebruary = new TextView(this);
-            tvFebruary.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
             tvFebruary.setGravity(Gravity.LEFT);
-            tvFebruary.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvFebruary.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvFebruary.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvFebruary.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvFebruary.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvFebruary.setText(getResources().getString(R.string.calendar_heading3));
-                tvFebruary.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layFebruarySTH.addView(tvFebruary);
             } else {
-                tvFebruary.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layFebruarySTH = fillCurrentMonth(tvFebruary,row.getVegetableCalendarFebruary(),layFebruarySTH);
+                layFebruarySTH = fillCurrentMonth(row.getVegetableCalendarFebruary(),layFebruarySTH);
             }
 
             //LinearLayout March
             LinearLayout layMarchSTH = new LinearLayout(this);
             layMarchSTH.setOrientation(LinearLayout.VERTICAL);
-            layMarchSTH.setGravity(Gravity.RIGHT);
-            layMarchSTH.setPadding(0, 10, 0, 10);
+            layMarchSTH.setGravity(Gravity.LEFT);
+            layMarchSTH.setPadding(0, 0, 0, 10);
             layMarchSTH.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
+            layMarchSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
             final TextView tvMarch = new TextView(this);
-            tvMarch.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
             tvMarch.setGravity(Gravity.LEFT);
-            tvMarch.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvMarch.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvMarch.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvMarch.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvMarch.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvMarch.setText(getResources().getString(R.string.calendar_heading4));
-                tvMarch.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layMarchSTH.addView(tvMarch);
             } else {
-                tvMarch.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layMarchSTH = fillCurrentMonth(tvMarch,row.getVegetableCalendarMarch(),layMarchSTH);
+                layMarchSTH = fillCurrentMonth(row.getVegetableCalendarMarch(),layMarchSTH);
             }
 
             //LinearLayout April
             LinearLayout layAprilSTH = new LinearLayout(this);
             layAprilSTH.setOrientation(LinearLayout.VERTICAL);
             layAprilSTH.setGravity(Gravity.RIGHT);
-            layAprilSTH.setPadding(0, 10, 0, 10);
+            layAprilSTH.setPadding(0, 0, 0, 10);
             layAprilSTH.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
+            layAprilSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvApril = new TextView(this);
-            tvApril.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
             tvApril.setGravity(Gravity.LEFT);
-            tvApril.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvApril.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvApril.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvApril.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvApril.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvApril.setText(getResources().getString(R.string.calendar_heading5));
-                tvApril.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layAprilSTH.addView(tvApril);
             } else {
-                tvApril.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layAprilSTH = fillCurrentMonth(tvApril,row.getVegetableCalendarApril(),layAprilSTH);
+                layAprilSTH = fillCurrentMonth(row.getVegetableCalendarApril(),layAprilSTH);
             }
 
             //LinearLayout May
             LinearLayout layMaySTH = new LinearLayout(this);
             layMaySTH.setOrientation(LinearLayout.VERTICAL);
             layMaySTH.setGravity(Gravity.RIGHT);
-            layMaySTH.setPadding(0, 10, 0, 10);
+            layMaySTH.setPadding(0, 0, 0, 10);
             layMaySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layMaySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
             final TextView tvMay = new TextView(this);
             tvMay.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvMay.setGravity(Gravity.LEFT);
-            tvMay.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvMay.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvMay.setPadding(5, 15, 0, 15);
+
             if (i == -1) {
-                tvMay.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvMay.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvMay.setText(getResources().getString(R.string.calendar_heading6));
-                tvMay.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layMaySTH.addView(tvMay);
             } else {
-                tvMay.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layMaySTH = fillCurrentMonth(tvMay,row.getVegetableCalendarMay(),layMaySTH);
+                layMaySTH = fillCurrentMonth(row.getVegetableCalendarMay(),layMaySTH);
             }
 
             //LinearLayout June
             LinearLayout layJuneSTH = new LinearLayout(this);
             layJuneSTH.setOrientation(LinearLayout.VERTICAL);
             layJuneSTH.setGravity(Gravity.RIGHT);
-            layJuneSTH.setPadding(0, 10, 0, 10);
+            layJuneSTH.setPadding(0, 0, 0, 10);
             layJuneSTH.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
+            layJuneSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvJune = new TextView(this);
             tvJune.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                     TableRow.LayoutParams.WRAP_CONTENT));
             tvJune.setGravity(Gravity.LEFT);
-            tvJune.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvJune.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvJune.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvJune.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvJune.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvJune.setText(getResources().getString(R.string.calendar_heading7));
-                tvJune.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layJuneSTH.addView(tvJune);
             } else {
-                tvJune.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layJuneSTH = fillCurrentMonth(tvJune,row.getVegetableCalendarJune(),layJuneSTH);
+                layJuneSTH = fillCurrentMonth(row.getVegetableCalendarJune(),layJuneSTH);
             }
 
             //LinearLayout July
             LinearLayout layJulySTH = new LinearLayout(this);
             layJulySTH.setOrientation(LinearLayout.VERTICAL);
             layJulySTH.setGravity(Gravity.RIGHT);
-            layJulySTH.setPadding(0, 10, 0, 10);
+            layJulySTH.setPadding(0, 0, 0, 10);
             layJulySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layJulySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
             final TextView tvJuly = new TextView(this);
             tvJuly.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvJuly.setGravity(Gravity.LEFT);
-            tvJuly.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvJuly.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvJuly.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvJuly.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvJuly.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvJuly.setText(getResources().getString(R.string.calendar_heading8));
-                tvJuly.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layJulySTH.addView(tvJuly);
             } else {
-                tvJuly.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layJulySTH = fillCurrentMonth(tvJuly,row.getVegetableCalendarJuly(),layJulySTH);
+                layJulySTH = fillCurrentMonth(row.getVegetableCalendarJuly(),layJulySTH);
             }
 
             //LinearLayout August
             LinearLayout layAugustSTH = new LinearLayout(this);
             layAugustSTH.setOrientation(LinearLayout.VERTICAL);
             layAugustSTH.setGravity(Gravity.RIGHT);
-            layAugustSTH.setPadding(0, 10, 0, 10);
+            layAugustSTH.setPadding(0, 0, 0, 10);
             layAugustSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layAugustSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvAugust = new TextView(this);
             tvAugust.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvAugust.setGravity(Gravity.RIGHT);
-            tvAugust.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvAugust.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvAugust.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvAugust.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvAugust.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvAugust.setText(getResources().getString(R.string.calendar_heading9));
-                tvAugust.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layAugustSTH.addView(tvAugust);
             } else {
                 tvAugust.setLayoutParams(new
                         TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.MATCH_PARENT));
-                layAugustSTH = fillCurrentMonth(tvAugust,row.getVegetableCalendarAugust(),layAugustSTH);
+                layAugustSTH = fillCurrentMonth(row.getVegetableCalendarAugust(),layAugustSTH);
             }
 
             //LinearLayout September
             LinearLayout laySeptemberSTH = new LinearLayout(this);
             laySeptemberSTH.setOrientation(LinearLayout.VERTICAL);
             laySeptemberSTH.setGravity(Gravity.RIGHT);
-            laySeptemberSTH.setPadding(0, 10, 0, 10);
+            laySeptemberSTH.setPadding(0, 0, 0, 10);
             laySeptemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            laySeptemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
             final TextView tvSeptember = new TextView(this);
             tvSeptember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvSeptember.setGravity(Gravity.RIGHT);
-            tvSeptember.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvSeptember.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvSeptember.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvSeptember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvSeptember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvSeptember.setText(getResources().getString(R.string.calendar_heading10));
-                tvSeptember.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 laySeptemberSTH.addView(tvSeptember);
             } else {
-                tvSeptember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                laySeptemberSTH = fillCurrentMonth(tvSeptember,row.getVegetableCalendarSeptember(),laySeptemberSTH);
+                laySeptemberSTH = fillCurrentMonth(row.getVegetableCalendarSeptember(),laySeptemberSTH);
             }
 
             //LinearLayout October
             LinearLayout layOctoberSTH = new LinearLayout(this);
             layOctoberSTH.setOrientation(LinearLayout.VERTICAL);
             layOctoberSTH.setGravity(Gravity.RIGHT);
-            layOctoberSTH.setPadding(0, 10, 0, 10);
+            layOctoberSTH.setPadding(0, 0, 0, 10);
             layOctoberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layOctoberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvOctober = new TextView(this);
+            tvOctober.setGravity(Gravity.RIGHT);
+            tvOctober.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
+            tvOctober.setPadding(5, 15, 0, 15);
             tvOctober.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-            tvOctober.setGravity(Gravity.RIGHT);
-            tvOctober.setBackgroundColor(Color.parseColor("#ffffff"));
-            tvOctober.setPadding(5, 15, 0, 15);
+                    TableRow.LayoutParams.MATCH_PARENT));
             if (i == -1) {
-                tvOctober.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
+
                 tvOctober.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvOctober.setText(getResources().getString(R.string.calendar_heading11));
-                tvOctober.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layOctoberSTH.addView(tvOctober);
             } else {
-                tvOctober.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layOctoberSTH = fillCurrentMonth(tvOctober,row.getVegetableCalendarOctober(),layOctoberSTH);
+                layOctoberSTH = fillCurrentMonth(row.getVegetableCalendarOctober(),layOctoberSTH);
             }
 
             //LinearLayout November
             LinearLayout layNovemberSTH = new LinearLayout(this);
             layNovemberSTH.setOrientation(LinearLayout.VERTICAL);
             layNovemberSTH.setGravity(Gravity.RIGHT);
-            layNovemberSTH.setPadding(0, 10, 0, 10);
+            layNovemberSTH.setPadding(0, 0, 0, 10);
             layNovemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layNovemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
             final TextView tvNovember = new TextView(this);
             tvNovember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvNovember.setGravity(Gravity.RIGHT);
-            tvNovember.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvNovember.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvNovember.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvNovember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvNovember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvNovember.setText(getResources().getString(R.string.calendar_heading12));
-                tvNovember.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layNovemberSTH.addView(tvNovember);
             } else {
-                tvNovember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layNovemberSTH = fillCurrentMonth(tvNovember,row.getVegetableCalendarNovember(),layNovemberSTH);
+                layNovemberSTH = fillCurrentMonth(row.getVegetableCalendarNovember(),layNovemberSTH);
             }
 
             //LinearLayout December
             LinearLayout layDecemberSTH = new LinearLayout(this);
             layDecemberSTH.setOrientation(LinearLayout.VERTICAL);
             layDecemberSTH.setGravity(Gravity.RIGHT);
-            layDecemberSTH.setPadding(0, 10, 0, 10);
+            layDecemberSTH.setPadding(0, 0, 0, 10);
             layDecemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.MATCH_PARENT));
+                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams.WRAP_CONTENT));
+            layDecemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvDecember = new TextView(this);
             tvDecember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
+                    TableRow.LayoutParams.MATCH_PARENT));
             tvDecember.setGravity(Gravity.RIGHT);
-            tvDecember.setBackgroundColor(Color.parseColor("#ffffff"));
+            tvDecember.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvDecember.setPadding(5, 15, 0, 15);
             if (i == -1) {
-                tvDecember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                        TableRow.LayoutParams.WRAP_CONTENT));
                 tvDecember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvDecember.setText(getResources().getString(R.string.calendar_heading13));
-                tvDecember.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 layDecemberSTH.addView(tvDecember);
             } else {
-                tvDecember.setLayoutParams(new
-                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-                        TableRow.LayoutParams.MATCH_PARENT));
-                layDecemberSTH = fillCurrentMonth(tvDecember,row.getVegetableCalendarNovember(),layDecemberSTH);
+                layDecemberSTH = fillCurrentMonth(row.getVegetableCalendarNovember(),layDecemberSTH);
             }
             // add table row
             final TableRow tr = new TableRow(this);
@@ -505,9 +430,9 @@ public class MainActivity extends AppCompatActivity {
                 TableRow.LayoutParams tvSepLay = new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT);
-                tvSepLay.span = 13;
+                tvSepLay.span = 6;
                 tvSep.setLayoutParams(tvSepLay);
-                tvSep.setBackgroundColor(Color.parseColor("#d9d9d9"));
+                tvSep.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark2));
                 tvSep.setHeight(1);
                 trSep.addView(tvSep);
                 mTableLayout.addView(trSep, trParamsSep);
@@ -516,20 +441,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-        public LinearLayout fillCurrentMonth(TextView tv, String monthInformation, LinearLayout linearLayout){
+        public LinearLayout fillCurrentMonth(String monthInformation, LinearLayout linearLayout){
+
             linearLayout.setOrientation(LinearLayout.VERTICAL);
             linearLayout.setGravity(Gravity.RIGHT);
-            linearLayout.setPadding(0, 10, 0, 10);
+            linearLayout.setPadding(0, 5, 0, 5);
             linearLayout.setWeightSum(3f);
             linearLayout.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
-
+            if(monthInformation.equals("NONE")){
+                return linearLayout;
+            }
             //IS OS ISAS ISAE
             final TextView tvS = new TextView(this);
             tvS.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f)
+                    TableRow.LayoutParams.MATCH_PARENT,1.0f)
                     );
             tvS.setPadding(5, 0, 1, 5);
             tvS.setGravity(Gravity.RIGHT);
@@ -537,33 +465,38 @@ public class MainActivity extends AppCompatActivity {
             final TextView tvOS = new TextView(this);
             tvOS.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                    TableRow.LayoutParams.MATCH_PARENT,1.0f));
             tvOS.setPadding(5, 0, 1, 5);
             tvOS.setGravity(Gravity.RIGHT);
-
-            final TextView tvAEmpty = new TextView(this);
-            tvAEmpty.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
-            tvAEmpty.setPadding(5, 0, 1, 5);
-            tvAEmpty.setGravity(Gravity.RIGHT);
 
             final TableRow trS = new TableRow(this);
             final TableRow trT = new TableRow(this);
             final TableRow trH = new TableRow(this);
-
+            trS.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            trT.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            trH.setLayoutParams(new
+                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+            trS.setEnabled(false);
+            trT.setEnabled(false);
+            trH.setEnabled(false);
 
             final TextView tvT = new TextView(this);
             tvT.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                    TableRow.LayoutParams.MATCH_PARENT,1.0f));
             tvT.setPadding(5, 0, 1, 5);
             tvT.setGravity(Gravity.RIGHT);
+
 
             final TextView tvH = new TextView(this);
             tvH.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                    TableRow.LayoutParams.MATCH_PARENT,1.0f));
             tvH.setPadding(5, 0, 1, 5);
             tvH.setGravity(Gravity.RIGHT);
 
@@ -573,84 +506,134 @@ public class MainActivity extends AppCompatActivity {
 
             if(monthInformation.contains("IS")&&!monthInformation.contains("ISAS")&&!monthInformation.contains("ISAE")) {
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-                linearLayout.addView(tvS);
+                trS.setEnabled(false);
             }
-            if(monthInformation.contains("ISAE")&&monthInformation.contains("OSAE")) {
+            if(monthInformation.contains("ISAS")&&monthInformation.contains("OSAE")) {
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
                 tvOS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-                tr.addView(tvS);
-                tr.addView(tvOS);
-                linearLayout.addView(tr);
+                trS.addView(tvS);
+                trS.addView(tvOS);
+                trS.setEnabled(true);
             }
             if(monthInformation.contains("ISAS")&&!monthInformation.contains("OSAE")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-                tr.addView(tvS);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
+                trS.addView(tvS);
+                trS.addView(tvAEmpty);
+                trS.setEnabled(true);
             }
             if(monthInformation.contains("ISAE")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_iseeding));
-                tvAEmpty.setText(" ");
-                tr.addView(tvAEmpty);
-                tr.addView(tvS);
-                linearLayout.addView(tr);
+                trS.addView(tvAEmpty);
+                trS.addView(tvS);
+                trS.setEnabled(true);
             }
             if(monthInformation.contains("OS")&&!monthInformation.contains("OSAS")&&!monthInformation.contains("OSAE")) {
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-                linearLayout.addView(tvS);
+                trS.setEnabled(false);
             }
-            if(monthInformation.contains("OSAS")) {
+            if(monthInformation.contains("OSAE")&&!monthInformation.contains("ISAS")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-                tvAEmpty.setText(" ");
-                tr.addView(tvS);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
-            }
-            if(monthInformation.contains("OSAE")&&monthInformation.contains("ISAS")) {
-                tvS.setBackgroundColor(getResources().getColor(R.color.table_color_oseeding));
-                tr.addView(tvAEmpty);
-                tr.addView(tvS);
-                linearLayout.addView(tr);
+                trS.addView(tvAEmpty);
+                trS.addView(tvS);
+                trS.setEnabled(true);
             }
 
             //T
 
             if(monthInformation.contains("T")&&!monthInformation.contains("TAS")&&!monthInformation.contains("TAE")) {
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
-                linearLayout.addView(tvT);
+                trT.setEnabled(false);
             }
             if(monthInformation.contains("TAS")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
-                tr.addView(tvT);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
+                trT.addView(tvT);
+                trT.addView(tvAEmpty);
+                trT.setEnabled(true);
             }
             if(monthInformation.contains("TAE")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvT.setBackgroundColor(getResources().getColor(R.color.table_color_transplantation));
-                tr.addView(tvT);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
+                trT.addView(tvAEmpty);
+                trT.addView(tvT);
+                trT.setEnabled(true);
             }
-            //H
 
+            //H
             if(monthInformation.contains("H")&&!monthInformation.contains("HAS")&&!monthInformation.contains("HAE")) {
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
-                linearLayout.addView(tvH);
+                trH.setEnabled(false);
             }
             if(monthInformation.contains("HAS")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
-                tr.addView(tvH);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
+                trH.addView(tvH);
+                trH.addView(tvAEmpty);
+                trH.setEnabled(true);
             }
             if(monthInformation.contains("HAE")) {
+                final TextView tvAEmpty = new TextView(this);
+                tvAEmpty.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.WRAP_CONTENT,1.0f));
+                tvAEmpty.setPadding(5, 0, 1, 5);
+                tvAEmpty.setGravity(Gravity.RIGHT);
                 tvH.setBackgroundColor(getResources().getColor(R.color.table_color_harvest));
-                tr.addView(tvH);
-                tr.addView(tvAEmpty);
-                linearLayout.addView(tr);
+                trH.addView(tvH);
+                trH.addView(tvAEmpty);
+                trH.setEnabled(true);
             }
 
             //fill linearLayout
+            if(trS.isEnabled()){
+                linearLayout.addView(trS);
+            }else{
+                linearLayout.addView(tvS);
+            }
+            if(trT.isEnabled()){
+                linearLayout.addView(trT);
+            }else{
+                linearLayout.addView(tvT);
+            }
+            if(trH.isEnabled()){
+                linearLayout.addView(trH);
+            }else{
+                linearLayout.addView(tvH);
+            }
+
             return linearLayout;
         }
 
