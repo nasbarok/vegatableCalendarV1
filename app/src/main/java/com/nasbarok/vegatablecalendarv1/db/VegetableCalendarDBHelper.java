@@ -150,6 +150,24 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         return vegetableCalendar;
     }
 
+    public List <VegetableCalendar> findVegetableCalendar(String vegetableCalendarName) {
+        List <VegetableCalendar> vegetableCalendarList=new ArrayList<VegetableCalendar>();
+        String query = "Select * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME1 + " LIKE " + "'%" + vegetableCalendarName + "%'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor c = db.rawQuery(query, null);
+        // looping through all rows and adding to the list
+        if(c.moveToFirst()){
+            do{
+                VegetableCalendar vegetableCalendar;
+                vegetableCalendar = mapFromCursor(c);
+                // Adding user to the list
+                vegetableCalendarList.add(vegetableCalendar);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return vegetableCalendarList;
+    }
+
     public VegetableCalendar mapFromCursor(Cursor c){
         VegetableCalendar vegetableCalendar = new VegetableCalendar();
         vegetableCalendar.setVegetableCalendarId(c.getInt(0));

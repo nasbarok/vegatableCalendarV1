@@ -56,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 VegetableCalendar vegetableCalendar = null;
-                vegetableCalendar = vegetableCalendarDB.findHandler(query);
-                if(vegetableCalendar!=null){
+                List <VegetableCalendar> vegetableCalendarList;
+                vegetableCalendarList = vegetableCalendarDB.findVegetableCalendar(query);
+                if(vegetableCalendarList.size()>1){
+                    vegetableCalendars = vegetableCalendarList;
+                    startLoadData();
+                }else{
                     vegetableCalendars = new ArrayList<VegetableCalendar>();
-                    vegetableCalendars.add(vegetableCalendar);
                     startLoadData();
                 }
                 return false;
