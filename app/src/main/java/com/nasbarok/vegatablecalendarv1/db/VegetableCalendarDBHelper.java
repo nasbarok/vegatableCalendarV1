@@ -113,21 +113,8 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to the list
         if(c.moveToFirst()){
             do{
-                VegetableCalendar vegetableCalendar=new VegetableCalendar();
-                vegetableCalendar.setVegetableCalendarId(c.getInt(0));
-                vegetableCalendar.setVegetableCalendarName(c.getString(1));
-                vegetableCalendar.setVegetableCalendarJanuary(c.getString(2));
-                vegetableCalendar.setVegetableCalendarFebruary(c.getString(3));
-                vegetableCalendar.setVegetableCalendarMarch(c.getString(4));
-                vegetableCalendar.setVegetableCalendarApril(c.getString(5));
-                vegetableCalendar.setVegetableCalendarMay(c.getString(6));
-                vegetableCalendar.setVegetableCalendarJune(c.getString(7));
-                vegetableCalendar.setVegetableCalendarJuly(c.getString(8));
-                vegetableCalendar.setVegetableCalendarAugust(c.getString(9));
-                vegetableCalendar.setVegetableCalendarSeptember(c.getString(10));
-                vegetableCalendar.setVegetableCalendarOctober(c.getString(11));
-                vegetableCalendar.setVegetableCalendarNovember(c.getString(12));
-                vegetableCalendar.setVegetableCalendarDecember(c.getString(13));
+                VegetableCalendar vegetableCalendar;
+                vegetableCalendar = mapFromCursor(c);
                 // Adding user to the list
                 vegetableCalendarList.add(vegetableCalendar);
             }while(c.moveToNext());
@@ -148,19 +135,37 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     public VegetableCalendar findHandler(String vegetableCalendarName) {
 
-        String query = "Select * FROM " + TABLE_NAME + "WHERE" + COLUMN_NAME1 + " = " + "'" + vegetableCalendarName + "'";
+        String query = "Select * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME1 + " LIKE " + "'%" + vegetableCalendarName + "%'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
-        VegetableCalendar vegetableCalendar = new VegetableCalendar();
+        VegetableCalendar vegetableCalendar;
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
-            vegetableCalendar.setVegetableCalendarId(Integer.parseInt(cursor.getString(0)));
-            vegetableCalendar.setVegetableCalendarName(cursor.getString(1));
+            vegetableCalendar = mapFromCursor(cursor);
             cursor.close();
         } else {
             vegetableCalendar = null;
         }
         db.close();
+        return vegetableCalendar;
+    }
+
+    public VegetableCalendar mapFromCursor(Cursor c){
+        VegetableCalendar vegetableCalendar = new VegetableCalendar();
+        vegetableCalendar.setVegetableCalendarId(c.getInt(0));
+        vegetableCalendar.setVegetableCalendarName(c.getString(1));
+        vegetableCalendar.setVegetableCalendarJanuary(c.getString(2));
+        vegetableCalendar.setVegetableCalendarFebruary(c.getString(3));
+        vegetableCalendar.setVegetableCalendarMarch(c.getString(4));
+        vegetableCalendar.setVegetableCalendarApril(c.getString(5));
+        vegetableCalendar.setVegetableCalendarMay(c.getString(6));
+        vegetableCalendar.setVegetableCalendarJune(c.getString(7));
+        vegetableCalendar.setVegetableCalendarJuly(c.getString(8));
+        vegetableCalendar.setVegetableCalendarAugust(c.getString(9));
+        vegetableCalendar.setVegetableCalendarSeptember(c.getString(10));
+        vegetableCalendar.setVegetableCalendarOctober(c.getString(11));
+        vegetableCalendar.setVegetableCalendarNovember(c.getString(12));
+        vegetableCalendar.setVegetableCalendarDecember(c.getString(13));
         return vegetableCalendar;
     }
 }

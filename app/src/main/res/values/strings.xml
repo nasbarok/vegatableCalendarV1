@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Calendrier Potager</string>
     <string name="tab_text_1">Calendrier</string>
-    <string name="calendar_heading1">Légume</string>
+    <string name="calendar_heading1">Légumes</string>
     <string name="calendar_heading2">January</string>
     <string name="calendar_heading3">February</string>
     <string name="calendar_heading4">March</string>
@@ -19,4 +19,5 @@
     <string name="tab_text_2">Paramètres</string>
     <string name="calendar_heading">en tête</string>
     <string name="loading_msg">Chargement ..</string>
+    <string name="search">rechercher</string>
 </resources>

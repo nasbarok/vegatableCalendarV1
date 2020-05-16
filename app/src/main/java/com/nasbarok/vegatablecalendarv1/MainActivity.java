@@ -1,14 +1,20 @@
 package com.nasbarok.vegatablecalendarv1;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,12 +23,15 @@ import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public VegetableCalendarDBHelper vegetableCalendarDB;
     private TableLayout mTableLayout;
     ProgressDialog mProgressBar;
+    List<VegetableCalendar> vegetableCalendars;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +46,31 @@ public class MainActivity extends AppCompatActivity {
         vegetableCalendarDB.createDB(inputStream);
 
         startLoadData();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem searchItem = (MenuItem) menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                VegetableCalendar vegetableCalendar = null;
+                vegetableCalendar = vegetableCalendarDB.findHandler(query);
+                if(vegetableCalendar!=null){
+                    vegetableCalendars = new ArrayList<VegetableCalendar>();
+                    vegetableCalendars.add(vegetableCalendar);
+                    startLoadData();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     public void startLoadData() {
@@ -59,7 +93,17 @@ public class MainActivity extends AppCompatActivity {
         mediumTextSize = (int)
                 getResources().getDimension(R.dimen.font_size_medium);
 
-        List<VegetableCalendar> vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
+        //get dimensions in pixels
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int widthTotalDisplay = size.x - 40;
+        int widthColumn = widthTotalDisplay/14;
+        int widthColumnVegetables = widthColumn + widthColumn/2;
+        if(vegetableCalendars==null){
+            vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
+        }
+
         VegetableCalendar[] data = new VegetableCalendar[vegetableCalendars.size()];
         data = vegetableCalendars.toArray(data);
 
@@ -80,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout vegetable Name
             final TextView tv = new TextView(this);
             tv.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumnVegetables,
                     TableRow.LayoutParams.WRAP_CONTENT));
             tv.setGravity(Gravity.LEFT);
             tv.setPadding(5, 15, 0, 15);
@@ -100,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             layJanuarySTH.setGravity(Gravity.LEFT);
             layJanuarySTH.setPadding(0, 0, 0, 10);
             layJanuarySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.MATCH_PARENT));
             layJanuarySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             final TextView tvJanuary = new TextView(this);
@@ -111,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 tvJanuary.setText(getResources().getString(R.string.calendar_heading2));
                 tvJanuary.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
                 tvJanuary.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
+                tvJanuary.setSingleLine(true);
                 layJanuarySTH.addView(tvJanuary);
             } else {
                 layJanuarySTH = fillCurrentMonth(row.getVegetableCalendarJanuary(),layJanuarySTH);
@@ -122,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             layFebruarySTH.setGravity(Gravity.LEFT);
             layFebruarySTH.setPadding(0, 0, 0, 10);
             layFebruarySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.MATCH_PARENT));
             layFebruarySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
@@ -133,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
             if (i == -1) {
                 tvFebruary.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvFebruary.setText(getResources().getString(R.string.calendar_heading3));
+                tvFebruary.setSingleLine(true);
                 layFebruarySTH.addView(tvFebruary);
             } else {
                 layFebruarySTH = fillCurrentMonth(row.getVegetableCalendarFebruary(),layFebruarySTH);
@@ -144,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
             layMarchSTH.setGravity(Gravity.LEFT);
             layMarchSTH.setPadding(0, 0, 0, 10);
             layMarchSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.MATCH_PARENT));
             layMarchSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
@@ -163,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout April
             LinearLayout layAprilSTH = new LinearLayout(this);
             layAprilSTH.setOrientation(LinearLayout.VERTICAL);
-            layAprilSTH.setGravity(Gravity.RIGHT);
+            layAprilSTH.setGravity(Gravity.LEFT);
             layAprilSTH.setPadding(0, 0, 0, 10);
             layAprilSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.MATCH_PARENT));
             layAprilSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
@@ -177,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
             if (i == -1) {
                 tvApril.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvApril.setText(getResources().getString(R.string.calendar_heading5));
+                tvApril.setSingleLine(true);
                 layAprilSTH.addView(tvApril);
             } else {
                 layAprilSTH = fillCurrentMonth(row.getVegetableCalendarApril(),layAprilSTH);
@@ -185,10 +232,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout May
             LinearLayout layMaySTH = new LinearLayout(this);
             layMaySTH.setOrientation(LinearLayout.VERTICAL);
-            layMaySTH.setGravity(Gravity.RIGHT);
+            layMaySTH.setGravity(Gravity.LEFT);
             layMaySTH.setPadding(0, 0, 0, 10);
             layMaySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layMaySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
@@ -203,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
             if (i == -1) {
                 tvMay.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvMay.setText(getResources().getString(R.string.calendar_heading6));
+                tvMay.setSingleLine(true);
                 layMaySTH.addView(tvMay);
             } else {
                 layMaySTH = fillCurrentMonth(row.getVegetableCalendarMay(),layMaySTH);
@@ -211,10 +259,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout June
             LinearLayout layJuneSTH = new LinearLayout(this);
             layJuneSTH.setOrientation(LinearLayout.VERTICAL);
-            layJuneSTH.setGravity(Gravity.RIGHT);
+            layJuneSTH.setGravity(Gravity.LEFT);
             layJuneSTH.setPadding(0, 0, 0, 10);
             layJuneSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.MATCH_PARENT));
             layJuneSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
@@ -228,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
             if (i == -1) {
                 tvJune.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvJune.setText(getResources().getString(R.string.calendar_heading7));
+                tvJune.setSingleLine(true);
                 layJuneSTH.addView(tvJune);
             } else {
                 layJuneSTH = fillCurrentMonth(row.getVegetableCalendarJune(),layJuneSTH);
@@ -236,10 +285,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout July
             LinearLayout layJulySTH = new LinearLayout(this);
             layJulySTH.setOrientation(LinearLayout.VERTICAL);
-            layJulySTH.setGravity(Gravity.RIGHT);
+            layJulySTH.setGravity(Gravity.LEFT);
             layJulySTH.setPadding(0, 0, 0, 10);
             layJulySTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layJulySTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
@@ -253,6 +302,7 @@ public class MainActivity extends AppCompatActivity {
             if (i == -1) {
                 tvJuly.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvJuly.setText(getResources().getString(R.string.calendar_heading8));
+                tvJuly.setSingleLine(true);
                 layJulySTH.addView(tvJuly);
             } else {
                 layJulySTH = fillCurrentMonth(row.getVegetableCalendarJuly(),layJulySTH);
@@ -261,10 +311,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout August
             LinearLayout layAugustSTH = new LinearLayout(this);
             layAugustSTH.setOrientation(LinearLayout.VERTICAL);
-            layAugustSTH.setGravity(Gravity.RIGHT);
+            layAugustSTH.setGravity(Gravity.LEFT);
             layAugustSTH.setPadding(0, 0, 0, 10);
             layAugustSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layAugustSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
@@ -272,12 +322,13 @@ public class MainActivity extends AppCompatActivity {
             tvAugust.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
-            tvAugust.setGravity(Gravity.RIGHT);
+            tvAugust.setGravity(Gravity.LEFT);
             tvAugust.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvAugust.setPadding(5, 15, 0, 15);
             if (i == -1) {
                 tvAugust.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvAugust.setText(getResources().getString(R.string.calendar_heading9));
+                tvAugust.setSingleLine(true);
                 layAugustSTH.addView(tvAugust);
             } else {
                 tvAugust.setLayoutParams(new
@@ -289,10 +340,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout September
             LinearLayout laySeptemberSTH = new LinearLayout(this);
             laySeptemberSTH.setOrientation(LinearLayout.VERTICAL);
-            laySeptemberSTH.setGravity(Gravity.RIGHT);
+            laySeptemberSTH.setGravity(Gravity.LEFT);
             laySeptemberSTH.setPadding(0, 0, 0, 10);
             laySeptemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             laySeptemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
@@ -300,12 +351,13 @@ public class MainActivity extends AppCompatActivity {
             tvSeptember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
-            tvSeptember.setGravity(Gravity.RIGHT);
+            tvSeptember.setGravity(Gravity.LEFT);
             tvSeptember.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvSeptember.setPadding(5, 15, 0, 15);
             if (i == -1) {
                 tvSeptember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvSeptember.setText(getResources().getString(R.string.calendar_heading10));
+                tvSeptember.setSingleLine(true);
                 laySeptemberSTH.addView(tvSeptember);
             } else {
                 laySeptemberSTH = fillCurrentMonth(row.getVegetableCalendarSeptember(),laySeptemberSTH);
@@ -314,15 +366,15 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout October
             LinearLayout layOctoberSTH = new LinearLayout(this);
             layOctoberSTH.setOrientation(LinearLayout.VERTICAL);
-            layOctoberSTH.setGravity(Gravity.RIGHT);
+            layOctoberSTH.setGravity(Gravity.LEFT);
             layOctoberSTH.setPadding(0, 0, 0, 10);
             layOctoberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layOctoberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
             final TextView tvOctober = new TextView(this);
-            tvOctober.setGravity(Gravity.RIGHT);
+            tvOctober.setGravity(Gravity.LEFT);
             tvOctober.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvOctober.setPadding(5, 15, 0, 15);
             tvOctober.setLayoutParams(new
@@ -332,6 +384,7 @@ public class MainActivity extends AppCompatActivity {
 
                 tvOctober.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvOctober.setText(getResources().getString(R.string.calendar_heading11));
+                tvOctober.setSingleLine(true);
                 layOctoberSTH.addView(tvOctober);
             } else {
                 layOctoberSTH = fillCurrentMonth(row.getVegetableCalendarOctober(),layOctoberSTH);
@@ -340,10 +393,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout November
             LinearLayout layNovemberSTH = new LinearLayout(this);
             layNovemberSTH.setOrientation(LinearLayout.VERTICAL);
-            layNovemberSTH.setGravity(Gravity.RIGHT);
+            layNovemberSTH.setGravity(Gravity.LEFT);
             layNovemberSTH.setPadding(0, 0, 0, 10);
             layNovemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layNovemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
 
@@ -351,12 +404,13 @@ public class MainActivity extends AppCompatActivity {
             tvNovember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
-            tvNovember.setGravity(Gravity.RIGHT);
+            tvNovember.setGravity(Gravity.LEFT);
             tvNovember.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark));
             tvNovember.setPadding(5, 15, 0, 15);
             if (i == -1) {
                 tvNovember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvNovember.setText(getResources().getString(R.string.calendar_heading12));
+                tvNovember.setSingleLine(true);
                 layNovemberSTH.addView(tvNovember);
             } else {
                 layNovemberSTH = fillCurrentMonth(row.getVegetableCalendarNovember(),layNovemberSTH);
@@ -365,10 +419,10 @@ public class MainActivity extends AppCompatActivity {
             //LinearLayout December
             LinearLayout layDecemberSTH = new LinearLayout(this);
             layDecemberSTH.setOrientation(LinearLayout.VERTICAL);
-            layDecemberSTH.setGravity(Gravity.RIGHT);
+            layDecemberSTH.setGravity(Gravity.LEFT);
             layDecemberSTH.setPadding(0, 0, 0, 10);
             layDecemberSTH.setLayoutParams(new
-                    TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                    TableRow.LayoutParams(widthColumn,
                     TableRow.LayoutParams.WRAP_CONTENT));
             layDecemberSTH.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
 
@@ -376,12 +430,13 @@ public class MainActivity extends AppCompatActivity {
             tvDecember.setLayoutParams(new
                     TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                     TableRow.LayoutParams.MATCH_PARENT));
-            tvDecember.setGravity(Gravity.RIGHT);
+            tvDecember.setGravity(Gravity.LEFT);
             tvDecember.setBackgroundColor(getResources().getColor(R.color.table_color_default_bright2));
             tvDecember.setPadding(5, 15, 0, 15);
             if (i == -1) {
                 tvDecember.setTextSize(TypedValue.COMPLEX_UNIT_PX, smallTextSize);
                 tvDecember.setText(getResources().getString(R.string.calendar_heading13));
+                tvDecember.setSingleLine(true);
                 layDecemberSTH.addView(tvDecember);
             } else {
                 layDecemberSTH = fillCurrentMonth(row.getVegetableCalendarNovember(),layDecemberSTH);
@@ -430,7 +485,7 @@ public class MainActivity extends AppCompatActivity {
                 TableRow.LayoutParams tvSepLay = new
                         TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT);
-                tvSepLay.span = 6;
+                tvSepLay.span = 13;
                 tvSep.setLayoutParams(tvSepLay);
                 tvSep.setBackgroundColor(getResources().getColor(R.color.table_color_default_dark2));
                 tvSep.setHeight(1);
