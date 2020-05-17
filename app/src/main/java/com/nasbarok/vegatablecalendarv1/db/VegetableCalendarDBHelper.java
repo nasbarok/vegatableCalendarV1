@@ -23,7 +23,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "vegetableCalendarDB.db";
     public static final String TABLE_NAME = "vegetable_calendar";
-    public static final String COLUMN_ID = "vegetable_calendar_id";
+    public static final String COLUMN_ID_VEGETABLE_CALENDAR = "vegetable_calendar_id";
     public static final String COLUMN_NAME1 = "vegetableCalendarName";
     public static final String COLUMN_NAME2 = "vegetableCalendarJanuary";
     public static final String COLUMN_NAME3 = "vegetableCalendarFebruary";
@@ -37,6 +37,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME11 = "vegetableCalendarOctober";
     public static final String COLUMN_NAME12 = "vegetableCalendarNovember";
     public static final String COLUMN_NAME13 = "vegetableCalendarDecember";
+    public static final String TABLE_NAME_VEGETABLE_GARDEN = "my_vegetable_garden";
 
     private Context context;
 
@@ -55,9 +56,10 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     }
 
     public void createDB(InputStream inputStream){
+        //vegetable calendar database
         SQLiteDatabase db = this.getWritableDatabase();
-        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" + COLUMN_ID +
-                "INTEGER PRIMARYKEY," + COLUMN_NAME1 + " TEXT , " + COLUMN_NAME2 + " TEXT , " + COLUMN_NAME3 + " TEXT ," + COLUMN_NAME4 + " TEXT ," + COLUMN_NAME5 + " TEXT ," + COLUMN_NAME6 + " TEXT ," + COLUMN_NAME7 + " TEXT ," + COLUMN_NAME8 + " TEXT ," + COLUMN_NAME9 + " TEXT ," + COLUMN_NAME10 + " TEXT ," + COLUMN_NAME11 + " TEXT ," + COLUMN_NAME12 + " TEXT ," + COLUMN_NAME13 + " TEXT )";
+        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "( " + COLUMN_ID_VEGETABLE_CALENDAR +
+                " INTEGER , " + COLUMN_NAME1 + " TEXT , " + COLUMN_NAME2 + " TEXT , " + COLUMN_NAME3 + " TEXT ," + COLUMN_NAME4 + " TEXT ," + COLUMN_NAME5 + " TEXT ," + COLUMN_NAME6 + " TEXT ," + COLUMN_NAME7 + " TEXT ," + COLUMN_NAME8 + " TEXT ," + COLUMN_NAME9 + " TEXT ," + COLUMN_NAME10 + " TEXT ," + COLUMN_NAME11 + " TEXT ," + COLUMN_NAME12 + " TEXT ," + COLUMN_NAME13 + " TEXT )";
         db.execSQL(CREATE_TABLE);
         if(getVegetableCalendars().size()==0){
             try {
@@ -68,8 +70,8 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                 while ((line = bufferedReader.readLine()) != null) {
                     values = line.split(",");
                     String insertCommand = String
-                            .format("insert into "+TABLE_NAME+"("+COLUMN_NAME1+", "+COLUMN_NAME2+", "+COLUMN_NAME3+", "+COLUMN_NAME4+", "+COLUMN_NAME5+", "+COLUMN_NAME6+", "+COLUMN_NAME7+", "+COLUMN_NAME8+", "+COLUMN_NAME9+", "+COLUMN_NAME10+", "+COLUMN_NAME11+", "+COLUMN_NAME12+", "+COLUMN_NAME13+") values(\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
-                                    values[0], values[1], values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10],values[11],values[12]);
+                            .format("insert into "+TABLE_NAME+"("+COLUMN_ID_VEGETABLE_CALENDAR+", "+COLUMN_NAME1+", "+COLUMN_NAME2+", "+COLUMN_NAME3+", "+COLUMN_NAME4+", "+COLUMN_NAME5+", "+COLUMN_NAME6+", "+COLUMN_NAME7+", "+COLUMN_NAME8+", "+COLUMN_NAME9+", "+COLUMN_NAME10+", "+COLUMN_NAME11+", "+COLUMN_NAME12+", "+COLUMN_NAME13+") values(\"%d\",\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
+                                    Integer.parseInt(values[0]), values[1], values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10],values[11],values[12],values[13]);
                     db.execSQL(insertCommand);
                 }
 
@@ -78,6 +80,9 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                 e.printStackTrace();
             }
         }
+        //My vegetable garden local
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_VEGETABLE_GARDEN + "( " + COLUMN_ID_VEGETABLE_CALENDAR + " INTEGER )";
+        db.execSQL(CREATE_TABLE);
     }
 
     @Override
@@ -123,19 +128,26 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         return vegetableCalendarList;
     }
 
-    public void addHandler(VegetableCalendar vegetableCalendar) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ID, vegetableCalendar.getVegetableCalendarId());
-        values.put(COLUMN_NAME1, vegetableCalendar.getVegetableCalendarName());
-        //..
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(TABLE_NAME, null, values);
-        db.close();
-    }
-
     public VegetableCalendar findHandler(String vegetableCalendarName) {
 
         String query = "Select * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME1 + " LIKE " + "'%" + vegetableCalendarName + "%'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        VegetableCalendar vegetableCalendar;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            vegetableCalendar = mapFromCursor(cursor);
+            cursor.close();
+        } else {
+            vegetableCalendar = null;
+        }
+        db.close();
+        return vegetableCalendar;
+    }
+
+    public VegetableCalendar findVegetableCalendarById(Integer vegetableCalendarId) {
+
+        String query = "Select * FROM " + TABLE_NAME + " WHERE " + COLUMN_ID_VEGETABLE_CALENDAR + " = " +vegetableCalendarId;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         VegetableCalendar vegetableCalendar;
@@ -168,6 +180,56 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         return vegetableCalendarList;
     }
 
+    public String addVegetableToMyVegetableGarden(VegetableCalendar vegetableCalendar) {
+        if(!vegetableExistInMyVegetableGarden(vegetableCalendar)){
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_ID_VEGETABLE_CALENDAR, vegetableCalendar.getVegetableCalendarId());
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.insert(TABLE_NAME_VEGETABLE_GARDEN, null, values);
+            db.close();
+            return "OK";
+        }else{
+            return "KO";
+        }
+
+    }
+
+    public List<Integer> getMyVegetableGarden(){
+        List <Integer> myVegetableGardenList=new ArrayList<Integer>();
+
+        // Select All Query
+        String selectQuery="SELECT * FROM " + TABLE_NAME_VEGETABLE_GARDEN;
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor c=db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to the list
+        if(c.moveToFirst()){
+            do{
+                // Adding user to the list
+                myVegetableGardenList.add(c.getInt(0));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return myVegetableGardenList;
+    }
+
+    public boolean vegetableExistInMyVegetableGarden(VegetableCalendar vegetableCalendar){
+        List <Integer> myVegetableGardenList=getMyVegetableGarden();
+        return myVegetableGardenList.contains(vegetableCalendar.getVegetableCalendarId());
+    }
+
+    public List<VegetableCalendar> fillMyVegetableGarden(){
+        List<Integer> myVegetableList = getMyVegetableGarden();
+        List<VegetableCalendar> vegetableCalendars = getVegetableCalendars();
+        List<VegetableCalendar> myVegetableCaldendarList = new ArrayList<VegetableCalendar>();
+        for (Integer vegetableCalendarId : myVegetableList) {
+            myVegetableCaldendarList.add(findVegetableCalendarById(vegetableCalendarId));
+        }
+        return myVegetableCaldendarList;
+    }
+
+    //UTILS
     public VegetableCalendar mapFromCursor(Cursor c){
         VegetableCalendar vegetableCalendar = new VegetableCalendar();
         vegetableCalendar.setVegetableCalendarId(c.getInt(0));

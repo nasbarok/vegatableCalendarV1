@@ -2,7 +2,7 @@ package com.nasbarok.vegatablecalendarv1;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.graphics.Color;
+import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TableLayout mTableLayout;
     ProgressDialog mProgressBar;
     List<VegetableCalendar> vegetableCalendars;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
         vegetableCalendarDB = new VegetableCalendarDBHelper(this.getApplicationContext());
         vegetableCalendarDB.createDB(inputStream);
 
+        builder = new AlertDialog.Builder(this);
+
         startLoadData();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        MenuItem searchItem = (MenuItem) menu.findItem(R.id.app_bar_search);
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -58,10 +62,11 @@ public class MainActivity extends AppCompatActivity {
                 VegetableCalendar vegetableCalendar = null;
                 List <VegetableCalendar> vegetableCalendarList;
                 vegetableCalendarList = vegetableCalendarDB.findVegetableCalendar(query);
-                if(vegetableCalendarList.size()>1){
+                if(vegetableCalendarList.size()>=1){
                     vegetableCalendars = vegetableCalendarList;
                     startLoadData();
-                }else{
+                }
+                if(vegetableCalendarList.size()<1){
                     vegetableCalendars = new ArrayList<VegetableCalendar>();
                     startLoadData();
                 }
@@ -73,6 +78,27 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        MenuItem renewBtn = (MenuItem) menu.findItem(R.id.app_bar_renew_search);
+        renewBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                vegetableCalendars = new ArrayList<VegetableCalendar>();
+                startLoadData();
+                return false;
+            }
+        });
+
+        MenuItem myVegetableGardenBtn = (MenuItem) menu.findItem(R.id.app_bar_my_vegetable_garden);
+        myVegetableGardenBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                vegetableCalendars = vegetableCalendarDB.fillMyVegetableGarden();
+                startLoadData();
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -103,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         int widthTotalDisplay = size.x - 40;
         int widthColumn = widthTotalDisplay/14;
         int widthColumnVegetables = widthColumn + widthColumn/2;
-        if(vegetableCalendars==null){
+        if(vegetableCalendars==null||vegetableCalendars.size()==0){
             vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
         }
 
@@ -140,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 tv.setBackgroundColor(getResources().getColor(R.color.table_color_vegetable_column));
                 tv.setText(String.valueOf(row.getVegetableCalendarName()));
                 tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+                setOnClick(tv,row);
             }
             //LinearLayout January
             LinearLayout layJanuarySTH = new LinearLayout(this);
@@ -694,6 +721,47 @@ public class MainActivity extends AppCompatActivity {
 
             return linearLayout;
         }
+
+            private void setOnClick(final TextView view, final VegetableCalendar vegetableCalendar){
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        builder.setTitle(vegetableCalendar.getVegetableCalendarName());
+                        builder.setMessage(getResources().getString(R.string.dialog_msg_add_vegetable_to_my_vegetable_garden1));
+                        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Do nothing but close the dialog
+                                String response = vegetableCalendarDB.addVegetableToMyVegetableGarden(vegetableCalendar);
+                                if(response.equals("OK")){
+                                    Toast toast = Toast.makeText(getApplicationContext(), " "+ vegetableCalendar.getVegetableCalendarName()+ " "+ getResources().getString(R.string.added_success) , Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                    toast.show();
+                                }else{
+                                    Toast toast = Toast.makeText(getApplicationContext(), " "+ vegetableCalendar.getVegetableCalendarName()+ " "+getResources().getString(R.string.already_exist), Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                    toast.show();
+                                }
+
+                                dialog.dismiss();
+                            }
+                        });
+
+                        builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // Do nothing
+                                dialog.dismiss();
+                            }
+                        });
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                });
+            }
 
         class LoadDataTask extends AsyncTask<Integer, Integer, String> {
             @Override
