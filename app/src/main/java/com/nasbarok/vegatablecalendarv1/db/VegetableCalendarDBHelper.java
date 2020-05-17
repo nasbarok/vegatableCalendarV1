@@ -221,7 +221,6 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     public List<VegetableCalendar> fillMyVegetableGarden(){
         List<Integer> myVegetableList = getMyVegetableGarden();
-        List<VegetableCalendar> vegetableCalendars = getVegetableCalendars();
         List<VegetableCalendar> myVegetableCaldendarList = new ArrayList<VegetableCalendar>();
         for (Integer vegetableCalendarId : myVegetableList) {
             myVegetableCaldendarList.add(findVegetableCalendarById(vegetableCalendarId));
