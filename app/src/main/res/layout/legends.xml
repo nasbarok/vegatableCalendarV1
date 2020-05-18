@@ -1,56 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/content_main"
+    tools:context=".MainActivity">
+    <GridLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearlayout_legends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="72dp" >
-        <shape android:shape="rectangle">
-            <size
-                android:width="15dp"
-                android:height="15dp" />
-            <solid android:color="@color/table_color_oseeding" />
-        </shape>
+        android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/outdoor_seeding" />
-
-        <shape android:shape="rectangle">
-            <size
-                android:width="15dp"
-                android:height="15dp" />
-            <solid android:color="@color/table_color_iseeding" />
-        </shape>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_iseeding_24dp"
+            android:text="@string/indoor_seeding"
+            android:textSize="@dimen/font_size_medium"
+            android:gravity="center_horizontal|top"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/indoor_seeding" />
-
-        <shape android:shape="rectangle">
-            <size
-                android:width="15dp"
-                android:height="15dp" />
-            <solid android:color="@color/table_color_transplantation" />
-        </shape>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_oseeding_24dp"
+            android:text="@string/outdoor_seeding"
+            android:textSize="@dimen/font_size_medium"
+            android:layout_gravity="center_horizontal"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/transplantation" />
-
-        <shape android:shape="rectangle">
-            <size
-                android:width="15dp"
-                android:height="15dp" />
-            <solid android:color="@color/table_color_harvest" />
-        </shape>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_transplantation_24dp"
+            android:text="@string/transplantation"
+            android:textSize="@dimen/font_size_medium"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/harvest" />
-    </android.support.constraint.Guideline>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_harvest_24dp"
+            android:text="@string/harvest"
+            android:textSize="@dimen/font_size_medium" />
+</GridLayout>
 </android.support.constraint.ConstraintLayout>

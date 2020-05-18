@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".VegetableCalendarFragment">
     <LinearLayout
-        android:id="@+id/linearlayout_legends"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:orientation="horizontal"
-        tools:context=".MainActivity">
-    </LinearLayout>
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -26,6 +15,9 @@
         android:orientation="vertical"
         android:id="@+id/vegetables_layout"
         tools:context=".MainActivity">
+        <include layout="@layout/legends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent" >

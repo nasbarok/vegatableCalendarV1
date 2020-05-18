@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.drawable.Icon;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.Shape;
@@ -53,7 +54,6 @@ public class VegetableCalendarFragment extends Fragment {
     private TableLayout mTableLayout;
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
-    private LinearLayout linearLayoutLegends;
 
     public VegetableCalendarFragment() {
         // Required empty public constructor
@@ -101,9 +101,6 @@ public class VegetableCalendarFragment extends Fragment {
 
         startLoadData();
 
-        //legends
-        linearLayoutLegends =(LinearLayout) v.findViewById(R.id.linearlayout_legends);
-        fillLinearLayoutLegends();
         return v;
     }
 
@@ -767,20 +764,6 @@ public class VegetableCalendarFragment extends Fragment {
                 alert.show();
             }
         });
-    }
-
-    private void fillLinearLayoutLegends(){
-        final TextView tvOs = new TextView(getContext());
-        tvOs.setText(getResources().getString(R.string.outdoor_seeding));
-        Shape rectOs = new RectShape();
-        Paint paintOs = new Paint();
-        ShapeDrawable shapeDrawable = new ShapeDrawable();
-        paintOs.setColor(getResources().getColor(R.color.table_color_oseeding));
-        Canvas rectOsCanvas = new Canvas();
-        rectOsCanvas.clipRect(15,15,15,15);
-        rectOs.draw(rectOsCanvas,paintOs);
-        linearLayoutLegends.addView(rectOs);
-        linearLayoutLegends.addView(tvOs);
     }
 
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
