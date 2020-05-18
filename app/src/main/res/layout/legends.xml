@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--<color name="table_color_oseeding">#DC044E</color>
-    <color name="table_color_iseeding">#03B600</color>
-    <color name="table_color_transplantation">#F3A43E</color>
-    <color name="table_color_harvest">#FBDA1C</color>-->
-    <item
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="72dp" >
         <shape android:shape="rectangle">
             <size
                 android:width="15dp"
@@ -20,10 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/outdoor_seeding" />
-    </item>
-    <item
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+
         <shape android:shape="rectangle">
             <size
                 android:width="15dp"
@@ -34,10 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/indoor_seeding" />
-    </item>
-    <item
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+
         <shape android:shape="rectangle">
             <size
                 android:width="15dp"
@@ -48,10 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/transplantation" />
-    </item>
-    <item
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+
         <shape android:shape="rectangle">
             <size
                 android:width="15dp"
@@ -62,7 +52,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/harvest" />
-    </item>
-
-
+    </android.support.constraint.Guideline>
 </android.support.constraint.ConstraintLayout>
