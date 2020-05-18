@@ -24,4 +24,10 @@
     <string name="no">Non</string>
     <string name="added_success">ajouté avec succès !</string>
     <string name="already_exist">existe déjà</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_vegetable_garden">Mon potager</string>
+    <string name="indoor_seeding">Semis intérieur</string>
+    <string name="outdoor_seeding">Semis exterieur</string>
+    <string name="transplantation">Repiquage</string>
+    <string name="harvest">Récolte</string>
 </resources>

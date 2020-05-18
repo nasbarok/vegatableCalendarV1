@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/app_bar_my_vegetable_garden"
-        android:icon="@drawable/ic_betterave_et_carotte"
+        android:icon="@drawable/ic_pousse2"
         android:title="Item"
         app:showAsAction="always"  />
     <item

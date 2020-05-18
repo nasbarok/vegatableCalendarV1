@@ -25,4 +25,12 @@
     <string name="no">No</string>
     <string name="added_success">Successfuly added !</string>
     <string name="already_exist">already exist</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_vegetable_garden">My vegetable garden</string>
+    <string name="indoor_seeding">Indoor seeding</string>
+    <string name="outdoor_seeding">Outdoor seeding</string>
+    <string name="transplantation">Transplantation</string>
+    <string name="harvest">Harvest</string>
 </resources>

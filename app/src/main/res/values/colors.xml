@@ -14,6 +14,10 @@
     <color name="table_color_default_dark">#f0f0f0</color>
     <color name="table_color_default_bright2">#ffffff</color>
     <color name="table_color_default_dark2">#d9d9d9</color>
+    <color name="table_my_vegetable_garden_color_default_bright">#D9FBB2</color>
+    <color name="table_my_vegetable_garden_color_default_dark">#CFF8A2</color>
+    <color name="table_my_vegetable_garden_color_default_bright2">#F1FBE4</color>
+    <color name="table_my_vegetable_garden_color_default_dark2">#C5FD86</color>
     <color name="table_color_vegetable_column">#EACAFA92</color>
     <color name="table_color_vegetable_head">#EAABD17F</color>
 </resources>

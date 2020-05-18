@@ -1,8 +1,9 @@
 package com.nasbarok.vegatablecalendarv1.model;
 
 
+import java.io.Serializable;
 
-public class VegetableCalendar {
+public class VegetableCalendar implements Serializable {
 
     private int vegetableCalendarId;
     private String vegetableCalendarName;
