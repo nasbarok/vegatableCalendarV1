@@ -16,8 +16,7 @@
     <string name="calendar_heading13">December</string>
 
 
-    <string name="tab_text_2">Paramètres</string>
-    <string name="calendar_heading">en tête</string>
+    <string name="tab_text_2">Parameter</string>
     <string name="loading_msg">Chargement ..</string>
     <string name="search">rechercher</string>
     <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Do you want add on your custom vegetable garden</string>
@@ -27,10 +26,12 @@
     <string name="already_exist">already exist</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_vegetable_garden">My vegetable garden</string>
     <string name="indoor_seeding">Indoor seeding</string>
     <string name="outdoor_seeding">Outdoor seeding</string>
     <string name="transplantation">Transplantation</string>
     <string name="harvest">Harvest</string>
+    <string name="add_calendar_msg1">"Do you want to add a notification to a start date of: "</string>
+    <string name="close">close</string>
+    <string name="validate">Validate</string>
 </resources>

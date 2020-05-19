@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.BufferedReader;
@@ -38,6 +39,10 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME12 = "vegetableCalendarNovember";
     public static final String COLUMN_NAME13 = "vegetableCalendarDecember";
     public static final String TABLE_NAME_VEGETABLE_GARDEN = "my_vegetable_garden";
+    public static final String COLUMN_VEGETABLE_GARDEN_NAME1 = "outdoorSeedingNotify";
+    public static final String COLUMN_VEGETABLE_GARDEN_NAME2 = "indoorSeedingNotify";
+    public static final String COLUMN_VEGETABLE_GARDEN_NAME3 = "transplationNotify";
+    public static final String COLUMN_VEGETABLE_GARDEN_NAME4 = "harvestNotify";
 
     private Context context;
 
@@ -81,7 +86,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
             }
         }
         //My vegetable garden local
-        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_VEGETABLE_GARDEN + "( " + COLUMN_ID_VEGETABLE_CALENDAR + " INTEGER )";
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_VEGETABLE_GARDEN + "( " + COLUMN_ID_VEGETABLE_CALENDAR + " INTEGER, " + COLUMN_VEGETABLE_GARDEN_NAME1+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME2+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME3+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME4+" TEXT )";
         db.execSQL(CREATE_TABLE);
     }
 
@@ -194,6 +199,21 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     }
 
+    public String saveVegetableNotificationToMyVegetableGarden(MyVegetableGarden myVegetableGarden) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_ID_VEGETABLE_CALENDAR, myVegetableGarden.getVegetableCalendarId());
+            values.put(COLUMN_VEGETABLE_GARDEN_NAME1, myVegetableGarden.getIndoorSeedingNotify());
+            values.put(COLUMN_VEGETABLE_GARDEN_NAME2, myVegetableGarden.getOutdoorSeedingNotify());
+            values.put(COLUMN_VEGETABLE_GARDEN_NAME3, myVegetableGarden.getTransplationNotify());
+            values.put(COLUMN_VEGETABLE_GARDEN_NAME4, myVegetableGarden.getHarvestNotify());
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.update(TABLE_NAME_VEGETABLE_GARDEN,values,COLUMN_ID_VEGETABLE_CALENDAR+ " = "+myVegetableGarden.getVegetableCalendarId(),null);
+            db.close();
+            return "OK";
+
+    }
+
     public List<Integer> getMyVegetableGarden(){
         List <Integer> myVegetableGardenList=new ArrayList<Integer>();
 
@@ -212,6 +232,28 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         }
         c.close();
         return myVegetableGardenList;
+    }
+
+    public MyVegetableGarden getMyVegetableGardenNotify(int vegetalNumber){
+        MyVegetableGarden myVegetableGarden = new MyVegetableGarden();
+        // Select All Query
+        String selectQuery="SELECT * FROM " + TABLE_NAME_VEGETABLE_GARDEN + " WHERE "+ COLUMN_ID_VEGETABLE_CALENDAR+" = "+vegetalNumber;
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor c=db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to the list
+        if(c.moveToFirst()){
+            do{
+                myVegetableGarden.setVegetableCalendarId(c.getInt(0));
+                myVegetableGarden.setIndoorSeedingNotify(c.getString(1));
+                myVegetableGarden.setOutdoorSeedingNotify(c.getString(2));
+                myVegetableGarden.setTransplationNotify(c.getString(3));
+                myVegetableGarden.setHarvestNotify(c.getString(4));
+            }while(c.moveToNext());
+        }
+        c.close();
+        return myVegetableGarden;
     }
 
     public boolean vegetableExistInMyVegetableGarden(VegetableCalendar vegetableCalendar){

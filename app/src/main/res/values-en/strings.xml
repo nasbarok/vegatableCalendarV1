@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Calendrier Potager</string>
     <string name="tab_text_1">Calendrier</string>
-    <string name="calendar_heading1">Légume</string>
+    <string name="calendar_heading1">Légumes</string>
     <string name="calendar_heading2">January</string>
     <string name="calendar_heading3">February</string>
     <string name="calendar_heading4">March</string>
@@ -15,19 +15,20 @@
     <string name="calendar_heading11">October</string>
     <string name="calendar_heading12">November</string>
     <string name="calendar_heading13">December</string>
-    <string name="tab_text_2">Paramètres</string>
-    <string name="calendar_heading">en tête</string>
-    <string name="loading_msg">loading please wait</string>
-    <string name="search">search</string>
-    <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Voulez vous l\'ajouter à votre potager personnalisé ?</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
-    <string name="added_success">ajouté avec succès !</string>
-    <string name="already_exist">existe déjà</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="my_vegetable_garden">Mon potager</string>
-    <string name="indoor_seeding">Semis intérieur</string>
-    <string name="outdoor_seeding">Semis exterieur</string>
-    <string name="transplantation">Repiquage</string>
-    <string name="harvest">Récolte</string>
+    <string name="tab_text_2">Parameter</string>
+    <string name="loading_msg">Chargement ..</string>
+    <string name="search">rechercher</string>
+    <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Do you want add on your custom vegetable garden</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="added_success">" Successfully added ! "</string>
+    <string name="already_exist">already exist</string>
+    <string name="indoor_seeding">Indoor seeding</string>
+    <string name="outdoor_seeding">Outdoor seeding</string>
+    <string name="transplantation">Transplantation</string>
+    <string name="harvest">Harvest</string>
+    <string name="add_calendar_msg1">"Do you want to add a notification to a start date of: "</string>
+    <string name="my_vegetable_garden">My vegetable garden</string>
+    <string name="close">close</string>
+    <string name="validate">Validate</string>
 </resources>

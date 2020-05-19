@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Point;
+import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +20,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
+import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.Serializable;
@@ -57,7 +62,6 @@ public class MyVegetableGardenFragment extends Fragment {
      * @param vegetableCalendarList list of entity vegetableCalendar.
      * @return A new instance of fragment MyVegetableGardenFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MyVegetableGardenFragment newInstance(List<VegetableCalendar> vegetableCalendarList) {
         MyVegetableGardenFragment fragment = new MyVegetableGardenFragment();
         Bundle args = new Bundle();
@@ -108,8 +112,7 @@ public class MyVegetableGardenFragment extends Fragment {
         int textSize = 0, smallTextSize = 0, mediumTextSize = 0;
         textSize = (int) getResources().getDimension(R.dimen.font_size_verysmall);
         smallTextSize = (int) getResources().getDimension(R.dimen.font_size_small);
-        mediumTextSize = (int)
-                getResources().getDimension(R.dimen.font_size_medium);
+        mediumTextSize = (int) getResources().getDimension(R.dimen.font_size_medium);
 
         //get dimensions in pixels
         Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -712,36 +715,86 @@ public class MyVegetableGardenFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                builder.setTitle(vegetableCalendar.getVegetableCalendarName());
-                builder.setMessage(getResources().getString(R.string.dialog_msg_add_vegetable_to_my_vegetable_garden1));
-                builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                LinearLayout linearLayout = new LinearLayout(getContext());
+                linearLayout.setOrientation(LinearLayout.VERTICAL);
+                linearLayout.setGravity(Gravity.CENTER);
+                linearLayout.setPadding(0, 0, 0, 10);
+                vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
+                final MyVegetableGarden myVegetableGarden = vegetableCalendarDB.getMyVegetableGardenNotify(vegetableCalendar.getVegetableCalendarId());
 
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing but close the dialog
-                        String response = vegetableCalendarDB.addVegetableToMyVegetableGarden(vegetableCalendar);
-                        if(response.equals("OK")){
-                            Toast toast = Toast.makeText(getContext(), " "+ vegetableCalendar.getVegetableCalendarName()+ " "+ getResources().getString(R.string.added_success) , Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                            toast.show();
-                        }else{
-                            Toast toast = Toast.makeText(getContext(), " "+ vegetableCalendar.getVegetableCalendarName()+ " "+getResources().getString(R.string.already_exist), Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                            toast.show();
-                        }
+                linearLayout.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT));
+                final TextView tvTitle = new TextView(getContext());
+                tvTitle.setText(vegetableCalendar.getVegetableCalendarName());
+                tvTitle.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tvTitle.setTextSize( getResources().getDimension(R.dimen.font_size_medium));
+                linearLayout.addView(tvTitle);
 
-                        dialog.dismiss();
-                    }
-                });
+                final TextView tvMsg = new TextView(getContext());
+                tvMsg.setText(getResources().getString(R.string.add_calendar_msg1));
+                tvMsg.setLayoutParams(new
+                        TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
+                        TableRow.LayoutParams.WRAP_CONTENT));
+                tvMsg.setTextSize(getResources().getDimension(R.dimen.font_size_small));
+                tvMsg.setPadding(20, 0, 20, 0);
+                linearLayout.addView(tvMsg);
 
-                builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                final TextView tvIs = new TextView(getContext());
+                tvIs.setText(getResources().getString(R.string.indoor_seeding));
+                tvIs.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_iseeding_24dp),null, null, null);
+                final Switch switchIs=new Switch(getContext());
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                switchIs.setLayoutParams(params);
+
+                if(myVegetableGarden.getIndoorSeedingNotify()==null||myVegetableGarden.getIndoorSeedingNotify().equals("false")){
+                    switchIs.setChecked(false);
+                }else{
+                    switchIs.setChecked(true);
+                }
+
+                RelativeLayout relative=new RelativeLayout(getContext());
+                relative.addView(tvIs);
+                relative.addView(switchIs);
+                relative.setPadding(50,50,50,0);
+                linearLayout.addView(relative);
+                builder.setCustomTitle(linearLayout);
+
+
+
+
+                builder.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         // Do nothing
                         dialog.dismiss();
                     }
                 });
+
+                builder.setPositiveButton(getResources().getString(R.string.validate) ,new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        boolean notify = false;
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            notify = switchIs.isChecked();
+                        }
+
+                        myVegetableGarden.setIndoorSeedingNotify(String.valueOf(notify));
+                        String updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+
+                        notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify());
+                        dialog.dismiss();
+                    }
+                });
+
 
                 AlertDialog alert = builder.create();
                 alert.show();
@@ -749,11 +802,17 @@ public class MyVegetableGardenFragment extends Fragment {
         });
     }
 
+    public void notifyToast(String msg){
+        Toast toast = Toast.makeText(getContext(), " "+ msg+ " " , Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.show();
+    }
+
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
             try {
-                Thread.sleep(2000);
+                Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
