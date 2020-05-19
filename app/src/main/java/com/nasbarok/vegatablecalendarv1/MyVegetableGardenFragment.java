@@ -30,8 +30,10 @@ import android.widget.Toast;
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
+import com.nasbarok.vegatablecalendarv1.utils.VegetableCalendarNotify;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -50,6 +52,7 @@ public class MyVegetableGardenFragment extends Fragment {
     private TableLayout mTableLayout;
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
+    public String updateReturn;
 
     public MyVegetableGardenFragment() {
         // Required empty public constructor
@@ -765,9 +768,6 @@ public class MyVegetableGardenFragment extends Fragment {
                 linearLayout.addView(relative);
                 builder.setCustomTitle(linearLayout);
 
-
-
-
                 builder.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
 
                     @Override
@@ -782,15 +782,33 @@ public class MyVegetableGardenFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        boolean notify = false;
+                        boolean notifyIndoorSeeding = false;
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            notify = switchIs.isChecked();
+                            notifyIndoorSeeding = switchIs.isChecked();
                         }
 
-                        myVegetableGarden.setIndoorSeedingNotify(String.valueOf(notify));
-                        String updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
 
-                        notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify());
+
+                        VegetableCalendarNotify vegetableCalendarNotify = new VegetableCalendarNotify();
+                        if(notifyIndoorSeeding){
+                            Calendar beginTime = Calendar.getInstance();
+                            int hourOfDayNotify = 7;
+                            int minuteNotify = 7;
+                            beginTime.set(beginTime.YEAR, beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify, minuteNotify);
+                            Calendar endTime = Calendar.getInstance();
+                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify+10, minuteNotify);
+                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.indoor_seeding);
+                            vegetableCalendarNotify.createNotifyCalendar(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg);
+
+                            myVegetableGarden.setIndoorSeedingNotify(String.valueOf(beginTime));
+                            updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+                            notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify());
+                        }
+
+
+
                         dialog.dismiss();
                     }
                 });
