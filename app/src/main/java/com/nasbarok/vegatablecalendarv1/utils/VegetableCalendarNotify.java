@@ -16,7 +16,7 @@ public class VegetableCalendarNotify {
     public void createNotifyCalendar(Context context, Calendar beginTime, Calendar endTime, String location, String description, String title){
         int argbValue = 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            argbValue = Color.valueOf(context.getResources().getColor(R.color.table_color_iseeding)).toArgb();
+            argbValue = Color.toArgb(context.getResources().getColor(R.color.table_color_iseeding));
         }
         Intent intent = null;
 
@@ -27,9 +27,9 @@ public class VegetableCalendarNotify {
                     .putExtra(CalendarContract.Events.TITLE, title)
                     .putExtra(CalendarContract.Events.DESCRIPTION, description)
                     .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
-                    .putExtra(CalendarContract.Events.EVENT_COLOR_KEY, argbValue)
-                    .putExtra(CalendarContract.Reminders.MINUTES, 20)
-                    .putExtra(Intent.EXTRA_EMAIL, "na.ouahit@gmail.com");
+                    .putExtra(CalendarContract.Events.EVENT_COLOR_KEY, 89)
+                    .putExtra(CalendarContract.Reminders.MINUTES, 1)
+                    .putExtra(Intent.EXTRA_EMAIL, "blabla@gmail.com,blublu@gmail.com");
 
         context.startActivity(intent);
     }
