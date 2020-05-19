@@ -2,13 +2,17 @@ package com.nasbarok.vegatablecalendarv1.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.provider.CalendarContract;
+
+import com.nasbarok.vegatablecalendarv1.R;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class VegetableCalendarNotify {
+
     public void createNotifyCalendar(Context context, Calendar beginTime, Calendar endTime, String location, String description, String title){
         Intent intent = new Intent(Intent.ACTION_INSERT)
                 .setData(CalendarContract.Events.CONTENT_URI)
@@ -17,6 +21,8 @@ public class VegetableCalendarNotify {
                 .putExtra(CalendarContract.Events.TITLE, title)
                 .putExtra(CalendarContract.Events.DESCRIPTION, description)
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
+                .putExtra(CalendarContract.Events.EVENT_COLOR_KEY, Color.RED)
+                .putExtra(CalendarContract.Reminders.MINUTES, 5)
                 .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
                 .putExtra(Intent.EXTRA_EMAIL, "na.ouahit@gmail.com");
 

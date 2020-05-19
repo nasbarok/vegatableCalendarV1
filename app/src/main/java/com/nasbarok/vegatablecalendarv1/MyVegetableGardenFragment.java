@@ -798,7 +798,7 @@ public class MyVegetableGardenFragment extends Fragment {
                             Calendar endTime = Calendar.getInstance();
                             endTime.set(beginTime.get(Calendar.YEAR), beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify+10, minuteNotify);
                             String locationMsg = getResources().getString(R.string.my_vegetable_garden);
-                            String descriptionMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.indoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName();
                             String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.indoor_seeding);
                             vegetableCalendarNotify.createNotifyCalendar(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg);
 
@@ -806,8 +806,6 @@ public class MyVegetableGardenFragment extends Fragment {
                             updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
                             notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify());
                         }
-
-
 
                         dialog.dismiss();
                     }
