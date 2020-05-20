@@ -31,4 +31,5 @@
     <string name="calendar_heading5">Avril</string>
     <string name="close">fermer</string>
     <string name="validate">Valider</string>
+    <string name="option_menu">Mes préférences</string>
 </resources>

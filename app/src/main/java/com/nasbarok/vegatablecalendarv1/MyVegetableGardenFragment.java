@@ -2,6 +2,7 @@ package com.nasbarok.vegatablecalendarv1;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
 import android.graphics.drawable.Icon;
@@ -29,7 +30,9 @@ import android.widget.Toast;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
+import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
+import com.nasbarok.vegatablecalendarv1.utils.Utils;
 import com.nasbarok.vegatablecalendarv1.utils.VegetableCalendarNotify;
 
 import java.io.Serializable;
@@ -53,6 +56,7 @@ public class MyVegetableGardenFragment extends Fragment {
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
     public String updateReturn;
+    public Utils utils;
 
     public MyVegetableGardenFragment() {
         // Required empty public constructor
@@ -93,6 +97,8 @@ public class MyVegetableGardenFragment extends Fragment {
         mTableLayout.setStretchAllColumns(true);
 
         builder = new AlertDialog.Builder(v.getContext());
+
+        utils = new Utils();
 
         startLoadData();
 
@@ -794,17 +800,21 @@ public class MyVegetableGardenFragment extends Fragment {
                             Calendar beginTime = Calendar.getInstance();
                             int hourOfDayNotify = 7;
                             int minuteNotify = 7;
+                            UserInformations userInformations = vegetableCalendarDB.getUserInformations();
+
+                            userInformations.setEndTime("trololol");
+                            vegetableCalendarDB.saveUserInformations(userInformations);
+
                             beginTime.set(beginTime.YEAR, beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify, minuteNotify);
                             Calendar endTime = Calendar.getInstance();
                             endTime.set(beginTime.get(Calendar.YEAR), beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify+10, minuteNotify);
                             String locationMsg = getResources().getString(R.string.my_vegetable_garden);
                             String descriptionMsg = getResources().getString(R.string.indoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName();
                             String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.indoor_seeding);
-                            vegetableCalendarNotify.createNotifyCalendar(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg);
-
-                            myVegetableGarden.setIndoorSeedingNotify(String.valueOf(beginTime));
+                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg);
+                            myVegetableGarden.setIndoorSeedingNotify(String.valueOf(beginTime.get(Calendar.YEAR)));
                             updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
-                            notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify());
+                            utils.notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify(),getContext());
                         }
 
                         dialog.dismiss();
@@ -818,11 +828,9 @@ public class MyVegetableGardenFragment extends Fragment {
         });
     }
 
-    public void notifyToast(String msg){
-        Toast toast = Toast.makeText(getContext(), " "+ msg+ " " , Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.show();
-    }
+    //Utils
+
+
 
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
         @Override

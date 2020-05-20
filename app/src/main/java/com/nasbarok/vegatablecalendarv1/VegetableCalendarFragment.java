@@ -736,6 +736,7 @@ public class VegetableCalendarFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
                         String response = vegetableCalendarDB.addVegetableToMyVegetableGarden(vegetableCalendar);
+
                         if(response.equals("OK")){
                             Toast toast = Toast.makeText(getContext(), " "+ vegetableCalendar.getVegetableCalendarName()+ " "+ getResources().getString(R.string.added_success) , Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);

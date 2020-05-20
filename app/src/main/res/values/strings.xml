@@ -14,8 +14,6 @@
     <string name="calendar_heading11">October</string>
     <string name="calendar_heading12">November</string>
     <string name="calendar_heading13">December</string>
-
-
     <string name="tab_text_2">Parameter</string>
     <string name="loading_msg">Chargement ..</string>
     <string name="search">rechercher</string>
@@ -24,8 +22,6 @@
     <string name="no">No</string>
     <string name="added_success">Successfuly added !</string>
     <string name="already_exist">already exist</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="my_vegetable_garden">My vegetable garden</string>
     <string name="indoor_seeding">Indoor seeding</string>
     <string name="outdoor_seeding">Outdoor seeding</string>
@@ -34,4 +30,5 @@
     <string name="add_calendar_msg1">"Do you want to add a notification to a start date of: "</string>
     <string name="close">close</string>
     <string name="validate">Validate</string>
+    <string name="option_menu">"My preferences "</string>
 </resources>

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/app_bar_my_vegetable_garden"
-        android:icon="@drawable/ic_pousse2"
-        android:title="Item"
-        app:showAsAction="always"  />
+
     <item
         android:id="@+id/app_bar_renew_search"
         android:icon="@drawable/ic_autorenew_black_24dp"
         android:title="Item"
+        android:drawableLeft="@drawable/ic_autorenew_black_24dp"
         app:showAsAction="always" />
     <item
         android:id="@+id/app_bar_search"
@@ -17,4 +14,24 @@
         android:title="@string/search"
         app:actionViewClass="android.widget.SearchView"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/empty"
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:orderInCategory="101"
+        app:showAsAction="always"
+        android:title="">
+    <menu>
+            <item
+                android:id="@+id/app_bar_my_vegetable_garden"
+                android:icon="@drawable/ic_pousse_logo_v2"
+                android:title="@string/my_vegetable_garden"
+                app:showAsAction="always|withText" />
+            <item
+                android:id="@+id/app_bar_myparapeters"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/option_menu"
+                app:showAsAction="always|withText" />
+        </menu>
+    </item>
+
 </menu>

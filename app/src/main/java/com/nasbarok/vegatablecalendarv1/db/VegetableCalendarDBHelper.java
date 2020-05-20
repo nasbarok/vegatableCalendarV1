@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
+import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.BufferedReader;
@@ -43,6 +44,11 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_VEGETABLE_GARDEN_NAME2 = "indoorSeedingNotify";
     public static final String COLUMN_VEGETABLE_GARDEN_NAME3 = "transplationNotify";
     public static final String COLUMN_VEGETABLE_GARDEN_NAME4 = "harvestNotify";
+    public static final String TABLE_NAME_USER_INFORMATION = "user_informations";
+    public static final String COLUMN_USER_INFORMATION_ID = "user_info_id";
+    public static final String COLUMN_USER_INFORMATION_NAME1 = "mails";
+    public static final String COLUMN_USER_INFORMATION_NAME2 = "startTime";
+    public static final String COLUMN_USER_INFORMATION_NAME3 = "endTime";
 
     private Context context;
 
@@ -88,7 +94,39 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         //My vegetable garden local
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_VEGETABLE_GARDEN + "( " + COLUMN_ID_VEGETABLE_CALENDAR + " INTEGER, " + COLUMN_VEGETABLE_GARDEN_NAME1+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME2+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME3+" TEXT, "+ COLUMN_VEGETABLE_GARDEN_NAME4+" TEXT )";
         db.execSQL(CREATE_TABLE);
+
+        //My user informations
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_USER_INFORMATION + "( " + COLUMN_USER_INFORMATION_ID + " INTEGER, " + COLUMN_USER_INFORMATION_NAME1 + " TEXT, " + COLUMN_USER_INFORMATION_NAME2+" TEXT, "+ COLUMN_USER_INFORMATION_NAME3+" TEXT )";
+        db.execSQL(CREATE_TABLE);
+
+
+        if(!userInformationExist()){
+            String insertCommand = String
+                    .format("insert into "+TABLE_NAME_USER_INFORMATION+"( " + COLUMN_USER_INFORMATION_ID + ", "+COLUMN_USER_INFORMATION_NAME1+", "+COLUMN_USER_INFORMATION_NAME2+", "+COLUMN_USER_INFORMATION_NAME3+") values(\"%d\",\"%s\", \"%s\", \"%s\")",
+                           1,"","","");
+            db.execSQL(insertCommand);
+        }
+
+        db.close();
     }
+
+    public boolean userInformationExist(){
+        String query = "Select * FROM " + TABLE_NAME_USER_INFORMATION + " WHERE " + COLUMN_USER_INFORMATION_ID + " = 1";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        UserInformations userInformations = new UserInformations();
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            userInformations.setMails(cursor.getString(0));
+            userInformations.setStartTime(cursor.getString(1));
+            userInformations.setEndTime(cursor.getString(2));
+            cursor.close();
+        } else {
+            userInformations = null;
+        }
+        return userInformations!=null;
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -231,6 +269,8 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
             }while(c.moveToNext());
         }
         c.close();
+
+        db.close();
         return myVegetableGardenList;
     }
 
@@ -253,6 +293,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
             }while(c.moveToNext());
         }
         c.close();
+        db.close();
         return myVegetableGarden;
     }
 
@@ -268,6 +309,40 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
             myVegetableCaldendarList.add(findVegetableCalendarById(vegetableCalendarId));
         }
         return myVegetableCaldendarList;
+    }
+
+    public UserInformations getUserInformations(){
+        UserInformations userInformations = new UserInformations();
+        // Select All Query
+        String selectQuery="SELECT * FROM " + TABLE_NAME_USER_INFORMATION +" WHERE " + COLUMN_USER_INFORMATION_ID + " = 1 ";
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor c=db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to the list
+        if(c.moveToFirst()){
+            do{
+                userInformations.setMails(c.getString(0));
+                userInformations.setStartTime(c.getString(1));
+                userInformations.setEndTime(c.getString(2));
+            }while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+        return userInformations;
+    }
+
+    public String saveUserInformations(UserInformations userInformations) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_INFORMATION_NAME1, userInformations.getMails());
+        values.put(COLUMN_USER_INFORMATION_NAME2, userInformations.getStartTime());
+        values.put(COLUMN_USER_INFORMATION_NAME3, userInformations.getEndTime());
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(TABLE_NAME_USER_INFORMATION,values,COLUMN_USER_INFORMATION_ID+ " = 1 ",null);
+        db.close();
+        return "OK";
+
     }
 
     //UTILS
