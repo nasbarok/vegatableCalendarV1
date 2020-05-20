@@ -9,17 +9,38 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/userInfoLayout"
-            tools:context=".MainActivity">
 
-        </LinearLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:background="@android:color/white">
+
+            <!--  This is the main content -->
+            <RelativeLayout
+                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_margin="5dp" android:background="@color/colorPrimaryDark"
+                android:orientation="vertical" android:padding="@dimen/padding_fieldset">
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/contactUserInfoLayout"
+                    android:layout_marginLeft="30dp"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    tools:context=".MainActivity" />
+
+        </RelativeLayout>
+
+        <!--  This is the title label -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:background="@android:color/white" android:padding="@dimen/padding_fieldset"
+            android:text="@string/add_contact"
+            android:textSize="@dimen/font_size_big"
+            android:layout_marginLeft="30dp" android:textColor="@color/colorPrimaryDark" />
+
+        </RelativeLayout>
     </ScrollView>
 
 </FrameLayout>

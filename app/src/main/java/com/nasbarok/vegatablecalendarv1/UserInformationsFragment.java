@@ -1,5 +1,6 @@
 package com.nasbarok.vegatablecalendarv1;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -28,8 +29,12 @@ public class UserInformationsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private LinearLayout layoutUserInformation;
+    @SuppressLint("ResourceType")
+    private final Integer TVCONTACTLISTID = getResources().getInteger(R.id.tvContcatListId);
+    @SuppressLint("ResourceType")
+    private final Integer INPUTMAILID = getResources().getInteger(R.id.inputMailId);
+
+    private RelativeLayout contactUserInformationLayout;
     private VegetableCalendarDBHelper vegetableCalendarDB;
     private Utils utils;
     // TODO: Rename and change types of parameters
@@ -64,28 +69,25 @@ public class UserInformationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_user_informations, container, false);
-        layoutUserInformation = (LinearLayout) v.findViewById(R.id.userInfoLayout);
+        contactUserInformationLayout = (RelativeLayout) v.findViewById(R.id.contactUserInfoLayout);
         utils = new Utils();
         loadUsersInformtionLayout();
         return v;
     }
 
     public void loadUsersInformtionLayout(){
-      /*  LinearLayout.LayoutParams lyParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-        LinearLayout.LayoutParams.WRAP_CONTENT);*/
-        /*layoutUserInformation.setLayoutParams(lyParams);*/
-        TextView tvSep = new TextView(getContext());
-        final TextView tvMsg = new TextView(getContext());
-        tvMsg.setText(getResources().getString(R.string.add_contact));
-        layoutUserInformation.addView(tvMsg);
 
+      /*  RelativeLayout.LayoutParams paramsLayout = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+        contactUserInformationLayout.setLayoutParams(paramsLayout);*/
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
         final UserInformations userInformations = vegetableCalendarDB.getUserInformations();
         final TextView tvContactList = new TextView(getContext());
+        tvContactList.setId(TVCONTACTLISTID);
         tvContactList.setText(userInformations.getMails());
         /*RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);*/
         /*relativeLayoutInputMail.setLayoutParams(rlParams);*/
+
         final EditText addMail = new EditText(getContext());
         addMail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
@@ -127,12 +129,29 @@ public class UserInformationsFragment extends Fragment {
 
             }
         });
-        layoutUserInformation.addView(tvContactList);
-        layoutUserInformation.addView(addMail);
-        LinearLayout linearLayoutHBtn = new LinearLayout(getContext());
-        linearLayoutHBtn.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayoutHBtn.addView(buttonAddMail);
-        linearLayoutHBtn.addView(buttonClearMail);
-        layoutUserInformation.addView(linearLayoutHBtn);
+
+
+        RelativeLayout.LayoutParams relativeLayoutContactListParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        relativeLayoutContactListParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        relativeLayoutContactListParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        tvContactList.setLayoutParams(relativeLayoutContactListParams);
+        contactUserInformationLayout.addView(tvContactList);
+        //tvContactList.setLayoutParams();
+
+        RelativeLayout.LayoutParams relativeLayoutAddMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        relativeLayoutAddMailParams.addRule(RelativeLayout.ABOVE,TVCONTACTLISTID);
+        relativeLayoutAddMailParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        addMail.setLayoutParams(relativeLayoutAddMailParams);
+        contactUserInformationLayout.addView(addMail);
+
+        RelativeLayout relativeLayoutHBtn = new RelativeLayout(getContext());
+
+        relativeLayoutHBtn.setPadding(0,0,0,0);
+        relativeLayoutHBtn.addView(buttonAddMail);
+        relativeLayoutHBtn.addView(buttonClearMail);
+        contactUserInformationLayout.addView(relativeLayoutHBtn);
+        contactUserInformationLayout.setPadding(5,5,5,5);
     }
 }
