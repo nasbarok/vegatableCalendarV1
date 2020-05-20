@@ -322,9 +322,9 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to the list
         if(c.moveToFirst()){
             do{
-                userInformations.setMails(c.getString(0));
-                userInformations.setStartTime(c.getString(1));
-                userInformations.setEndTime(c.getString(2));
+                userInformations.setMails(c.getString(1));
+                userInformations.setStartTime(c.getString(2));
+                userInformations.setEndTime(c.getString(3));
             }while(c.moveToNext());
         }
         c.close();

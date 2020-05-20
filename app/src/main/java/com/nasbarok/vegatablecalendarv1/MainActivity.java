@@ -82,6 +82,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        MenuItem myPreferences = (MenuItem) menu.findItem(R.id.app_bar_myparapeters);
+        myPreferences.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                launchMyPreferences();
+                return false;
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -108,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager myVegetableGardenFragmentManager=getSupportFragmentManager();
         FragmentTransaction myVegetableGardenFragmentTransaction=myVegetableGardenFragmentManager.beginTransaction();
         myVegetableGardenFragmentTransaction.replace(R.id.content_main,vegetableCalendarFragmentInstance,"vegetable_calendar_fragment_tag").addToBackStack(null).commit();
+    }
+
+    public void launchMyPreferences(){
+        UserInformationsFragment userInformationsFragmentInstance = UserInformationsFragment.newInstance();
+        FragmentManager userInformationsManager=getSupportFragmentManager();
+        FragmentTransaction userInformationsFragmentTransaction=userInformationsManager.beginTransaction();
+        userInformationsFragmentTransaction.replace(R.id.content_main,userInformationsFragmentInstance,"vegetable_calendar_fragment_tag").addToBackStack(null).commit();
+
     }
 
 
