@@ -71,9 +71,9 @@ public class UserInformationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_user_informations, container, false);
-        contactUserInformationLayout = (RelativeLayout) v.findViewById(R.id.contactUserInfoLayout);
+        //contactUserInformationLayout = (RelativeLayout) v.findViewById(R.id.contactUserInfoLayout);
         utils = new Utils();
-        loadUsersInformtionLayout();
+        //loadUsersInformtionLayout();
         return v;
     }
 

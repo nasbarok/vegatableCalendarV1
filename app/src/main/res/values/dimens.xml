@@ -10,4 +10,5 @@
     <dimen name="font_size_medium">12dp</dimen>
     <dimen name="font_size_big">20dp</dimen>
     <dimen name="padding_fieldset">5dp</dimen>
+    <dimen name="margin_fieldset">100dp</dimen>
 </resources>
