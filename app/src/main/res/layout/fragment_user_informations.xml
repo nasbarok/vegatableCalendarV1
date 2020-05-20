@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".UserInformationsFragment">
 
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:background="@android:color/white">
 
             <!--  This is the main content -->
             <RelativeLayout
-                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_margin="5dp" android:background="@color/colorPrimaryDark"
                 android:orientation="vertical" android:padding="@dimen/padding_fieldset">
 
@@ -28,6 +28,7 @@
                     android:orientation="vertical"
                     android:id="@+id/contactUserInfoLayout"
                     android:layout_marginLeft="30dp"
+                    android:layout_centerInParent="true"
                     android:background="@color/table_my_vegetable_garden_color_default_bright2"
                     tools:context=".MainActivity" />
 

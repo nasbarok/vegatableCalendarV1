@@ -29,10 +29,12 @@ public class UserInformationsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    @SuppressLint("ResourceType")
-    private final Integer TVCONTACTLISTID = getResources().getInteger(R.id.tvContcatListId);
-    @SuppressLint("ResourceType")
-    private final Integer INPUTMAILID = getResources().getInteger(R.id.inputMailId);
+    private Integer TVCONTACTLISTID ;
+    private Integer INPUTMAILID ;
+    private Integer BTNADDMAILID ;
+    private Integer BTNCLEARMAILID ;
+
+
 
     private RelativeLayout contactUserInformationLayout;
     private VegetableCalendarDBHelper vegetableCalendarDB;
@@ -82,7 +84,7 @@ public class UserInformationsFragment extends Fragment {
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
         final UserInformations userInformations = vegetableCalendarDB.getUserInformations();
         final TextView tvContactList = new TextView(getContext());
-        tvContactList.setId(TVCONTACTLISTID);
+        TVCONTACTLISTID = tvContactList.getId();
         tvContactList.setText(userInformations.getMails());
         /*RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);*/
@@ -90,8 +92,11 @@ public class UserInformationsFragment extends Fragment {
 
         final EditText addMail = new EditText(getContext());
         addMail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        INPUTMAILID = addMail.getId();
 
         Button buttonAddMail = new Button(getContext());
+        BTNADDMAILID = buttonAddMail.getId();
+
         buttonAddMail.setText(getResources().getString(R.string.add));
         buttonAddMail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +122,8 @@ public class UserInformationsFragment extends Fragment {
             }
         });
         Button buttonClearMail = new Button(getContext());
+        BTNCLEARMAILID = buttonClearMail.getId();
+        buttonClearMail.setId(BTNCLEARMAILID);
         buttonClearMail.setText(getResources().getString(R.string.clear));
         /*relativeLayoutInputMail.addView(buttonAddMail);*/
         buttonClearMail.setOnClickListener(new View.OnClickListener() {
@@ -141,17 +148,23 @@ public class UserInformationsFragment extends Fragment {
 
         RelativeLayout.LayoutParams relativeLayoutAddMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayoutAddMailParams.addRule(RelativeLayout.ABOVE,TVCONTACTLISTID);
+        relativeLayoutAddMailParams.addRule(RelativeLayout.ALIGN_BOTTOM,TVCONTACTLISTID);
         relativeLayoutAddMailParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         addMail.setLayoutParams(relativeLayoutAddMailParams);
+
         contactUserInformationLayout.addView(addMail);
-
-        RelativeLayout relativeLayoutHBtn = new RelativeLayout(getContext());
-
-        relativeLayoutHBtn.setPadding(0,0,0,0);
-        relativeLayoutHBtn.addView(buttonAddMail);
-        relativeLayoutHBtn.addView(buttonClearMail);
-        contactUserInformationLayout.addView(relativeLayoutHBtn);
+        RelativeLayout.LayoutParams relativeLayoutButtonAddMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        relativeLayoutButtonAddMailParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        relativeLayoutButtonAddMailParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        buttonAddMail.setLayoutParams(relativeLayoutButtonAddMailParams);
+        contactUserInformationLayout.addView(buttonAddMail);
+        RelativeLayout.LayoutParams relativeLayoutButtonClearMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        relativeLayoutButtonClearMailParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        relativeLayoutButtonClearMailParams.addRule(RelativeLayout.END_OF,BTNADDMAILID);
+        buttonClearMail.setLayoutParams(relativeLayoutButtonAddMailParams);
+        contactUserInformationLayout.addView(buttonClearMail);
         contactUserInformationLayout.setPadding(5,5,5,5);
     }
 }

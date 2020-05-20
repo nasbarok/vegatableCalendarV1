@@ -2,4 +2,8 @@
 <resources>
     <item name="tvContcatListId" type="id"/>
     <item name="inputMailId" type="id"/>
+    <item name="btnAddMail" type="id"/>
+    <item name="btnClearMail" type="id"/>
+
+
 </resources>
