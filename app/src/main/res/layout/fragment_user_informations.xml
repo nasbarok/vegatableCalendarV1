@@ -79,9 +79,11 @@
                     android:layout_alignParentLeft="true"
                     android:text="Main Content"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/font_size_big"
                     android:id="@+id/btnChangeStartTime" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/font_size_big"
                     android:text="Main Content"
                     android:id="@+id/tvStartTime"
                     android:layout_alignParentTop="true"/>
