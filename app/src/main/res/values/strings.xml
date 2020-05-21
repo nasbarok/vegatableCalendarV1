@@ -31,8 +31,14 @@
     <string name="close">close</string>
     <string name="validate">Validate</string>
     <string name="option_menu">"My preferences "</string>
-    <string name="add_contact">Add default email contacts to calendar events?</string>
+    <string name="add_contact">Add default email contacts to calendar events</string>
     <string name="add">Add</string>
     <string name="clear">Clear</string>
     <string name="not_valid_mail">Mail exist or not valid</string>
+    <string name="input_mails_msg">put an email address</string>
+    <string name="not_mail_exist">No emails yet</string>
+    <string name="start_time_msg">Start time</string>
+    <string name="end_time_msg">End time</string>
+    <string name="notification_time_msg">Set the notification time</string>
+    <string name="saved">saved</string>
 </resources>

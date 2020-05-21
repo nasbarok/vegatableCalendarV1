@@ -26,6 +26,14 @@ public class Utils {
         toast.show();
     }
 
+    public int[] splitTimeValue(String value){
+        String[] strings = value.split("h");
+        int[] ints = new int[2];
+        ints[0] = Integer.valueOf(strings[0]);
+        ints[1] = Integer.valueOf(strings[1]);
+        return ints;
+    }
+
     public final static boolean isValidEmail(CharSequence target) {
         if (target == null)
             return false;

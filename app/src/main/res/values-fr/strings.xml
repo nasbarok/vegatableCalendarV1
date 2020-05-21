@@ -32,8 +32,14 @@
     <string name="close">fermer</string>
     <string name="validate">Valider</string>
     <string name="option_menu">Mes préférences</string>
-    <string name="add_contact">Ajouter des contacts mails par defaut aux évenements agenda ?</string>
+    <string name="add_contact">Ajouter des contacts mails par defaut aux évenements agenda</string>
     <string name="add">Ajouter</string>
     <string name="clear">Effacer</string>
     <string name="not_valid_mail">Mail existe ou non valide</string>
+    <string name="input_mails_msg">mettez une adresse mail</string>
+    <string name="not_mail_exist">Pas de mails pour l\'instant</string>
+    <string name="start_time_msg">Heure de début</string>
+    <string name="end_time_msg">Heure de fin</string>
+    <string name="notification_time_msg">Définir l\'heure de la notification</string>
+    <string name="saved">sauvegardée</string>
 </resources>

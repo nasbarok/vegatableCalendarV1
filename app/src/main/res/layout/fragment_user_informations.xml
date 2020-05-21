@@ -5,66 +5,108 @@
     android:layout_height="wrap_content"
     tools:context=".UserInformationsFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent" android:layout_height="fill_parent"
-            android:background="@android:color/white">
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:id="@+id/fieldsetAddContactId"
+            android:layout_weight="1">
 
             <!--  This is the main content -->
             <RelativeLayout
-                android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_margin="5dp" android:background="@color/colorPrimaryDark"
                 android:orientation="vertical" android:padding="@dimen/padding_fieldset">
-
+                <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="TextView TextView Main Content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/table_color_default_bright2"
-                    android:id="@+id/tvContcatListId"
-                    android:paddingTop="@dimen/margin_fieldset"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:drawableLeft="@drawable/ic_mail_black_24dp"
+                    android:id="@+id/tvContactListId"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true" android:paddingTop="@dimen/margin_fieldsetbig"/>
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:background="@color/table_color_default_bright2"
-                    android:text="EditText EditText Main Content"
-                    android:id="@+id/etMail"/>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button Button Main Content"
-                    android:layout_alignParentLeft="true"
-                    android:id="@+id/btnAddMail"></Button>
+                    android:textColorHighlight="@color/colorPrimaryDark"
+                    android:hint="@string/input_mails_msg"
+                    android:id="@+id/etMailId"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:id="@+id/btnClearMail"></Button>
-               <!-- <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/btnAddMailId"/>
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/contactUserInfoLayout"
-                    android:layout_marginLeft="30dp"
-                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/btnClearMailId" />
+        </RelativeLayout>
+
+            <!--  This is the title label -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:background="@color/table_my_vegetable_garden_color_default_bright2" android:padding="@dimen/padding_fieldset"
+                android:text="@string/add_contact"
+                android:textSize="@dimen/font_size_medium"
+                android:layout_marginLeft="30dp" android:textColor="@color/colorPrimaryDark" />
+
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:background="@android:color/white" android:id="@+id/timePicketLayout" android:layout_weight="1" >
+
+            <!--  This is the main content -->
+            <RelativeLayout
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_margin="5dp" android:background="@color/colorPrimaryDark"
+                android:orientation="vertical" android:padding="@dimen/padding_fieldset">
+
+                <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Main Content"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/btnChangeStartTime" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Main Content"
+                    android:id="@+id/tvStartTime"
+                    android:layout_alignParentTop="true"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Main Content"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/btnChangeEndTime" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:background="@color/table_my_vegetable_garden_color_default_bright2"
-                    tools:context=".MainActivity" />-->
+                    android:text="Main Content"
+                    android:id="@+id/tvEndTime"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true" />
 
+            </RelativeLayout>
+
+            <!--  This is the title label -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:padding="@dimen/padding_fieldset"
+                android:text="@string/notification_time_msg"
+                android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                android:layout_marginLeft="30dp" android:textColor="@color/colorPrimaryDark" />
         </RelativeLayout>
-
-        <!--  This is the title label -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:background="@color/table_color_default_bright2" android:padding="@dimen/padding_fieldset"
-            android:text="@string/add_contact"
-            android:textSize="@dimen/font_size_medium"
-            android:layout_marginLeft="30dp" android:textColor="@color/colorPrimaryDark" />
-
-        </RelativeLayout>
-
+    </LinearLayout>
 </FrameLayout>

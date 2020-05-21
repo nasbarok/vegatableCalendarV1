@@ -1,6 +1,8 @@
 package com.nasbarok.vegatablecalendarv1;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -14,10 +16,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
+
+import java.util.Calendar;
 
 
 /**
@@ -26,21 +31,20 @@ import com.nasbarok.vegatablecalendarv1.utils.Utils;
  * create an instance of this fragment.  userInfoLayout
  */
 public class UserInformationsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private Integer TVCONTACTLISTID ;
-    private Integer INPUTMAILID ;
-    private Integer BTNADDMAILID ;
-    private Integer BTNCLEARMAILID ;
-
-
 
     private RelativeLayout contactUserInformationLayout;
     private VegetableCalendarDBHelper vegetableCalendarDB;
     private Utils utils;
-    // TODO: Rename and change types of parameters
-
+    private TextView tvContactList;
+    private EditText etMail;
+    private Button btnAddMail;
+    private Button btnClearMail;
+    private TextView tvStartTime;
+    private TextView tvEndTime;
+    private Button btnStartTime;
+    private Button btnEndTime;
+    private int  mHourEndTime, mMinuteEndTime, mHourStartTime, mMinuteStartTime;
+    private UserInformations userInformations;
     public UserInformationsFragment() {
         // Required empty public constructor
     }
@@ -73,60 +77,63 @@ public class UserInformationsFragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_user_informations, container, false);
         //contactUserInformationLayout = (RelativeLayout) v.findViewById(R.id.contactUserInfoLayout);
         utils = new Utils();
-        //loadUsersInformtionLayout();
+        vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
+        userInformations = vegetableCalendarDB.getUserInformations();
+
+        tvContactList = v.findViewById(R.id.tvContactListId);
+        etMail = v.findViewById(R.id.etMailId);
+        btnAddMail = v.findViewById(R.id.btnAddMailId);
+        btnClearMail = v.findViewById(R.id.btnClearMailId);
+        loadCantactMail();
+
+        tvStartTime  = v.findViewById(R.id.tvStartTime);
+        tvEndTime = v.findViewById(R.id.tvEndTime);
+        btnStartTime = v.findViewById(R.id.btnChangeStartTime);
+        btnEndTime = v.findViewById(R.id.btnChangeEndTime);
+
+        loadTimerSetterNotification();
         return v;
     }
 
-    public void loadUsersInformtionLayout(){
+    public void loadCantactMail(){
 
-      /*  RelativeLayout.LayoutParams paramsLayout = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
-        contactUserInformationLayout.setLayoutParams(paramsLayout);*/
-        vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
-        final UserInformations userInformations = vegetableCalendarDB.getUserInformations();
-        final TextView tvContactList = new TextView(getContext());
-        TVCONTACTLISTID = tvContactList.getId();
+
+        if(userInformations.getMails()==null||userInformations.getMails().equals("")){
+            tvContactList.setText(getResources().getString(R.string.not_mail_exist));
+        }else{
+            tvContactList.setText(userInformations.getMails());
+        }
         tvContactList.setText(userInformations.getMails());
-        /*RelativeLayout.LayoutParams rlParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);*/
-        /*relativeLayoutInputMail.setLayoutParams(rlParams);*/
-
-        final EditText addMail = new EditText(getContext());
-        addMail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        INPUTMAILID = addMail.getId();
-
-        Button buttonAddMail = new Button(getContext());
-        BTNADDMAILID = buttonAddMail.getId();
-
-        buttonAddMail.setText(getResources().getString(R.string.add));
-        buttonAddMail.setOnClickListener(new View.OnClickListener() {
+        etMail.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        //etMail.setIex(getResources().getString(R.string.input_mails_msg));
+        btnAddMail.setText(getResources().getString(R.string.add));
+        btnAddMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(utils.isValidEmail(addMail.getText())&&addMail.getText()!=null&&!addMail.getText().toString().equals("")
-                &&!userInformations.getMails().contains(addMail.getText().toString())){
+                if(utils.isValidEmail(etMail.getText())&&etMail.getText()!=null&&!etMail.getText().toString().equals("")
+                &&!userInformations.getMails().contains(btnAddMail.getText().toString())){
                     String listMail = userInformations.getMails();
                     if(listMail.contains(",")||!userInformations.getMails().equals("")){
-                        listMail = listMail + ","+addMail.getText() ;
+                        listMail = listMail + ","+etMail.getText() ;
                     }else {
-                        listMail = addMail.getText().toString();
+                        listMail = etMail.getText().toString();
                     }
                     userInformations.setMails(listMail);
                     tvContactList.setText(listMail);
                     vegetableCalendarDB.saveUserInformations(userInformations);
-                    utils.notifyToast(getResources().getString(R.string.add)+" "+addMail.getText().toString(),getContext());
+                    utils.notifyToast(getResources().getString(R.string.add)+" "+etMail.getText().toString(),getContext());
                 }else{
-                    utils.notifyToast(addMail.getText().toString()+":"+getResources().getString(R.string.not_valid_mail)+" ",getContext());
+                    utils.notifyToast(etMail.getText().toString()+":"+getResources().getString(R.string.not_valid_mail)+" ",getContext());
 
                 }
 
 
             }
         });
-        Button buttonClearMail = new Button(getContext());
-        BTNCLEARMAILID = buttonClearMail.getId();
-        buttonClearMail.setId(BTNCLEARMAILID);
-        buttonClearMail.setText(getResources().getString(R.string.clear));
+        
+        btnClearMail.setText(getResources().getString(R.string.clear));
         /*relativeLayoutInputMail.addView(buttonAddMail);*/
-        buttonClearMail.setOnClickListener(new View.OnClickListener() {
+        btnClearMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     userInformations.setMails("");
@@ -136,35 +143,39 @@ public class UserInformationsFragment extends Fragment {
 
             }
         });
-
-
-        RelativeLayout.LayoutParams relativeLayoutContactListParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayoutContactListParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        relativeLayoutContactListParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        tvContactList.setLayoutParams(relativeLayoutContactListParams);
-        contactUserInformationLayout.addView(tvContactList);
-        //tvContactList.setLayoutParams();
-
-        RelativeLayout.LayoutParams relativeLayoutAddMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayoutAddMailParams.addRule(RelativeLayout.ALIGN_BOTTOM,TVCONTACTLISTID);
-        relativeLayoutAddMailParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        addMail.setLayoutParams(relativeLayoutAddMailParams);
-
-        contactUserInformationLayout.addView(addMail);
-        RelativeLayout.LayoutParams relativeLayoutButtonAddMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayoutButtonAddMailParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        relativeLayoutButtonAddMailParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        buttonAddMail.setLayoutParams(relativeLayoutButtonAddMailParams);
-        contactUserInformationLayout.addView(buttonAddMail);
-        RelativeLayout.LayoutParams relativeLayoutButtonClearMailParams = (RelativeLayout.LayoutParams) new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayoutButtonClearMailParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        relativeLayoutButtonClearMailParams.addRule(RelativeLayout.END_OF,BTNADDMAILID);
-        buttonClearMail.setLayoutParams(relativeLayoutButtonAddMailParams);
-        contactUserInformationLayout.addView(buttonClearMail);
-        contactUserInformationLayout.setPadding(5,5,5,5);
     }
+
+    public void loadTimerSetterNotification(){
+        tvStartTime.setText(getResources().getString(R.string.start_time_msg));
+        tvEndTime.setText(getResources().getString(R.string.end_time_msg));
+        btnStartTime.setText(userInformations.getStartTime());
+        btnStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int[] ints = utils.splitTimeValue(userInformations.getStartTime());
+                mHourStartTime =ints[0];
+                mMinuteStartTime = ints[1];
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                userInformations.setStartTime(hourOfDay + "h" + minute);
+                                vegetableCalendarDB.saveUserInformations(userInformations);
+                                btnStartTime.setText(userInformations.getStartTime());
+                                utils.notifyToast(userInformations.getStartTime()+" "+getResources().getString(R.string.saved),getContext());
+                            }
+                        }, mHourStartTime, mMinuteStartTime, true);
+                timePickerDialog.show();
+            }
+
+        });
+
+        /*        btnEndTime*/
+    }
+
 }

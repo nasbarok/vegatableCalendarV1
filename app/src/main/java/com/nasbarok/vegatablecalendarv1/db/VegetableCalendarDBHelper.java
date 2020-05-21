@@ -103,7 +103,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         if(!userInformationExist()){
             String insertCommand = String
                     .format("insert into "+TABLE_NAME_USER_INFORMATION+"( " + COLUMN_USER_INFORMATION_ID + ", "+COLUMN_USER_INFORMATION_NAME1+", "+COLUMN_USER_INFORMATION_NAME2+", "+COLUMN_USER_INFORMATION_NAME3+") values(\"%d\",\"%s\", \"%s\", \"%s\")",
-                           1,"","","");
+                           1,"","10h30","17h30");
             db.execSQL(insertCommand);
         }
 
