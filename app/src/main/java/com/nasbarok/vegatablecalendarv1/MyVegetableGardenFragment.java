@@ -98,8 +98,8 @@ public class MyVegetableGardenFragment extends Fragment {
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
         userInformations = vegetableCalendarDB.getUserInformations();
         loadUsersValues();
-        //startLoadData();
-        loadData();
+        startLoadData();
+
         return v;
     }
 
@@ -938,20 +938,21 @@ public class MyVegetableGardenFragment extends Fragment {
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
-            try {
+            /*try {
                 Thread.sleep(2500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             return "Task Completed.";
         }
         @Override
         protected void onPostExecute(String result) {
             mProgressBar.hide();
-            loadData();
+
         }
         @Override
         protected void onPreExecute() {
+            loadData();
         }
         @Override
         protected void onProgressUpdate(Integer... values) {

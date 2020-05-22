@@ -87,8 +87,7 @@ public class VegetableCalendarFragment extends Fragment {
 
         builder = new AlertDialog.Builder(v.getContext());
 
-        //startLoadData();
-        loadData();
+        startLoadData();
 
         return v;
     }
@@ -759,20 +758,15 @@ public class VegetableCalendarFragment extends Fragment {
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
         @Override
         protected String doInBackground(Integer... params) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             return "Task Completed.";
         }
         @Override
         protected void onPostExecute(String result) {
             mProgressBar.hide();
-            loadData();
         }
         @Override
         protected void onPreExecute() {
+            loadData();
         }
         @Override
         protected void onProgressUpdate(Integer... values) {
