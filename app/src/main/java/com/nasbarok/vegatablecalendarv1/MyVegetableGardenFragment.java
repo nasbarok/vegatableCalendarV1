@@ -2,12 +2,9 @@ package com.nasbarok.vegatablecalendarv1;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +12,6 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -26,7 +20,6 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
@@ -938,7 +931,7 @@ public class MyVegetableGardenFragment extends Fragment {
 
 
     public void refreshListMyVEgetableGarden(){
-        vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
+        vegetableCalendars = vegetableCalendarDB.fillMyVegetableGarden();
         loadData();
     }
 
