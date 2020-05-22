@@ -55,8 +55,10 @@ public class MyVegetableGardenFragment extends Fragment {
     private TableLayout mTableLayout;
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
-    public String updateReturn;
     public Utils utils;
+    private VegetableCalendarNotify vegetableCalendarNotify;
+    private UserInformations userInformations;
+    private int hourOfDayStartNotify, minuteStartNotify, hourOfDayEndNotify,minuteEndNotify;
 
     public MyVegetableGardenFragment() {
         // Required empty public constructor
@@ -99,7 +101,10 @@ public class MyVegetableGardenFragment extends Fragment {
         builder = new AlertDialog.Builder(v.getContext());
 
         utils = new Utils();
-
+        vegetableCalendarNotify = new VegetableCalendarNotify();
+        vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
+        userInformations = vegetableCalendarDB.getUserInformations();
+        loadUsersValues();
         startLoadData();
 
         return v;
@@ -728,7 +733,6 @@ public class MyVegetableGardenFragment extends Fragment {
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.setGravity(Gravity.CENTER);
                 linearLayout.setPadding(0, 0, 0, 10);
-                vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
                 final MyVegetableGarden myVegetableGarden = vegetableCalendarDB.getMyVegetableGardenNotify(vegetableCalendar.getVegetableCalendarId());
 
                 linearLayout.setLayoutParams(new
@@ -761,19 +765,151 @@ public class MyVegetableGardenFragment extends Fragment {
                 params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 switchIs.setLayoutParams(params);
 
-                if(myVegetableGarden.getIndoorSeedingNotify()==null||myVegetableGarden.getIndoorSeedingNotify().equals("false")){
-                    switchIs.setChecked(false);
-                }else{
-                    switchIs.setChecked(true);
-                }
 
-                RelativeLayout relative=new RelativeLayout(getContext());
-                relative.addView(tvIs);
-                relative.addView(switchIs);
-                relative.setPadding(50,50,50,0);
-                linearLayout.addView(relative);
+                switchIs.setChecked(utils.getSwitchCheckedByDate(myVegetableGarden.getIndoorSeedingNotify()));
+
+                switchIs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(switchIs.isChecked()){
+                            Calendar beginTime = utils.setCalendar(vegetableCalendar,"IS");
+                            beginTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayStartNotify, minuteStartNotify);
+                            Calendar endTime = Calendar.getInstance();
+                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayEndNotify, minuteEndNotify);
+
+                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.indoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName();
+                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.indoor_seeding);
+
+                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg,userInformations.getMails());
+
+                            String savedValue = beginTime.get(Calendar.YEAR)+":"+beginTime.get(Calendar.MONTH)+":"+beginTime.get(Calendar.DAY_OF_MONTH);
+                            myVegetableGarden.setIndoorSeedingNotify(savedValue);
+                            vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+                            utils.notifyToast(getResources().getString(R.string.indoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName()+" "+getResources().getString(R.string.notified),getContext());
+                        }
+                    }
+
+                });
+                final TextView tvOs = new TextView(getContext());
+                tvOs.setText(getResources().getString(R.string.outdoor_seeding));
+                tvOs.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_oseeding_24dp),null, null, null);
+                final Switch switchOs=new Switch(getContext());
+                switchOs.setLayoutParams(params);
+                switchOs.setChecked(utils.getSwitchCheckedByDate(myVegetableGarden.getOutdoorSeedingNotify()));
+
+                switchOs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (switchOs.isChecked()) {
+                            Calendar beginTime = utils.setCalendar(vegetableCalendar,"OS");
+                            beginTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayStartNotify, minuteStartNotify);
+                            Calendar endTime = Calendar.getInstance();
+                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayEndNotify, minuteEndNotify);
+
+                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.outdoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName();
+                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.outdoor_seeding);
+                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg,userInformations.getMails());
+
+                            String savedValue = beginTime.get(Calendar.YEAR)+":"+beginTime.get(Calendar.MONTH)+":"+beginTime.get(Calendar.DAY_OF_MONTH);
+                            myVegetableGarden.setOutdoorSeedingNotify(savedValue);
+                            vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+                            utils.notifyToast(getResources().getString(R.string.outdoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName()+" "+getResources().getString(R.string.notified),getContext());
+                        }
+                    }
+                });
+
+                final TextView tvT = new TextView(getContext());
+                tvT.setText(getResources().getString(R.string.transplantation));
+                tvT.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_transplantation_24dp),null, null, null);
+                final Switch switchT=new Switch(getContext());
+                switchT.setLayoutParams(params);
+                switchT.setChecked(utils.getSwitchCheckedByDate(myVegetableGarden.getTransplationNotify()));
+                switchT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (switchT.isChecked()) {
+                            Calendar beginTime = utils.setCalendar(vegetableCalendar,"T");
+                            beginTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayStartNotify, minuteStartNotify);
+                            Calendar endTime = Calendar.getInstance();
+                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayEndNotify, minuteEndNotify);
+
+                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.transplantation)+" "+vegetableCalendar.getVegetableCalendarName();
+                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.transplantation);
+                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg,userInformations.getMails());
+
+                            String savedValue = beginTime.get(Calendar.YEAR)+":"+beginTime.get(Calendar.MONTH)+":"+beginTime.get(Calendar.DAY_OF_MONTH);
+                            myVegetableGarden.setTransplationNotify(savedValue);
+                            vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+                            utils.notifyToast(getResources().getString(R.string.transplantation)+" "+vegetableCalendar.getVegetableCalendarName()+" "+getResources().getString(R.string.notified),getContext());
+                        }
+                    }
+                });
+
+                final TextView tvH = new TextView(getContext());
+                tvH.setText(getResources().getString(R.string.harvest));
+                tvH.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_harvest_24dp),null, null, null);
+                final Switch switchH=new Switch(getContext());
+                switchH.setLayoutParams(params);
+                switchH.setChecked(utils.getSwitchCheckedByDate(myVegetableGarden.getHarvestNotify()));
+                switchH.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (switchH.isChecked()) {
+                            Calendar beginTime = utils.setCalendar(vegetableCalendar,"H");
+                            beginTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayStartNotify, minuteStartNotify);
+                            Calendar endTime = Calendar.getInstance();
+                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.get(Calendar.MONTH), beginTime.get(Calendar.DAY_OF_MONTH), hourOfDayEndNotify, minuteEndNotify);
+
+                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
+                            String descriptionMsg = getResources().getString(R.string.harvest)+" "+vegetableCalendar.getVegetableCalendarName();
+                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.harvest);
+                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg,userInformations.getMails());
+
+                            String savedValue = beginTime.get(Calendar.YEAR)+":"+beginTime.get(Calendar.MONTH)+":"+beginTime.get(Calendar.DAY_OF_MONTH);
+                            myVegetableGarden.setHarvestNotify(savedValue);
+                            vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
+                            utils.notifyToast(getResources().getString(R.string.harvest)+" "+vegetableCalendar.getVegetableCalendarName()+" "+getResources().getString(R.string.notified),getContext());
+                        }
+                    }
+                });
+
+                RelativeLayout relativeIs=new RelativeLayout(getContext());
+                relativeIs.addView(tvIs);
+                relativeIs.addView(switchIs);
+                relativeIs.setPadding(50,50,50,0);
+                linearLayout.addView(relativeIs);
+
+                RelativeLayout relativeOs=new RelativeLayout(getContext());
+                relativeOs.addView(tvOs);
+                relativeOs.addView(switchOs);
+                relativeOs.setPadding(50,50,50,0);
+                linearLayout.addView(relativeOs);
+
+                RelativeLayout relativeT=new RelativeLayout(getContext());
+                relativeT.addView(tvT);
+                relativeT.addView(switchT);
+                relativeT.setPadding(50,50,50,0);
+                linearLayout.addView(relativeT);
+
+                RelativeLayout relativeH=new RelativeLayout(getContext());
+                relativeH.addView(tvH);
+                relativeH.addView(switchH);
+                relativeH.setPadding(50,50,50,0);
+                linearLayout.addView(relativeH);
+
                 builder.setCustomTitle(linearLayout);
+                builder.setPositiveButton(getResources().getString(R.string.delete_msg), new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        vegetableCalendarDB.removeVegetableToMyVegetableGarden(myVegetableGarden);
+                        refreshListMyVEgetableGarden();
+                        dialog.dismiss();
+                    }
+                });
                 builder.setNegativeButton(getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
 
                     @Override
@@ -783,45 +919,6 @@ public class MyVegetableGardenFragment extends Fragment {
                     }
                 });
 
-                builder.setPositiveButton(getResources().getString(R.string.validate) ,new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        boolean notifyIndoorSeeding = false;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            notifyIndoorSeeding = switchIs.isChecked();
-                        }
-
-
-
-                        VegetableCalendarNotify vegetableCalendarNotify = new VegetableCalendarNotify();
-                        if(notifyIndoorSeeding){
-                            Calendar beginTime = Calendar.getInstance();
-                            int hourOfDayNotify = 7;
-                            int minuteNotify = 7;
-                            UserInformations userInformations = vegetableCalendarDB.getUserInformations();
-
-                            userInformations.setEndTime("trololol");
-                            vegetableCalendarDB.saveUserInformations(userInformations);
-
-                            beginTime.set(beginTime.YEAR, beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify, minuteNotify);
-                            Calendar endTime = Calendar.getInstance();
-                            endTime.set(beginTime.get(Calendar.YEAR), beginTime.MONTH, beginTime.DAY_OF_MONTH, hourOfDayNotify+10, minuteNotify);
-                            String locationMsg = getResources().getString(R.string.my_vegetable_garden);
-                            String descriptionMsg = getResources().getString(R.string.indoor_seeding)+" "+vegetableCalendar.getVegetableCalendarName();
-                            String titleMsg = vegetableCalendar.getVegetableCalendarName()+ " " +getResources().getString(R.string.indoor_seeding);
-                            vegetableCalendarNotify.AddEvent(getContext(),beginTime,endTime,locationMsg,descriptionMsg,titleMsg);
-                            myVegetableGarden.setIndoorSeedingNotify(String.valueOf(beginTime.get(Calendar.YEAR)));
-                            updateReturn = vegetableCalendarDB.saveVegetableNotificationToMyVegetableGarden(myVegetableGarden);
-                            utils.notifyToast(getResources().getString(R.string.indoor_seeding)+" "+updateReturn+" "+myVegetableGarden.getIndoorSeedingNotify(),getContext());
-                        }
-
-                        dialog.dismiss();
-                    }
-                });
-
-
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -830,7 +927,20 @@ public class MyVegetableGardenFragment extends Fragment {
 
     //Utils
 
+    public void loadUsersValues(){
+        int[] intsStart = utils.splitTimeValue(userInformations.getStartTime());
+        hourOfDayStartNotify = intsStart[0];
+        minuteStartNotify = intsStart[1];
+        int[] intsEnd = utils.splitTimeValue(userInformations.getEndTime());
+        hourOfDayEndNotify = intsEnd[0];
+        minuteEndNotify = intsEnd[1];
+    }
 
+
+    public void refreshListMyVEgetableGarden(){
+        vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
+        loadData();
+    }
 
     class LoadDataTask extends AsyncTask<Integer, Integer, String> {
         @Override

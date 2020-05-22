@@ -42,4 +42,6 @@
     <string name="end_time_msg">End time</string>
     <string name="notification_time_msg">Set the notification time</string>
     <string name="saved">saved</string>
+    <string name="notified">notified</string>
+    <string name="delete_msg">Delete from my vegetable garden</string>
 </resources>

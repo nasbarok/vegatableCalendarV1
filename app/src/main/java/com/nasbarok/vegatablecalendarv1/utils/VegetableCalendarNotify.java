@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class VegetableCalendarNotify {
 
-    public void AddEvent(Context context, Calendar beginTime, Calendar endTime, String location, String description, String title) {
+    public void AddEvent(Context context, Calendar beginTime, Calendar endTime, String location, String description, String title, String contacts) {
 
         ContentResolver cr = context.getContentResolver();
 
@@ -23,7 +23,7 @@ public class VegetableCalendarNotify {
                 .putExtra(CalendarContract.Events.DESCRIPTION, description)
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, location)
                 .putExtra(CalendarContract.Reminders.MINUTES, 0)
-                .putExtra(Intent.EXTRA_EMAIL, "blabla@gmail.com,blublu@gmail.com");
+                .putExtra(Intent.EXTRA_EMAIL, contacts);
         context.startActivity(intent);
     }
 }

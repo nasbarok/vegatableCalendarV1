@@ -111,7 +111,7 @@ public class UserInformationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(utils.isValidEmail(etMail.getText())&&etMail.getText()!=null&&!etMail.getText().toString().equals("")
-                &&!userInformations.getMails().contains(btnAddMail.getText().toString())){
+                &&!userInformations.getMails().contains(etMail.getText().toString())){
                     String listMail = userInformations.getMails();
                     if(listMail.contains(",")||!userInformations.getMails().equals("")){
                         listMail = listMail + ","+etMail.getText() ;
@@ -176,6 +176,32 @@ public class UserInformationsFragment extends Fragment {
         });
 
         /*        btnEndTime*/
+        btnEndTime.setText(userInformations.getEndTime());
+        btnEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int[] ints = utils.splitTimeValue(userInformations.getEndTime());
+                mHourEndTime =ints[0];
+                mMinuteEndTime = ints[1];
+
+                // Launch Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                userInformations.setEndTime(hourOfDay + "h" + minute);
+                                vegetableCalendarDB.saveUserInformations(userInformations);
+                                btnEndTime.setText(userInformations.getEndTime());
+                                utils.notifyToast(userInformations.getEndTime()+" "+getResources().getString(R.string.saved),getContext());
+                            }
+                        }, mHourEndTime, mMinuteEndTime, true);
+                timePickerDialog.show();
+            }
+
+        });
     }
 
 }

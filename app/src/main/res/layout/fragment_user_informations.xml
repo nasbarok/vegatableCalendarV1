@@ -63,7 +63,8 @@
 
         </RelativeLayout>
         <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
-            android:background="@android:color/white" android:id="@+id/timePicketLayout" android:layout_weight="1" >
+            android:background="@android:color/white" android:id="@+id/timePicketLayout" android:layout_weight="1"
+            >
 
             <!--  This is the main content -->
             <RelativeLayout
@@ -74,41 +75,46 @@
                 <TextView android:layout_width="match_parent" android:layout_height="match_parent"
                     android:background="@color/table_my_vegetable_garden_color_default_bright2"/>
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center" >
-                    <Button
+                    android:id="@+id/startdateId"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/enddateId">
+                    <TextView
+                        android:id="@+id/tvStartTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:text="Main Content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/font_size_big"
-                        android:id="@+id/btnChangeStartTime" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:id="@+id/tvStartTime"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"/>
+                    <Button
+                        android:id="@+id/btnChangeStartTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/font_size_big"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tvStartTime"/>
                 </RelativeLayout>
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center" >
-                    <Button
+                    android:id="@+id/enddateId"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:id="@+id/tvEndTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Main Content"
-                        android:layout_alignParentBottom="true"
-                        android:id="@+id/btnChangeEndTime" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@color/table_my_vegetable_garden_color_default_bright2"
-                        android:text="Main Content"
-                        android:id="@+id/tvEndTime"
-                        android:layout_centerInParent="true"
-                        android:layout_alignParentBottom="true" />
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/font_size_big"
+                        android:layout_alignParentLeft="true"
+                        />
+                    <Button
+                        android:id="@+id/btnChangeEndTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/font_size_big"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/tvEndTime"/>
                 </RelativeLayout>
-
-
             </RelativeLayout>
 
             <!--  This is the title label -->

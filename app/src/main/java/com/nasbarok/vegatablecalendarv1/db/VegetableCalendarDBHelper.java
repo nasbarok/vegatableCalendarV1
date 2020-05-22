@@ -237,6 +237,18 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     }
 
+    public String removeVegetableToMyVegetableGarden(MyVegetableGarden myVegetableGarden) {
+        if(myVegetableGarden!=null){
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.delete(TABLE_NAME_VEGETABLE_GARDEN,COLUMN_ID_VEGETABLE_CALENDAR+ " = "+myVegetableGarden.getVegetableCalendarId(),null);
+            db.close();
+            return "OK";
+        }else{
+            return "KO";
+        }
+
+    }
+
     public String saveVegetableNotificationToMyVegetableGarden(MyVegetableGarden myVegetableGarden) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_ID_VEGETABLE_CALENDAR, myVegetableGarden.getVegetableCalendarId());

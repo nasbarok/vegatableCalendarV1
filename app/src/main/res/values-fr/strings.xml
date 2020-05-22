@@ -42,4 +42,6 @@
     <string name="end_time_msg">Heure de fin</string>
     <string name="notification_time_msg">Définir l\'heure de la notification</string>
     <string name="saved">sauvegardée</string>
+    <string name="notified">notifié</string>
+    <string name="delete_msg">Supprimer de mon potager</string>
 </resources>
