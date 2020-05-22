@@ -87,7 +87,8 @@ public class VegetableCalendarFragment extends Fragment {
 
         builder = new AlertDialog.Builder(v.getContext());
 
-        startLoadData();
+        //startLoadData();
+        loadData();
 
         return v;
     }

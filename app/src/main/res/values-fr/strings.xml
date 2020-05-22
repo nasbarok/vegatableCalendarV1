@@ -15,12 +15,12 @@
     <string name="calendar_heading12">Novembre</string>
     <string name="calendar_heading13">Décembre</string>
     <string name="tab_text_2">Paramètres</string>
-    <string name="loading_msg">loading please wait</string>
+    <string name="loading_msg">Chargement...</string>
     <string name="search">search</string>
     <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Voulez vous l\'ajouter à votre potager personnalisé ?</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
-    <string name="added_success">ajouté avec succès !</string>
+    <string name="added_success">est ajouté à votre potager</string>
     <string name="already_exist">existe déjà</string>
     <string name="my_vegetable_garden">Mon potager</string>
     <string name="indoor_seeding">Semis intérieur</string>

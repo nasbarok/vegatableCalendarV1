@@ -98,8 +98,8 @@ public class MyVegetableGardenFragment extends Fragment {
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
         userInformations = vegetableCalendarDB.getUserInformations();
         loadUsersValues();
-        startLoadData();
-
+        //startLoadData();
+        loadData();
         return v;
     }
 

@@ -15,12 +15,12 @@
     <string name="calendar_heading12">November</string>
     <string name="calendar_heading13">December</string>
     <string name="tab_text_2">Parameter</string>
-    <string name="loading_msg">Chargement ..</string>
+    <string name="loading_msg">Loading please wait ..</string>
     <string name="search">rechercher</string>
     <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Do you want add on your custom vegetable garden</string>
     <string name="yes">yes</string>
     <string name="no">No</string>
-    <string name="added_success">Successfuly added !</string>
+    <string name="added_success">" is added to your vegetable garden"</string>
     <string name="already_exist">already exist</string>
     <string name="my_vegetable_garden">My vegetable garden</string>
     <string name="indoor_seeding">Indoor seeding</string>
