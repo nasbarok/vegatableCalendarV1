@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
@@ -80,9 +81,10 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                 String[] values;
                 while ((line = bufferedReader.readLine()) != null) {
                     values = line.split(",");
+                    String vegetableName = getNameFromCurrentLanguage(values[1],values[2]);
                     String insertCommand = String
                             .format("insert into "+TABLE_NAME+"("+COLUMN_ID_VEGETABLE_CALENDAR+", "+COLUMN_NAME1+", "+COLUMN_NAME2+", "+COLUMN_NAME3+", "+COLUMN_NAME4+", "+COLUMN_NAME5+", "+COLUMN_NAME6+", "+COLUMN_NAME7+", "+COLUMN_NAME8+", "+COLUMN_NAME9+", "+COLUMN_NAME10+", "+COLUMN_NAME11+", "+COLUMN_NAME12+", "+COLUMN_NAME13+") values(\"%d\",\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
-                                    Integer.parseInt(values[0]), values[1], values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10],values[11],values[12],values[13]);
+                                    Integer.parseInt(values[0]), vegetableName, values[3],values[4],values[5],values[6],values[7],values[8],values[9],values[10],values[11],values[12],values[13],values[14]);
                     db.execSQL(insertCommand);
                 }
 
@@ -171,7 +173,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         return vegetableCalendarList;
     }
 
-    public VegetableCalendar findHandler(String vegetableCalendarName) {
+    public VegetableCalendar getVegetableCalendarByName(String vegetableCalendarName) {
 
         String query = "Select * FROM " + TABLE_NAME + " WHERE " + COLUMN_NAME1 + " LIKE " + "'%" + vegetableCalendarName + "%'";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -375,5 +377,13 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         vegetableCalendar.setVegetableCalendarNovember(c.getString(12));
         vegetableCalendar.setVegetableCalendarDecember(c.getString(13));
         return vegetableCalendar;
+    }
+
+    public String getNameFromCurrentLanguage(String frenchVegetableName, String englishVegetableName){
+        if(Locale.getDefault().getLanguage().equals("fr")){
+            return frenchVegetableName;
+        } else{
+            return englishVegetableName;
+        }
     }
 }

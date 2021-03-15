@@ -12,9 +12,13 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,6 +28,7 @@ import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,13 +43,14 @@ public class VegetableCalendarFragment extends Fragment {
     private static final String VEGETABLE_CALENDAR_LIST = "vegetable_calendar_list";
 
     private List<VegetableCalendar> vegetableCalendars;
-    private ProgressDialog mProgressBar;
+    private List<VegetableCalendar> myVegetableGardenCalendars;
     private TableLayout mTableLayout;
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
 
     public VegetableCalendarFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
     }
 
     /**
@@ -70,6 +76,7 @@ public class VegetableCalendarFragment extends Fragment {
             vegetableCalendars = (List<VegetableCalendar>) getArguments().getSerializable(VEGETABLE_CALENDAR_LIST);
         }
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -81,25 +88,83 @@ public class VegetableCalendarFragment extends Fragment {
 
         //Table
 
-        mProgressBar = new ProgressDialog(v.getContext());
+       /* mProgressBar = new ProgressDialog(v.getContext());*/
         mTableLayout = (TableLayout) v.findViewById(R.id.tableVegetables);
         mTableLayout.setStretchAllColumns(true);
 
         builder = new AlertDialog.Builder(v.getContext());
-
-        startLoadData();
-
+/*
+        startLoadData();*/
+        loadData();
         return v;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu mOptionsMenu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, mOptionsMenu);
 
-    public void startLoadData() {
+        MenuItem searchItem = mOptionsMenu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                List <VegetableCalendar> vegetableCalendarList;
+                vegetableCalendarList = vegetableCalendarDB.findVegetableCalendar(query);
+                if(vegetableCalendarList.size()>=1){
+                    vegetableCalendars = vegetableCalendarList;
+                    ((MainActivity) getActivity()).launchFilteredVegetableCalendarFragment(vegetableCalendars);
+
+                }
+                if(vegetableCalendarList.size()<1){
+                    vegetableCalendars = new ArrayList<>();
+                    ((MainActivity) getActivity()).launchFilteredVegetableCalendarFragment(vegetableCalendars);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        MenuItem homeBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_home);
+        homeBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchHomeFragment();
+                return false;
+            }
+        });
+
+        MenuItem myVegetableGardenBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_my_vegetable_garden);
+        myVegetableGardenBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchMyVegetableGardenFragment();
+                return false;
+            }
+        });
+
+        MenuItem myPreferences = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_myparapeters);
+        myPreferences.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchMyPreferences();
+                return false;
+            }
+        });
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.calendar_vegetable_garden_name));
+        super.onCreateOptionsMenu(mOptionsMenu, inflater);
+    }
+
+/*    public void startLoadData() {
         mProgressBar.setCancelable(false);
         mProgressBar.setMessage(getResources().getString(R.string.loading_msg));
         mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressBar.show();
         new LoadDataTask().execute(0);
-    }
+    }*/
     public void loadData() {
         //List<VegetableCalendar> vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
         // getSupportActionBar().setTitle(getResources().getString(R.string.app_name) + "( " + String.valueOf(rows) + " )");
@@ -128,7 +193,6 @@ public class VegetableCalendarFragment extends Fragment {
         data = vegetableCalendars.toArray(data);
 
         int rows = data.length;
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name) + " (" + String.valueOf(rows) + ")");
         TextView textSpacer = null;
         mTableLayout.removeAllViews();
         // -1 means heading row
@@ -753,23 +817,5 @@ public class VegetableCalendarFragment extends Fragment {
                 alert.show();
             }
         });
-    }
-
-    class LoadDataTask extends AsyncTask<Integer, Integer, String> {
-        @Override
-        protected String doInBackground(Integer... params) {
-            return "Task Completed.";
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            mProgressBar.hide();
-        }
-        @Override
-        protected void onPreExecute() {
-            loadData();
-        }
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-        }
     }
 }

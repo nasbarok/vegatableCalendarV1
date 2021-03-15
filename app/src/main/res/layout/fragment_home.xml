@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5">
+
+        <RelativeLayout
+            android:id="@+id/homeGoToCalendarVegetableGarden"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:background="@color/homeDark">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_logo_vegetable_garden_calendar" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/calendar_vegetable_garden_name"
+                    android:textColor="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:textSize="@dimen/font_size_big" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:id="@+id/homeGoToMyVegetableGarden"
+            android:background="@color/table_my_vegetable_garden_color_default_bright2">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_logo_potager_v2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:text="@string/my_vegetable_garden"
+                    android:textColor="@color/homeDark"
+                    android:textSize="@dimen/font_size_big" />
+
+                <ImageView
+                    android:id="@+id/addVegetableToMyVegetableGardenButton"
+                    android:layout_width="65dp"
+                    android:layout_height="58dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/ic_logo_add" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/home3"
+            android:layout_width="match_parent"
+            android:layout_height="312dp"
+            android:layout_margin="5dp"
+            android:background="@color/colorPrimaryDark"
+            android:padding="@dimen/padding_fieldset"
+            android:layout_weight="3">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="4">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:gravity="center"
+                    android:layout_marginBottom="5px"
+                    android:orientation="vertical" >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/table_my_vegetable_garden_color_default_bright2"
+                        android:id="@+id/textToDoHome"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:orientation="vertical" >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lineToDoHarvest"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_harvest_v3" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="2"
+                            android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                            android:orientation="vertical" >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to_do_harvet"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/colorPrimaryDark"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/textToDoHarvest"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_weight="2"
+                                    android:padding="@dimen/padding_fieldset"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/font_size_todo" />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_weight="1"
+                    android:orientation="vertical" android:padding="@dimen/padding_fieldset">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lineToDoIndoorSeeding"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_todo_indoorseeding" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                            android:orientation="vertical" >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to_do_indoorseeding"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/colorPrimaryDark"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/textToDoIndoorSeeding"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_weight="2"
+                                    android:padding="@dimen/padding_fieldset"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/font_size_todo" />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_weight="1"
+                    android:orientation="vertical" android:padding="@dimen/padding_fieldset">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lineToDoOutdoorSeeding"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_todo_outdoorseeding" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                            android:orientation="vertical" >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to_do_outdoorseeding"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/textToDoOutdoorSeeding"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_weight="2"
+                                    android:padding="@dimen/padding_fieldset"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/font_size_todo" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_weight="1"
+                    android:orientation="vertical" android:padding="@dimen/padding_fieldset">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/lineToDoTransplantation"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_todo_transplanting" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="2"
+                            android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                            android:orientation="vertical" >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:weightSum="3">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/to_do_transplantation"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:textColor="@color/colorPrimaryDark"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/textToDoTransplantation"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_weight="2"
+                                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                                    android:padding="@dimen/padding_fieldset"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/font_size_todo" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

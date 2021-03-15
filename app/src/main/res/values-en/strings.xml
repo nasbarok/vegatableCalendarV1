@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Calendrier Potager</string>
     <string name="tab_text_1">Calendrier</string>
-    <string name="calendar_heading1">Légumes</string>
+    <string name="calendar_heading1">Vegetables</string>
     <string name="calendar_heading2">January</string>
     <string name="calendar_heading3">February</string>
     <string name="calendar_heading4">March</string>
@@ -17,12 +17,14 @@
     <string name="calendar_heading13">December</string>
     <string name="tab_text_2">Parameter</string>
     <string name="loading_msg">Loading please wait ..</string>
-    <string name="search">rechercher</string>
+    <string name="search">Search</string>
     <string name="dialog_msg_add_vegetable_to_my_vegetable_garden1">Do you want add on your custom vegetable garden</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="added_success">" is added to your vegetable garden"</string>
     <string name="already_exist">already exist</string>
+    <string name="added_success_all"> added to your vegetable garden</string>
+    <string name="already_exist_all">already exist</string>
     <string name="indoor_seeding">Indoor seeding</string>
     <string name="outdoor_seeding">Outdoor seeding</string>
     <string name="transplantation">Transplantation</string>
@@ -44,4 +46,13 @@
     <string name="saved">saved</string>
     <string name="notified">notified</string>
     <string name="delete_msg">Delete from my vegetable garden</string>
+    <string name="calendar_vegetable_garden_name">Planting calendar</string>
+    <string name="today_i_can">Today i can : </string>
+    <string name="add_to_my_vegetable_garden">Add to my vegetable garden</string>
+    <string name="home">Home</string>
+    <string name="nothing_to_do_today">Nothing to do today</string>
+    <string name="to_do_harvet"><u>To Harvest</u></string>
+    <string name="to_do_indoorseeding"><u>Make indoor seeding</u></string>
+    <string name="to_do_outdoorseeding"><u>Make outdoor seeding</u></string>
+    <string name="to_do_transplantation"><u>Make transplanting</u></string>
 </resources>

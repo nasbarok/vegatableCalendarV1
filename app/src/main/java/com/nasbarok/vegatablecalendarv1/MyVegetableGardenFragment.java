@@ -12,14 +12,22 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
@@ -29,6 +37,7 @@ import com.nasbarok.vegatablecalendarv1.utils.Utils;
 import com.nasbarok.vegatablecalendarv1.utils.VegetableCalendarNotify;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -44,7 +53,6 @@ public class MyVegetableGardenFragment extends Fragment {
     private static final String VEGETABLE_CALENDAR_LIST = "vegetable_calendar_list";
 
     private List<VegetableCalendar> vegetableCalendars;
-    private ProgressDialog mProgressBar;
     private TableLayout mTableLayout;
     private AlertDialog.Builder builder;
     public VegetableCalendarDBHelper vegetableCalendarDB;
@@ -55,6 +63,7 @@ public class MyVegetableGardenFragment extends Fragment {
 
     public MyVegetableGardenFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
     }
 
     /**
@@ -78,6 +87,7 @@ public class MyVegetableGardenFragment extends Fragment {
         if (getArguments() != null) {
             vegetableCalendars = (List<VegetableCalendar>) getArguments().getSerializable(VEGETABLE_CALENDAR_LIST);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -87,7 +97,6 @@ public class MyVegetableGardenFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_my_vegetable_garden, container, false);
 
-        mProgressBar = new ProgressDialog(v.getContext());
         mTableLayout = (TableLayout) v.findViewById(R.id.table_my_vegetables_garden_layout);
         mTableLayout.setStretchAllColumns(true);
 
@@ -98,19 +107,89 @@ public class MyVegetableGardenFragment extends Fragment {
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
         userInformations = vegetableCalendarDB.getUserInformations();
         loadUsersValues();
-        startLoadData();
+        loadData();
 
         return v;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu mOptionsMenu, MenuInflater inflater) {
+        inflater.inflate(R.menu.my_vegetable_garden_menu, mOptionsMenu);
 
-    public void startLoadData() {
-        mProgressBar.setCancelable(false);
-        mProgressBar.setMessage(getResources().getString(R.string.loading_msg));
-        mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressBar.show();
-        new LoadDataTask().execute(0);
+        MenuItem homeBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_home);
+        homeBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchHomeFragment();
+                return false;
+            }
+        });
+
+        MenuItem myVegetableGardenBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_calendar_vegetable_garden);
+        myVegetableGardenBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchVegetableCalendarFragment();
+                return false;
+            }
+        });
+
+        MenuItem myPreferences = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_myparapeters);
+        myPreferences.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchMyPreferences();
+                return false;
+            }
+        });
+
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.add_to_my_vegetable_garden));
+
+        MenuItem menuItem = mOptionsMenu.findItem(R.id.app_bar_search_and_add);
+        Spinner spinnerAddVegetable =(Spinner) menuItem.getActionView();
+        List<String> listNames = new ArrayList<String>();
+        List<VegetableCalendar> allVegetables = vegetableCalendarDB.getVegetableCalendars();
+
+        for (VegetableCalendar vegetable: allVegetables){
+            boolean isIn = false;
+            for(VegetableCalendar myVegetable:vegetableCalendars){
+                if(vegetable.getVegetableCalendarName().equals(myVegetable.getVegetableCalendarName())){
+                    isIn = true;
+                    break;
+                }
+            }
+            if(!isIn){
+                listNames.add(vegetable.getVegetableCalendarName());
+            }
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>((MainActivity) getActivity(),android.R.layout.simple_spinner_item,listNames);
+        spinnerAddVegetable.setAdapter(spinnerAdapter);
+        spinnerAddVegetable.setSelected(false);
+        spinnerAddVegetable.setSelection(0,true);
+
+
+        spinnerAddVegetable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.table_my_vegetable_garden_color_default_bright2));
+                ((TextView) parent.getChildAt(0)).setTextSize(15);
+                startDialogAdd(parent.getItemAtPosition(position).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        TextView textView = (TextView)spinnerAddVegetable.getSelectedView();
+        textView.setTextSize(15);
+        textView.setTextColor(getResources().getColor(R.color.table_my_vegetable_garden_color_default_bright2));
+        spinnerAddVegetable.setPopupBackgroundResource(R.color.colorPrimaryDark);
+        spinnerAddVegetable.setPrompt(getResources().getString(R.string.add));
+
+        super.onCreateOptionsMenu(mOptionsMenu, inflater);
     }
+
+
     public void loadData() {
         int leftRowMargin = 0;
         int topRowMargin = 0;
@@ -133,7 +212,6 @@ public class MyVegetableGardenFragment extends Fragment {
         data = vegetableCalendars.toArray(data);
 
         int rows = data.length;
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.my_vegetable_garden) + " (" + String.valueOf(rows) + ")");
         TextView textSpacer = null;
         mTableLayout.removeAllViews();
         // -1 means heading row
@@ -935,27 +1013,44 @@ public class MyVegetableGardenFragment extends Fragment {
         loadData();
     }
 
-    class LoadDataTask extends AsyncTask<Integer, Integer, String> {
-        @Override
-        protected String doInBackground(Integer... params) {
-            /*try {
-                Thread.sleep(2500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-            return "Task Completed.";
-        }
-        @Override
-        protected void onPostExecute(String result) {
-            mProgressBar.hide();
+    public void startDialogAdd(final String vegetableName){
+        builder.setTitle(vegetableName);
+        builder.setMessage(getResources().getString(R.string.dialog_msg_add_vegetable_to_my_vegetable_garden1));
+        final VegetableCalendar vegetableCalendarSelected = vegetableCalendarDB.getVegetableCalendarByName(vegetableName);
+        builder.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 
-        }
-        @Override
-        protected void onPreExecute() {
-            loadData();
-        }
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-        }
+            public void onClick(DialogInterface dialog, int which) {
+                //find vegetable
+
+                // Do nothing but close the dialog
+                String response = vegetableCalendarDB.addVegetableToMyVegetableGarden(vegetableCalendarSelected);
+
+                if(response.equals("OK")){
+                    refreshListMyVEgetableGarden();
+                    Toast toast = Toast.makeText(getContext(), " "+ vegetableName+ " "+ getResources().getString(R.string.added_success) , Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
+                }else{
+                    Toast toast = Toast.makeText(getContext(), " "+ vegetableName+ " "+getResources().getString(R.string.already_exist), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton(getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

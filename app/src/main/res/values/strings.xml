@@ -22,6 +22,8 @@
     <string name="no">No</string>
     <string name="added_success">" is added to your vegetable garden"</string>
     <string name="already_exist">already exist</string>
+    <string name="added_success_all"> added to your vegetable garden</string>
+    <string name="already_exist_all">already exist</string>
     <string name="my_vegetable_garden">My vegetable garden</string>
     <string name="indoor_seeding">Indoor seeding</string>
     <string name="outdoor_seeding">Outdoor seeding</string>
@@ -43,4 +45,15 @@
     <string name="saved">saved</string>
     <string name="notified">notified</string>
     <string name="delete_msg">Delete from my vegetable garden</string>
+    <string name="calendar_vegetable_garden_name">Planting calendar</string>
+    <string name="today_i_can">Today i can : </string>
+    <string name="add_to_my_vegetable_garden">Add to my vegetable garden</string>
+    <string name="home">Home</string>
+    <string name="nothing_to_do_today">Nothing to do today</string>
+    <string name="to_do_harvet"><u>To Harvest</u></string>
+    <string name="to_do_indoorseeding"><u>Make indoor seeding</u></string>
+    <string name="to_do_outdoorseeding"><u>Make outdoor seeding</u></string>
+    <string name="to_do_transplantation"><u>Make transplanting</u></string>
+
+
 </resources>

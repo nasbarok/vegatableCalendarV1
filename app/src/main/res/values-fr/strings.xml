@@ -22,6 +22,8 @@
     <string name="no">Non</string>
     <string name="added_success">est ajouté à votre potager</string>
     <string name="already_exist">existe déjà</string>
+    <string name="added_success_all"> ajouté(es) à votre potager</string>
+    <string name="already_exist_all">existe(s) déjà</string>
     <string name="my_vegetable_garden">Mon potager</string>
     <string name="indoor_seeding">Semis intérieur</string>
     <string name="outdoor_seeding">Semis extérieur</string>
@@ -44,4 +46,14 @@
     <string name="saved">sauvegardée</string>
     <string name="notified">notifié</string>
     <string name="delete_msg">Supprimer de mon potager</string>
+    <string name="calendar_vegetable_garden_name">Calendrier de plantation</string>
+    <string name="today_i_can">Aujourd\'hui je peux : </string>
+    <string name="add_to_my_vegetable_garden">Ajouter à mon potager</string>
+    <string name="home">Accueil</string>
+    <string name="nothing_to_do_today">Rien à faire aujourd\'hui</string>
+    <string name="to_do_harvet"><u>Récolter</u></string>
+    <string name="to_do_indoorseeding"><u>Faire des semis en intérieur</u></string>
+    <string name="to_do_outdoorseeding"><u>Faire des semis en extérieur</u></string>
+    <string name="to_do_transplantation"><u>Repiquer</u></string>
+
 </resources>

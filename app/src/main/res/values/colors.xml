@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#285000</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorCalendarBackground">#31C500</color>
+    <color name="homeDark">#8BC34A</color>
     <color name="colorCalendarTextColor">#ED92C4</color>
     <color name="isp_home_color">#31C500</color>
     <color name="table_color_oseeding">#DC044E</color>
