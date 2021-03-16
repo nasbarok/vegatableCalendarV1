@@ -12,6 +12,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
@@ -24,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     List<VegetableCalendar> vegetableCalendars;
     List<VegetableCalendar> myVegetableGardenCalendars;
 
+    //for ads
+    private RewardedAd rewardedAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +38,25 @@ public class MainActivity extends AppCompatActivity {
 
         initDb();
 
+        //for ads
+        rewardedAd = new RewardedAd(this,
+                "ca-app-pub-4063904970721588~3069464357");
 
-        launchHomeFragment();
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                launchHomeFragment();
+            }
+
+            @Override
+            public void onRewardedAdFailedToLoad(LoadAdError adError) {
+                // Ad failed to load.
+                launchHomeFragment();
+            }
+        };
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+
     }
 
 
