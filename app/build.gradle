@@ -8,8 +8,8 @@ android {
         applicationId "com.nasbarok.vegatablecalendarv1"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 3
-        versionName "3.0"
+        versionCode 1
+        versionName "1 ads"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
