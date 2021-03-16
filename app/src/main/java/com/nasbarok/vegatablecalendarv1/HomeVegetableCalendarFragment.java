@@ -152,170 +152,170 @@ public class HomeVegetableCalendarFragment extends Fragment {
         for(VegetableCalendar currentVegetable :myVegetables){
             switch (currentMonth){
                 case 1 :
-                    if(currentVegetable.getVegetableCalendarJanuary().equals("T")||currentVegetable.getVegetableCalendarJanuary().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJanuary().contains("T")||currentVegetable.getVegetableCalendarJanuary().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJanuary().equals("IS")||currentVegetable.getVegetableCalendarJanuary().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJanuary().contains("IS")||currentVegetable.getVegetableCalendarJanuary().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJanuary().equals("OS")||currentVegetable.getVegetableCalendarJanuary().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJanuary().contains("OS")||currentVegetable.getVegetableCalendarJanuary().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJanuary().equals("H")||currentVegetable.getVegetableCalendarJanuary().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJanuary().contains("H")||currentVegetable.getVegetableCalendarJanuary().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 2 :
-                    if(currentVegetable.getVegetableCalendarFebruary().equals("T")||currentVegetable.getVegetableCalendarFebruary().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarFebruary().contains("T")||currentVegetable.getVegetableCalendarFebruary().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarFebruary().equals("IS")||currentVegetable.getVegetableCalendarFebruary().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarFebruary().contains("IS")||currentVegetable.getVegetableCalendarFebruary().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarFebruary().equals("OS")||currentVegetable.getVegetableCalendarFebruary().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarFebruary().contains("OS")||currentVegetable.getVegetableCalendarFebruary().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarFebruary().equals("H")||currentVegetable.getVegetableCalendarFebruary().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarFebruary().contains("H")||currentVegetable.getVegetableCalendarFebruary().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 3 :
-                    if(currentVegetable.getVegetableCalendarMarch().equals("T")||currentVegetable.getVegetableCalendarMarch().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMarch().contains("T")||currentVegetable.getVegetableCalendarMarch().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMarch().equals("IS")||currentVegetable.getVegetableCalendarMarch().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMarch().contains("IS")||currentVegetable.getVegetableCalendarMarch().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMarch().equals("OS")||currentVegetable.getVegetableCalendarMarch().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMarch().contains("OS")||currentVegetable.getVegetableCalendarMarch().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMarch().equals("H")||currentVegetable.getVegetableCalendarMarch().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMarch().contains("H")||currentVegetable.getVegetableCalendarMarch().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 4 :
-                    if(currentVegetable.getVegetableCalendarApril().equals("T")||currentVegetable.getVegetableCalendarApril().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarApril().contains("T")||currentVegetable.getVegetableCalendarApril().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarApril().equals("IS")||currentVegetable.getVegetableCalendarApril().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarApril().contains("IS")||currentVegetable.getVegetableCalendarApril().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarApril().equals("OS")||currentVegetable.getVegetableCalendarApril().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarApril().contains("OS")||currentVegetable.getVegetableCalendarApril().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarApril().equals("H")||currentVegetable.getVegetableCalendarApril().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarApril().contains("H")||currentVegetable.getVegetableCalendarApril().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 5 :
-                    if(currentVegetable.getVegetableCalendarMay().equals("T")||currentVegetable.getVegetableCalendarMay().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMay().contains("T")||currentVegetable.getVegetableCalendarMay().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMay().equals("IS")||currentVegetable.getVegetableCalendarMay().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMay().contains("IS")||currentVegetable.getVegetableCalendarMay().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMay().equals("OS")||currentVegetable.getVegetableCalendarMay().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMay().contains("OS")||currentVegetable.getVegetableCalendarMay().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarMay().equals("H")||currentVegetable.getVegetableCalendarMay().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarMay().contains("H")||currentVegetable.getVegetableCalendarMay().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 6 :
-                    if(currentVegetable.getVegetableCalendarJune().equals("T")||currentVegetable.getVegetableCalendarJune().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJune().contains("T")||currentVegetable.getVegetableCalendarJune().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJune().equals("IS")||currentVegetable.getVegetableCalendarJune().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJune().contains("IS")||currentVegetable.getVegetableCalendarJune().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJune().equals("OS")||currentVegetable.getVegetableCalendarJune().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJune().contains("OS")||currentVegetable.getVegetableCalendarJune().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJune().equals("H")||currentVegetable.getVegetableCalendarJune().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJune().contains("H")||currentVegetable.getVegetableCalendarJune().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 7 :
-                    if(currentVegetable.getVegetableCalendarJuly().equals("T")||currentVegetable.getVegetableCalendarJuly().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJuly().contains("T")||currentVegetable.getVegetableCalendarJuly().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJuly().equals("IS")||currentVegetable.getVegetableCalendarJuly().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJuly().contains("IS")||currentVegetable.getVegetableCalendarJuly().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJuly().equals("OS")||currentVegetable.getVegetableCalendarJuly().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJuly().contains("OS")||currentVegetable.getVegetableCalendarJuly().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarJuly().equals("H")||currentVegetable.getVegetableCalendarJuly().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarJuly().contains("H")||currentVegetable.getVegetableCalendarJuly().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 8 :
-                    if(currentVegetable.getVegetableCalendarAugust().equals("T")||currentVegetable.getVegetableCalendarAugust().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarAugust().contains("T")||currentVegetable.getVegetableCalendarAugust().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarAugust().equals("IS")||currentVegetable.getVegetableCalendarAugust().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarAugust().contains("IS")||currentVegetable.getVegetableCalendarAugust().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarAugust().equals("OS")||currentVegetable.getVegetableCalendarAugust().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarAugust().contains("OS")||currentVegetable.getVegetableCalendarAugust().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarAugust().equals("H")||currentVegetable.getVegetableCalendarAugust().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarAugust().contains("H")||currentVegetable.getVegetableCalendarAugust().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 9 :
-                    if(currentVegetable.getVegetableCalendarSeptember().equals("T")||currentVegetable.getVegetableCalendarSeptember().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarSeptember().contains("T")||currentVegetable.getVegetableCalendarSeptember().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarSeptember().equals("IS")||currentVegetable.getVegetableCalendarSeptember().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarSeptember().contains("IS")||currentVegetable.getVegetableCalendarSeptember().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarSeptember().equals("OS")||currentVegetable.getVegetableCalendarSeptember().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarSeptember().contains("OS")||currentVegetable.getVegetableCalendarSeptember().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarSeptember().equals("H")||currentVegetable.getVegetableCalendarSeptember().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarSeptember().contains("H")||currentVegetable.getVegetableCalendarSeptember().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 10 :
-                    if(currentVegetable.getVegetableCalendarOctober().equals("T")||currentVegetable.getVegetableCalendarOctober().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarOctober().contains("T")||currentVegetable.getVegetableCalendarOctober().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarOctober().equals("IS")||currentVegetable.getVegetableCalendarOctober().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarOctober().contains("IS")||currentVegetable.getVegetableCalendarOctober().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarOctober().equals("OS")||currentVegetable.getVegetableCalendarOctober().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarOctober().contains("OS")||currentVegetable.getVegetableCalendarOctober().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarOctober().equals("H")||currentVegetable.getVegetableCalendarOctober().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarOctober().contains("H")||currentVegetable.getVegetableCalendarOctober().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 11 :
-                    if(currentVegetable.getVegetableCalendarNovember().equals("T")||currentVegetable.getVegetableCalendarNovember().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarNovember().contains("T")||currentVegetable.getVegetableCalendarNovember().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarNovember().equals("IS")||currentVegetable.getVegetableCalendarNovember().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarNovember().contains("IS")||currentVegetable.getVegetableCalendarNovember().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarNovember().equals("OS")||currentVegetable.getVegetableCalendarNovember().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarNovember().contains("OS")||currentVegetable.getVegetableCalendarNovember().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarNovember().equals("H")||currentVegetable.getVegetableCalendarNovember().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarNovember().contains("H")||currentVegetable.getVegetableCalendarNovember().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
                 case 12 :
-                    if(currentVegetable.getVegetableCalendarDecember().equals("T")||currentVegetable.getVegetableCalendarDecember().equals("T"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarDecember().contains("T")||currentVegetable.getVegetableCalendarDecember().contains("T"+alfTermination)){
                         listToDoTransplantation.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarDecember().equals("IS")||currentVegetable.getVegetableCalendarDecember().equals("IS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarDecember().contains("IS")||currentVegetable.getVegetableCalendarDecember().contains("IS"+alfTermination)){
                         listToDoIndoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarDecember().equals("OS")||currentVegetable.getVegetableCalendarDecember().equals("OS"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarDecember().contains("OS")||currentVegetable.getVegetableCalendarDecember().contains("OS"+alfTermination)){
                         listToDoOutdoorSeeding.add(currentVegetable.getVegetableCalendarName());
                     };
-                    if(currentVegetable.getVegetableCalendarDecember().equals("H")||currentVegetable.getVegetableCalendarDecember().equals("H"+alfTermination)){
+                    if(currentVegetable.getVegetableCalendarDecember().contains("H")||currentVegetable.getVegetableCalendarDecember().contains("H"+alfTermination)){
                         listToDoHarvest.add(currentVegetable.getVegetableCalendarName());
                     };
                     break;
@@ -324,7 +324,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
 
         boolean allEmpty = true;
 
-        LinearLayout toDoHarvestLinearLayout = v.findViewById(R.id.lineToDoHarvest);
+        RelativeLayout toDoHarvestLinearLayout = v.findViewById(R.id.lineToDoHarvest);
         toDoHarvestLinearLayout.setVisibility(View.INVISIBLE);
         if(listToDoHarvest.size()>0){
             toDoHarvestLinearLayout.setVisibility(View.VISIBLE);
@@ -333,7 +333,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
             allEmpty=false;
         }
 
-        LinearLayout toDoIndoorSeedinginearLayout = v.findViewById(R.id.lineToDoIndoorSeeding);
+        RelativeLayout toDoIndoorSeedinginearLayout = v.findViewById(R.id.lineToDoIndoorSeeding);
         toDoIndoorSeedinginearLayout.setVisibility(View.INVISIBLE);
         if(listToDoIndoorSeeding.size()>0){
             toDoIndoorSeedinginearLayout.setVisibility(View.VISIBLE);
@@ -341,7 +341,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
             textView.setText(listToDoIndoorSeeding.toString().replace("[","").replace("]",""));
             allEmpty=false;
         }
-        LinearLayout toDoOutdoorSeedinginearLayout = v.findViewById(R.id.lineToDoOutdoorSeeding);
+        RelativeLayout toDoOutdoorSeedinginearLayout = v.findViewById(R.id.lineToDoOutdoorSeeding);
         toDoOutdoorSeedinginearLayout.setVisibility(View.INVISIBLE);
         if(listToDoOutdoorSeeding.size()>0){
             toDoOutdoorSeedinginearLayout.setVisibility(View.VISIBLE);
@@ -349,7 +349,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
             textView.setText(listToDoOutdoorSeeding.toString().replace("[","").replace("]",""));
             allEmpty=false;
         }
-        LinearLayout toDoTransplantationLinearLayout = v.findViewById(R.id.lineToDoTransplantation);
+        RelativeLayout toDoTransplantationLinearLayout = v.findViewById(R.id.lineToDoTransplantation);
         toDoTransplantationLinearLayout.setVisibility(View.INVISIBLE);
         if(listToDoTransplantation.size()>0){
             toDoTransplantationLinearLayout.setVisibility(View.VISIBLE);

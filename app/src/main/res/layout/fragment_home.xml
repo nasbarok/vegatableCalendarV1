@@ -115,6 +115,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/lineToDoHarvest"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:background="@color/table_my_vegetable_garden_color_default_bright2"
@@ -122,7 +123,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/lineToDoHarvest"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -169,13 +169,14 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_margin="5dp"
+                    android:id="@+id/lineToDoIndoorSeeding"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
                     android:layout_weight="1"
                     android:orientation="vertical" android:padding="@dimen/padding_fieldset">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/lineToDoIndoorSeeding"
                         android:orientation="horizontal"
                         android:weightSum="3">
                         <ImageView
@@ -221,13 +222,14 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_margin="5dp"
+                    android:id="@+id/lineToDoOutdoorSeeding"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
                     android:layout_weight="1"
                     android:orientation="vertical" android:padding="@dimen/padding_fieldset">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/lineToDoOutdoorSeeding"
                         android:orientation="horizontal"
                         android:weightSum="3">
                         <ImageView
@@ -273,13 +275,14 @@
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_margin="5dp" android:background="@color/table_my_vegetable_garden_color_default_bright2"
+                    android:layout_margin="5dp"
+                    android:id="@+id/lineToDoTransplantation"
+                    android:background="@color/table_my_vegetable_garden_color_default_bright2"
                     android:layout_weight="1"
                     android:orientation="vertical" android:padding="@dimen/padding_fieldset">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/lineToDoTransplantation"
                         android:orientation="horizontal"
                         android:weightSum="3">
                         <ImageView

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Calendrier Potager</string>
+    <string name="app_name">Vegetable garden calendar</string>
     <string name="tab_text_1">Calendrier</string>
     <string name="calendar_heading1">Vegetables</string>
     <string name="calendar_heading2">January</string>

@@ -9,20 +9,29 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.Layout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
+import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -45,8 +54,11 @@ public class UserInformationsFragment extends Fragment {
     private Button btnEndTime;
     private int  mHourEndTime, mMinuteEndTime, mHourStartTime, mMinuteStartTime;
     private UserInformations userInformations;
+
+
     public UserInformationsFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
     }
 
     /**
@@ -68,6 +80,7 @@ public class UserInformationsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -93,6 +106,43 @@ public class UserInformationsFragment extends Fragment {
 
         loadTimerSetterNotification();
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu mOptionsMenu, MenuInflater inflater) {
+        inflater.inflate(R.menu.user_information_menu, mOptionsMenu);
+
+        MenuItem homeBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_home);
+        homeBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchHomeFragment();
+                return false;
+            }
+        });
+
+        MenuItem myVegetableGardenCalendarBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_calendar_vegetable_garden);
+        myVegetableGardenCalendarBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchVegetableCalendarFragment();
+                return false;
+            }
+        });
+
+        MenuItem myVegetableGardenBtn = (MenuItem) mOptionsMenu.findItem(R.id.app_bar_my_vegetable_garden);
+        myVegetableGardenBtn.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                ((MainActivity) getActivity()).launchMyVegetableGardenFragment();
+                return false;
+            }
+        });
+
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.option_menu));
+
+
+        super.onCreateOptionsMenu(mOptionsMenu, inflater);
     }
 
     public void loadCantactMail(){
