@@ -54,6 +54,7 @@
     <string name="to_do_indoorseeding"><u>Make indoor seeding</u></string>
     <string name="to_do_outdoorseeding"><u>Make outdoor seeding</u></string>
     <string name="to_do_transplantation"><u>Make transplanting</u></string>
+    <string name="title_1st_launch_parameter">Put a City</string>
 
 
 </resources>

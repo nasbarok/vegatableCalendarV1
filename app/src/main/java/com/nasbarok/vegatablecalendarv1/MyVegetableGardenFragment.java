@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
@@ -28,6 +26,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;

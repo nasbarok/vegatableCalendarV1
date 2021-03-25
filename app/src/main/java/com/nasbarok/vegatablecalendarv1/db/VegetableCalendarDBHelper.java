@@ -50,6 +50,8 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_INFORMATION_NAME1 = "mails";
     public static final String COLUMN_USER_INFORMATION_NAME2 = "startTime";
     public static final String COLUMN_USER_INFORMATION_NAME3 = "endTime";
+    public static final String COLUMN_USER_INFORMATION_CITY = "city";
+    public static final String COLUMN_USER_INFORMATION_CLIMATE = "climate";
 
     private Context context;
 
@@ -98,14 +100,14 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
 
         //My user informations
-        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_USER_INFORMATION + "( " + COLUMN_USER_INFORMATION_ID + " INTEGER, " + COLUMN_USER_INFORMATION_NAME1 + " TEXT, " + COLUMN_USER_INFORMATION_NAME2+" TEXT, "+ COLUMN_USER_INFORMATION_NAME3+" TEXT )";
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_USER_INFORMATION + "( " + COLUMN_USER_INFORMATION_ID + " INTEGER, " + COLUMN_USER_INFORMATION_NAME1 + " TEXT, " + COLUMN_USER_INFORMATION_NAME2+" TEXT," + COLUMN_USER_INFORMATION_NAME3+" TEXT," + COLUMN_USER_INFORMATION_CITY+" TEXT, "+ COLUMN_USER_INFORMATION_CLIMATE+" TEXT )";
         db.execSQL(CREATE_TABLE);
 
 
         if(!userInformationExist()){
             String insertCommand = String
-                    .format("insert into "+TABLE_NAME_USER_INFORMATION+"( " + COLUMN_USER_INFORMATION_ID + ", "+COLUMN_USER_INFORMATION_NAME1+", "+COLUMN_USER_INFORMATION_NAME2+", "+COLUMN_USER_INFORMATION_NAME3+") values(\"%d\",\"%s\", \"%s\", \"%s\")",
-                           1,"","10h30","17h30");
+                    .format("insert into "+TABLE_NAME_USER_INFORMATION+"( " + COLUMN_USER_INFORMATION_ID + ", "+COLUMN_USER_INFORMATION_NAME1+", "+COLUMN_USER_INFORMATION_NAME2+", "+COLUMN_USER_INFORMATION_NAME3+", "+COLUMN_USER_INFORMATION_CITY+", "+COLUMN_USER_INFORMATION_CLIMATE+") values(\"%d\",\"%s\", \"%s\", \"%s\", \"%s\", \"%s\")",
+                           1,"","10h30","17h30","","");
             db.execSQL(insertCommand);
         }
 
@@ -339,6 +341,8 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                 userInformations.setMails(c.getString(1));
                 userInformations.setStartTime(c.getString(2));
                 userInformations.setEndTime(c.getString(3));
+                userInformations.setCity(c.getString(4));
+                userInformations.setClimate(c.getString(5));
             }while(c.moveToNext());
         }
         c.close();

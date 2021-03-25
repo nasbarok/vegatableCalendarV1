@@ -1,22 +1,16 @@
 package com.nasbarok.vegatablecalendarv1;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.SearchView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
+import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,9 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initDb();
+        //test and dial if is the first acces
 
 
-        launchHomeFragment();
+        if(!climateChosen()){
+            launch1stPageFragment();
+        }else{
+            launchHomeFragment();
+        }
     }
 
 
@@ -76,9 +75,14 @@ public class MainActivity extends AppCompatActivity {
         myVegetableGardenFragmentTransaction.replace(R.id.content_main,vegetableCalendarFragmentInstance,"vegetable_calendar_fragment_tag").addToBackStack(null).commit();
     }
 
+    public void launch1stPageFragment(){
+        ParametersFragment parametersFragment = ParametersFragment.newInstance();
+        FragmentManager parametersFragmentManager=getSupportFragmentManager();
+        FragmentTransaction vegetableCalendarFragmentTransaction = parametersFragmentManager.beginTransaction();
+        vegetableCalendarFragmentTransaction.replace(R.id.content_main,parametersFragment,"vegetable_calendar_fragment_tag").addToBackStack(null).commit();
+    }
 
-    //uilts
-
+    //utils
     public void initDb(){
         //initiate db
         InputStream inputStream = getResources().openRawResource(R.raw.vegetable_calendar_db);
@@ -87,4 +91,11 @@ public class MainActivity extends AppCompatActivity {
         vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
     }
 
+    public boolean climateChosen(){
+        UserInformations userInformations = vegetableCalendarDB.getUserInformations();
+        if(userInformations.getClimate().equals("")||userInformations.getClimate()==null){
+            return false;
+        }
+        return true;
+    }
 }

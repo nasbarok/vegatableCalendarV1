@@ -3,17 +3,7 @@ package com.nasbarok.vegatablecalendarv1;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.graphics.Point;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,18 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,6 +42,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
     public VegetableCalendarDBHelper vegetableCalendarDB;
     private ProgressDialog mProgressBar;
     private AlertDialog.Builder builder;
+    private String inputTextCity;
 
 
     public HomeVegetableCalendarFragment() {
@@ -85,6 +73,10 @@ public class HomeVegetableCalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
+
+
+        //start builder
+        builder = new AlertDialog.Builder(v.getContext());
 
         //access db
         vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
@@ -364,9 +356,6 @@ public class HomeVegetableCalendarFragment extends Fragment {
         }else{
             tvToDoHome.setText(getResources().getString(R.string.today_i_can));
         }
-
-        //start builder
-        builder = new AlertDialog.Builder(v.getContext());
         return v;
     }
     @Override

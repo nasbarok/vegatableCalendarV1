@@ -1,28 +1,21 @@
 package com.nasbarok.vegatablecalendarv1;
 
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
 import android.text.InputType;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.fragment.app.Fragment;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
