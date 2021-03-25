@@ -9,17 +9,22 @@ import android.location.GpsSatellite;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -30,6 +35,8 @@ import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +53,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private Utils utils;
     private UserInformations userInformations;
     private String inputTextCity;
+    private String inputTextCountry;
     private GpsSatellite gps;
     private TextView result1TextView = null;
     private TextView result2TextView = null;
@@ -53,6 +61,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private TextView result4TextView = null;
     private double userLongitude = 0.0;
     private double userLatitude = 0.0;
+    private Spinner spinnerChooseIsoCountry;
     private GoogleMap googleMap;
 
     public ParametersFragment() {
@@ -89,13 +98,24 @@ public class ParametersFragment extends Fragment implements LocationListener {
         userInformations = vegetableCalendarDB.getUserInformations();
 
         final EditText inputCity = (EditText) v.findViewById(R.id.input_city);
+        final EditText inputCountry = (EditText) v.findViewById(R.id.input_country);
         Button valideCityButton = v.findViewById(R.id.valide_city);
         result1TextView = v.findViewById(R.id.result1);
         result2TextView = v.findViewById(R.id.result2);
         result3TextView = v.findViewById(R.id.result3);
         result4TextView = v.findViewById(R.id.result4);
 
-
+        ;
+/*        spinnerChooseIsoCountry =(Spinner)  v.findViewById(R.id.iso_country_spinner);
+        List<Locale> locals = Arrays.asList(Locale.getAvailableLocales());
+        List<String> listIsoCountry = new ArrayList<String>();
+        for(Locale loc : locals){
+            listIsoCountry.add(loc.getDisplayLanguage()+" "+loc.getDisplayName());
+        }
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>((MainActivity) getActivity(),android.R.layout.simple_spinner_item,listIsoCountry);
+        spinnerChooseIsoCountry.setAdapter(spinnerAdapter);
+        spinnerChooseIsoCountry.setSelected(false);
+        spinnerChooseIsoCountry.setSelection(0,true);*/
 
 
         Button localiseButton = v.findViewById(R.id.localise);
@@ -109,16 +129,22 @@ public class ParametersFragment extends Fragment implements LocationListener {
             }
         });
         valideCityButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             public void onClick(View v) {
                 inputTextCity = inputCity.getText().toString();
-
+                inputTextCountry = inputCountry.getText().toString();
                 // aller chercher une ville existante google? et sa localisation
                 UserInformations userInformations = vegetableCalendarDB.getUserInformations();
                 userInformations.setCity(inputTextCity);
                 vegetableCalendarDB.saveUserInformations(userInformations);
 
+                if (inputTextCountry==null||inputTextCountry.equals("")||inputTextCity==null||inputTextCity.equals("")){
+                    Toast toast = Toast.makeText(getContext(), "Entrez une ville et selectionnez votre pays", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                    toast.show();
+                }
                 try {
-                    cityLocationFinder(inputTextCity);
+                    locationFinder(inputTextCity,inputTextCountry);
                 } catch (IOException e) {
                     Log.d("createView",e.getMessage());
                 }
@@ -204,17 +230,18 @@ public class ParametersFragment extends Fragment implements LocationListener {
         Log.d("Latitude","status");
     }
 
-    public String cityLocationFinder(String city) throws IOException {
-        result4TextView.setText(city);
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public String locationFinder(String city, String country) throws IOException {
+        result4TextView.setText(city+" "+country);
         Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
-        List<Address> addresses = geocoder.getFromLocationName(city,4);
+        List<Address> addresses = geocoder.getFromLocationName(city+" "+country,4);
         result4TextView.setText("");
         if(addresses!=null&&addresses.size()>0){
             for (Address resulteAdress :addresses) {
                 String cityName = addresses.get(0).getAddressLine(0);
                 String stateName = addresses.get(0).getAddressLine(1);
                 String countryName = addresses.get(0).getAddressLine(2);
-                result4TextView.setText(result4TextView.getText()+" "+cityName+" "+stateName+" "+countryName);
+                result4TextView.setText(result4TextView.getText()+" "+cityName+" "+stateName+" "+countryName+" "+addresses.get(0).getLatitude());
             }
             return "OK";
         }

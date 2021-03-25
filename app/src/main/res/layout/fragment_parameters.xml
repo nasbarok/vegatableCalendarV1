@@ -33,6 +33,18 @@
                 android:hint="@string/title_1st_launch_parameter" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/input_country"
+                android:inputType="textPostalAddress"
+                android:hint="Entrez votre pays" />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <Button
             android:id="@+id/valide_city"
             android:layout_width="match_parent"
