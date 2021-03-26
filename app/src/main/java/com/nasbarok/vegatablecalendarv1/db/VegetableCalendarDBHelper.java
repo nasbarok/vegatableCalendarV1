@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.nasbarok.vegatablecalendarv1.model.Classification;
 import com.nasbarok.vegatablecalendarv1.model.MyVegetableGarden;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
@@ -52,6 +53,11 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_INFORMATION_NAME3 = "endTime";
     public static final String COLUMN_USER_INFORMATION_CITY = "city";
     public static final String COLUMN_USER_INFORMATION_CLIMATE = "climate";
+    private static final String TABLE_CLS_DETAILS = "TABLE_CLS_DETAILS";
+    private static final String COLUMN_ID_TABLE_CLS_DETAILS = "COLUMN_ID_TABLE_CLS_DETAILS";
+    private static final String COLUMN_CLS_NAME = "COLUMN_CLS_NAME";
+    private static final String COLUMN_CLS_NAME_LONG = "COLUMN_CLS_NAME_LONG";
+    private static final String COLUMN_CLS_DESC = "COLUMN_CLS_DESC";
 
     private Context context;
 
@@ -69,7 +75,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     }
 
-    public void createDB(InputStream inputStream){
+    public void createDB(InputStream inputStreamDataCls,InputStream inputStream){
         //vegetable calendar database
         SQLiteDatabase db = this.getWritableDatabase();
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "( " + COLUMN_ID_VEGETABLE_CALENDAR +
@@ -103,6 +109,31 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_USER_INFORMATION + "( " + COLUMN_USER_INFORMATION_ID + " INTEGER, " + COLUMN_USER_INFORMATION_NAME1 + " TEXT, " + COLUMN_USER_INFORMATION_NAME2+" TEXT," + COLUMN_USER_INFORMATION_NAME3+" TEXT," + COLUMN_USER_INFORMATION_CITY+" TEXT, "+ COLUMN_USER_INFORMATION_CLIMATE+" TEXT )";
         db.execSQL(CREATE_TABLE);
 
+        //create classification details
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_CLS_DETAILS + "( " + COLUMN_ID_TABLE_CLS_DETAILS +
+                " INTEGER , " + COLUMN_CLS_NAME + " TEXT , " + COLUMN_CLS_NAME_LONG + " TEXT , " + COLUMN_CLS_DESC + " TEXT )";
+        db.execSQL(CREATE_TABLE);
+        if(getClassifications().size()==0){
+            try {
+                InputStreamReader streamReader = new InputStreamReader(inputStreamDataCls);
+                BufferedReader bufferedReader = new BufferedReader(streamReader);
+                String line;
+                String[] values;
+                while ((line = bufferedReader.readLine()) != null) {
+                    values = line.split(",");
+                    String nameLong = getNameFromCurrentLanguage(values[2],values[3]);
+                    String desc = getNameFromCurrentLanguage(values[4],values[5]);
+                    String insertCommand = String
+                            .format("insert into "+TABLE_CLS_DETAILS+"("+COLUMN_ID_TABLE_CLS_DETAILS+", "+COLUMN_CLS_NAME+", "+COLUMN_CLS_NAME_LONG+", "+COLUMN_CLS_DESC+") values(\"%d\",\"%s\", \"%s\", \"%s\")",
+                                    Integer.parseInt(values[0]),values[1],nameLong,desc);
+                    db.execSQL(insertCommand);
+                }
+
+            } catch (IOException e) {
+                Log.e("TBCAE", "Failed to open data input file");
+                e.printStackTrace();
+            }
+        }
 
         if(!userInformationExist()){
             String insertCommand = String
@@ -110,8 +141,6 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                            1,"","10h30","17h30","","");
             db.execSQL(insertCommand);
         }
-
-        db.close();
     }
 
     public boolean userInformationExist(){
@@ -173,6 +202,44 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         }
         c.close();
         return vegetableCalendarList;
+    }
+
+    public List<Classification> getClassifications(){
+        List <Classification> classifications=new ArrayList<Classification>();
+
+        // Select All Query
+        String selectQuery="SELECT * FROM " + TABLE_CLS_DETAILS;
+
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor c=db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to the list
+        if(c.moveToFirst()){
+            do{
+                Classification classification;
+                classification = mapFromCursorKoeppen(c);
+                // Adding user to the list
+                classifications.add(classification);
+            }while(c.moveToNext());
+        }
+        c.close();
+        return classifications;
+    }
+
+    public Classification getClassificationByName(String cls){
+        String query = "Select * FROM " + TABLE_CLS_DETAILS + " WHERE " + COLUMN_CLS_NAME+ " LIKE " + "'%" + cls + "%'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Classification classification;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            classification = mapFromCursorKoeppen(cursor);
+            cursor.close();
+        } else {
+            classification = null;
+        }
+        db.close();
+        return classification;
     }
 
     public VegetableCalendar getVegetableCalendarByName(String vegetableCalendarName) {
@@ -381,6 +448,14 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
         vegetableCalendar.setVegetableCalendarNovember(c.getString(12));
         vegetableCalendar.setVegetableCalendarDecember(c.getString(13));
         return vegetableCalendar;
+    }
+
+    public Classification mapFromCursorKoeppen(Cursor c){
+        Classification classification = new Classification();
+        classification.setLatitude(c.getString(0));
+        classification.setLongitude(c.getString(1));
+        classification.setClassification(c.getString(2));
+        return classification;
     }
 
     public String getNameFromCurrentLanguage(String frenchVegetableName, String englishVegetableName){

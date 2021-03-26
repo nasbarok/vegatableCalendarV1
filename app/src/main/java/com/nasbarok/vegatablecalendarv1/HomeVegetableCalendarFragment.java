@@ -317,7 +317,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
         boolean allEmpty = true;
 
         RelativeLayout toDoHarvestLinearLayout = v.findViewById(R.id.lineToDoHarvest);
-        toDoHarvestLinearLayout.setVisibility(View.INVISIBLE);
+        toDoHarvestLinearLayout.setVisibility(View.GONE);
         if(listToDoHarvest.size()>0){
             toDoHarvestLinearLayout.setVisibility(View.VISIBLE);
             TextView textView = v.findViewById(R.id.textToDoHarvest);
@@ -326,7 +326,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
         }
 
         RelativeLayout toDoIndoorSeedinginearLayout = v.findViewById(R.id.lineToDoIndoorSeeding);
-        toDoIndoorSeedinginearLayout.setVisibility(View.INVISIBLE);
+        toDoIndoorSeedinginearLayout.setVisibility(View.GONE);
         if(listToDoIndoorSeeding.size()>0){
             toDoIndoorSeedinginearLayout.setVisibility(View.VISIBLE);
             TextView textView = v.findViewById(R.id.textToDoIndoorSeeding);
@@ -334,7 +334,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
             allEmpty=false;
         }
         RelativeLayout toDoOutdoorSeedinginearLayout = v.findViewById(R.id.lineToDoOutdoorSeeding);
-        toDoOutdoorSeedinginearLayout.setVisibility(View.INVISIBLE);
+        toDoOutdoorSeedinginearLayout.setVisibility(View.GONE);
         if(listToDoOutdoorSeeding.size()>0){
             toDoOutdoorSeedinginearLayout.setVisibility(View.VISIBLE);
             TextView textView = v.findViewById(R.id.textToDoOutdoorSeeding);
@@ -342,7 +342,7 @@ public class HomeVegetableCalendarFragment extends Fragment {
             allEmpty=false;
         }
         RelativeLayout toDoTransplantationLinearLayout = v.findViewById(R.id.lineToDoTransplantation);
-        toDoTransplantationLinearLayout.setVisibility(View.INVISIBLE);
+        toDoTransplantationLinearLayout.setVisibility(View.GONE);
         if(listToDoTransplantation.size()>0){
             toDoTransplantationLinearLayout.setVisibility(View.VISIBLE);
             TextView textView = v.findViewById(R.id.textToDoTransplantation);

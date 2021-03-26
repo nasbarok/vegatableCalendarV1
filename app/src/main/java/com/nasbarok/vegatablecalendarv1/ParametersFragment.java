@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,10 @@ import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,10 +63,18 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private TextView result2TextView = null;
     private TextView result3TextView = null;
     private TextView result4TextView = null;
-    private double userLongitude = 0.0;
-    private double userLatitude = 0.0;
+    private double userLongitudeGeo = 0.0;
+    private double userLatitudeGeo = 0.0;
+    private double userLongitudeCity = 0.0;
+    private double userLatitudeCity = 0.0;
     private Spinner spinnerChooseIsoCountry;
     private GoogleMap googleMap;
+    private LocationManager locationManager;
+    private LinearLayout linearLayoutStartLocation;
+    private LinearLayout linearLayoutGenerationCalendar;
+    private Button backToLocationButton;
+    private Button findClassificationButton;
+    private String currentClassification;
 
     public ParametersFragment() {
     }
@@ -100,6 +112,30 @@ public class ParametersFragment extends Fragment implements LocationListener {
         final EditText inputCity = (EditText) v.findViewById(R.id.input_city);
         final EditText inputCountry = (EditText) v.findViewById(R.id.input_country);
         Button valideCityButton = v.findViewById(R.id.valide_city);
+        backToLocationButton = v.findViewById(R.id.back_to_loc);
+        linearLayoutStartLocation = v.findViewById(R.id.find_location_form);
+        linearLayoutGenerationCalendar = v.findViewById(R.id.form_generate_calendar);
+        findClassificationButton = v.findViewById(R.id.find_cls);
+
+        linearLayoutGenerationCalendar.setVisibility(View.GONE);
+
+        findClassificationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    loadingForClassification();
+                } catch (IOException e) {
+                    Log.d("findClassification",e.getMessage());e.printStackTrace();
+                }
+            }
+        });
+
+        backToLocationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                linearLayoutGenerationCalendar.setVisibility(View.GONE);
+                linearLayoutStartLocation.setVisibility(View.VISIBLE);
+            }
+        });
+
         result1TextView = v.findViewById(R.id.result1);
         result2TextView = v.findViewById(R.id.result2);
         result3TextView = v.findViewById(R.id.result3);
@@ -117,12 +153,16 @@ public class ParametersFragment extends Fragment implements LocationListener {
         spinnerChooseIsoCountry.setSelected(false);
         spinnerChooseIsoCountry.setSelection(0,true);*/
 
+        //prepar geoloc
+        locationManager = (LocationManager) ((MainActivity) getActivity()).getSystemService(Context.LOCATION_SERVICE);
 
         Button localiseButton = v.findViewById(R.id.localise);
         localiseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
                     geolocalisation();
+                    linearLayoutStartLocation.setVisibility(View.GONE);
+                    linearLayoutGenerationCalendar.setVisibility(View.VISIBLE);
                 } catch (IOException e) {
                     Log.d("createView",e.getMessage());
                 }
@@ -133,6 +173,9 @@ public class ParametersFragment extends Fragment implements LocationListener {
             public void onClick(View v) {
                 inputTextCity = inputCity.getText().toString();
                 inputTextCountry = inputCountry.getText().toString();
+
+                //stop localisation if worked
+                //locationManager.removeUpdates(this);
                 // aller chercher une ville existante google? et sa localisation
                 UserInformations userInformations = vegetableCalendarDB.getUserInformations();
                 userInformations.setCity(inputTextCity);
@@ -160,7 +203,6 @@ public class ParametersFragment extends Fragment implements LocationListener {
     }
 
     public String testLocation(String City) {
-        LocationManager locationManager = (LocationManager) ((MainActivity) getActivity()).getSystemService(Context.LOCATION_SERVICE);
         Location location = new Location(City);
         if (location != null) {
             double latitude = location.getLatitude();
@@ -176,7 +218,6 @@ public class ParametersFragment extends Fragment implements LocationListener {
     ;
 
     public String geolocalisation() throws IOException {
-        LocationManager locationManager = (LocationManager) ((MainActivity) getActivity()).getSystemService(Context.LOCATION_SERVICE);
 
         if ((ContextCompat.checkSelfPermission(((MainActivity) getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) &&
@@ -199,20 +240,19 @@ public class ParametersFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        result1TextView.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
-        userLatitude = location.getLatitude();
-        userLongitude = location.getLongitude();
+
+        userLatitudeGeo = location.getLatitude();
+        userLongitudeGeo = location.getLongitude();
         Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocation(userLatitude, userLongitude, 1);
+            addresses = geocoder.getFromLocation(userLatitudeGeo, userLongitudeGeo, 1);
         } catch (IOException e) {
             Log.d("geocoder",e.getMessage());
         }
-        String cityName = addresses.get(0).getAddressLine(0);
-        String stateName = addresses.get(0).getAddressLine(1);
-        String countryName = addresses.get(0).getAddressLine(2);
-        result2TextView.setText(cityName+" "+stateName+" "+countryName);
+        String adresse = addresses.get(0).getAddressLine(0);
+        result3TextView.setText("Latitude:" + userLatitudeGeo + ", Longitude:" +userLongitudeGeo);
+        result4TextView.setText(adresse);
     }
 
     @Override
@@ -237,14 +277,72 @@ public class ParametersFragment extends Fragment implements LocationListener {
         List<Address> addresses = geocoder.getFromLocationName(city+" "+country,4);
         result4TextView.setText("");
         if(addresses!=null&&addresses.size()>0){
-            for (Address resulteAdress :addresses) {
-                String cityName = addresses.get(0).getAddressLine(0);
-                String stateName = addresses.get(0).getAddressLine(1);
-                String countryName = addresses.get(0).getAddressLine(2);
-                result4TextView.setText(result4TextView.getText()+" "+cityName+" "+stateName+" "+countryName+" "+addresses.get(0).getLatitude());
-            }
+            userLatitudeCity =addresses.get(0).getLatitude();
+            userLongitudeCity = addresses.get(0).getLongitude();
+            linearLayoutStartLocation.setVisibility(View.GONE);
+            linearLayoutGenerationCalendar.setVisibility(View.VISIBLE);
+            result3TextView.setText("Latitude:" + userLatitudeCity + ", Longitude:" +userLongitudeCity);
+            result4TextView.setText(addresses.get(0).getAddressLine(0)+" "+ addresses.get(0).getPostalCode());
             return "OK";
         }
        return "KO";
+    }
+
+    @Override
+    public void onPause() {
+        locationManager.removeUpdates(this);
+        super.onPause();
+    }
+
+
+    public void loadingForClassification() throws IOException {
+
+        InputStream inputStream2 = getResources().openRawResource(R.raw.koeppen_geiger_ascii);
+        InputStreamReader streamReader = new InputStreamReader(inputStream2);
+        BufferedReader bufferedReader = new BufferedReader(streamReader);
+        String line;
+        String[] values;
+        double marginLat = 0.0;
+        double marginLong = 0.0;
+        double currentLat = 0.0;
+        double currentLong = 0.0;
+        double userLat = getSelectedLatitude();
+        double userLong = getSelectedLongitude();
+        String currentCls = "NONE";
+        while ((line = bufferedReader.readLine()) != null) {
+            values = line.split(",");
+            currentLat = Double.valueOf(values[1]);
+            currentLong = Double.valueOf(values[2]);
+            currentCls = values[3];
+            marginLat = userLat - currentLat;
+            marginLong = userLong - currentLong;
+
+            if((marginLat>=-1&&marginLat<=1)&&(marginLong>=-1&&marginLong<=1)){
+                currentClassification = currentCls;
+                break;
+            }
+
+            //latitude -89.75 -> 83.75
+            //longitude -179 -> 179.75
+            Log.d("load",currentLat+" "+currentLong+" "+marginLat+" "+marginLong );
+        }
+        currentClassification = currentCls;
+        result1TextView.setText(currentClassification+" "+currentLat+" , "+currentLong);
+    }
+
+    public double getSelectedLatitude(){
+        if (inputTextCity != null && !"".equals(inputTextCity) && userLatitudeCity!=0.0) {
+             return Double.valueOf(userLatitudeCity);
+        }else{
+            return Double.valueOf(userLatitudeGeo);
+        }
+    }
+
+    public double getSelectedLongitude(){
+        if (inputTextCity != null && !"".equals(inputTextCity) && userLongitudeCity!=0.0) {
+            return Double.valueOf(userLongitudeCity);
+        }else{
+            return Double.valueOf(userLongitudeGeo);
+        }
     }
 }

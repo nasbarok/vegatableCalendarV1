@@ -15,64 +15,83 @@
         android:orientation="vertical"
         android:id="@+id/parameters_layout"
         tools:context=".MainActivity">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_1st_launch_parameter"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
+            android:orientation="vertical"
+            android:id="@+id/find_location_form">
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/input_city"
-                android:inputType="textPostalAddress"
-                android:hint="@string/title_1st_launch_parameter" />
+                android:text="@string/title_1st_launch_parameter"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/input_city"
+                    android:inputType="textPostalAddress"
+                    android:hint="@string/title_1st_launch_parameter" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/input_country"
+                    android:inputType="textPostalAddress"
+                    android:hint="Entrez votre pays" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/valide_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/input_country"
-                android:inputType="textPostalAddress"
-                android:hint="Entrez votre pays" />
+                android:text="@string/validate"/>
+            <Button
+                android:id="@+id/localise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="localisation"/>
+        </LinearLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:id="@+id/valide_city"
+        <LinearLayout
+            android:id="@+id/form_generate_calendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/validate"/>
-        <Button
-            android:id="@+id/localise"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="localisation"/>
-
-        <TextView
-            android:id="@+id/result1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/result2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/result3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/result4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/back_to_loc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Retour"/>
+            <TextView
+                android:id="@+id/result1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/result2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/find_cls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Load"/>
+            <TextView
+                android:id="@+id/result3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/result4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
-
 </FrameLayout>
