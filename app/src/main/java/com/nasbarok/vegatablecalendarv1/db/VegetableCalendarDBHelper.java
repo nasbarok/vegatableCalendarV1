@@ -125,7 +125,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
                     String desc = getNameFromCurrentLanguage(values[4],values[5]);
                     String insertCommand = String
                             .format("insert into "+TABLE_CLS_DETAILS+"("+COLUMN_ID_TABLE_CLS_DETAILS+", "+COLUMN_CLS_NAME+", "+COLUMN_CLS_NAME_LONG+", "+COLUMN_CLS_DESC+") values(\"%d\",\"%s\", \"%s\", \"%s\")",
-                                    Integer.parseInt(values[0]),values[1],nameLong,desc);
+                                    Integer.parseInt(values[0]),values[1].toLowerCase(),nameLong,desc);
                     db.execSQL(insertCommand);
                 }
 
@@ -227,7 +227,7 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
     }
 
     public Classification getClassificationByName(String cls){
-        String query = "Select * FROM " + TABLE_CLS_DETAILS + " WHERE " + COLUMN_CLS_NAME+ " LIKE " + "'%" + cls + "%'";
+        String query = "Select * FROM " + TABLE_CLS_DETAILS + " WHERE " + COLUMN_CLS_NAME+ " LIKE " + "'%" + cls.toLowerCase() + "%'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Classification classification;
@@ -452,14 +452,15 @@ public class VegetableCalendarDBHelper extends SQLiteOpenHelper {
 
     public Classification mapFromCursorKoeppen(Cursor c){
         Classification classification = new Classification();
-        classification.setLatitude(c.getString(0));
-        classification.setLongitude(c.getString(1));
-        classification.setClassification(c.getString(2));
+        classification.setIdTableClsDetails(c.getInt(0));
+        classification.setName(c.getString(1));
+        classification.setNameLong(c.getString(2));
+        classification.setDesc(c.getString(3));
         return classification;
     }
 
     public String getNameFromCurrentLanguage(String frenchVegetableName, String englishVegetableName){
-        if(Locale.getDefault().getLanguage().equals("fr")){
+        if(Locale.getDefault().getDisplayLanguage().equals("french")){
             return frenchVegetableName;
         } else{
             return englishVegetableName;

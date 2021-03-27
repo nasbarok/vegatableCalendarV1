@@ -54,7 +54,14 @@
     <string name="to_do_indoorseeding"><u>Make indoor seeding</u></string>
     <string name="to_do_outdoorseeding"><u>Make outdoor seeding</u></string>
     <string name="to_do_transplantation"><u>Make transplanting</u></string>
-    <string name="title_1st_launch_parameter">Put a City</string>
-
-
+    <string name="step1_form_title">In order to determine the best planting schedule for you, define your location: </string>
+    <string name="step1_city_header">Entering a city and a country</string>
+    <string name="step1_city_input_txt">City</string>
+    <string name="step1_country_input_txt">Country</string>
+    <string name="step1_geoloc_header">Or directly by retrieving the location data from your device.</string>
+    <string name="step1_validate_error">Enter a city and a country</string>
+    <string name="step2_header_adresse_found">Here is the address and contact details found</string>
+    <string name="step2_launch_loading_koppen_btn_txt">Find the climatic zone associated with your region</string>
+    <string name="step3_header_txt">Your region according to the KÖPPEN-GEIGER classification corresponds to the following climate:</string>
+    <string name="step3_launch_home_btn_txt">Load the calendar associated with this climate</string>
 </resources>

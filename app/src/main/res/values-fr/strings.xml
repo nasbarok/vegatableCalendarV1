@@ -55,5 +55,14 @@
     <string name="to_do_indoorseeding"><u>Faire des semis en intérieur</u></string>
     <string name="to_do_outdoorseeding"><u>Faire des semis en extérieur</u></string>
     <string name="to_do_transplantation"><u>Repiquer</u></string>
-    <string name="title_1st_launch_parameter">Entrez une ville</string>
+    <string name="step1_form_title">Afin de déterminer le meilleur calendrier de plantation pour vous définissez votre localisation :</string>
+    <string name="step1_city_header">En saisissant une ville et un pays</string>
+    <string name="step1_city_input_txt">Ville</string>
+    <string name="step1_country_input_txt">Pays</string>
+    <string name="step1_geoloc_header">Ou directement en récuperant les données de localistation depuis votre appareil.</string>
+    <string name="step1_validate_error">Entrez une ville et un pays</string>
+    <string name="step2_header_adresse_found">Voici l\'adresse et les coordonnées trouvées</string>
+    <string name="step2_launch_loading_koppen_btn_txt">Rechercher la zone climatique assossiée à votre région</string>
+    <string name="step3_header_txt">Votre région d\'après la classification de KÖPPEN-GEIGER correspond au climat suivant :</string>
+    <string name="step3_launch_home_btn_txt">Charger le calendrier associé à ce climat</string>
 </resources>

@@ -6,39 +6,48 @@ import java.io.Serializable;
 public class Classification implements Serializable {
 
     private int idTableClsDetails;
-    private String longitude;
-    private String latitude;
-    private String classification;
+    private String name;
+    private String nameLong;
+    private String desc;
 
 
     public Classification(){}
-    public Classification(String longitude, String latitude, String classification){
-        this.longitude = longitude;
-        this.latitude= latitude;
-        this.classification= classification;
+    public Classification(int id,String name, String nameLong, String desc){
+        this.idTableClsDetails = id;
+        this.name= name;
+        this.nameLong= nameLong;
+        this.desc= desc;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public int getIdTableClsDetails() {
+        return idTableClsDetails;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setIdTableClsDetails(int idTableClsDetails) {
+        this.idTableClsDetails = idTableClsDetails;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public String getName() {
+        return name;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getClassification() {
-        return classification;
+    public String getNameLong() {
+        return nameLong;
     }
 
-    public void setClassification(String classification) {
-        this.classification = classification;
+    public void setNameLong(String nameLong) {
+        this.nameLong = nameLong;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

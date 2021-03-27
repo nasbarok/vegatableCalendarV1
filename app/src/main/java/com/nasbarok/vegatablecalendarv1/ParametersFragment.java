@@ -25,13 +25,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
+import com.nasbarok.vegatablecalendarv1.model.Classification;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
 
@@ -59,10 +65,10 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private String inputTextCity;
     private String inputTextCountry;
     private GpsSatellite gps;
-    private TextView result1TextView = null;
-    private TextView result2TextView = null;
-    private TextView result3TextView = null;
-    private TextView result4TextView = null;
+    private TextView step2AdresseFound1 = null;
+    private TextView step2AdresseFound2 = null;
+    private TextView step3SelectedClimatName = null;
+    private TextView step3SelectedClimatDesc = null;
     private double userLongitudeGeo = 0.0;
     private double userLatitudeGeo = 0.0;
     private double userLongitudeCity = 0.0;
@@ -70,11 +76,16 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private Spinner spinnerChooseIsoCountry;
     private GoogleMap googleMap;
     private LocationManager locationManager;
-    private LinearLayout linearLayoutStartLocation;
-    private LinearLayout linearLayoutGenerationCalendar;
-    private Button backToLocationButton;
-    private Button findClassificationButton;
+    private LinearLayout linearLayoutStep1;
+    private LinearLayout linearLayoutStep2;
+    private LinearLayout linearLayoutStep3;
+    private Button step2returnStep1Button;
+    private Button step2FindClassificationButton;
+    private Button step3return3tep1Button;
+    private Button step3goHomeButton;
     private String currentClassification;
+    private Classification currentClassificationKoppen;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     public ParametersFragment() {
     }
@@ -98,6 +109,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(((MainActivity) getActivity()));
     }
 
     @Override
@@ -106,63 +118,42 @@ public class ParametersFragment extends Fragment implements LocationListener {
 
         View v = inflater.inflate(R.layout.fragment_parameters, container, false);
 
-        vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
-        userInformations = vegetableCalendarDB.getUserInformations();
+        //init comoponents step 1
+        final EditText inputCity = (EditText) v.findViewById(R.id.step1_city_input);
+        final EditText inputCountry = (EditText) v.findViewById(R.id.step1_country_input);
+        Button valideCityButton = v.findViewById(R.id.step1_valide_city);
+        Button localiseButton = v.findViewById(R.id.step1_launch_localise);
+        linearLayoutStep1 = v.findViewById(R.id.step1_form);
 
-        final EditText inputCity = (EditText) v.findViewById(R.id.input_city);
-        final EditText inputCountry = (EditText) v.findViewById(R.id.input_country);
-        Button valideCityButton = v.findViewById(R.id.valide_city);
-        backToLocationButton = v.findViewById(R.id.back_to_loc);
-        linearLayoutStartLocation = v.findViewById(R.id.find_location_form);
-        linearLayoutGenerationCalendar = v.findViewById(R.id.form_generate_calendar);
-        findClassificationButton = v.findViewById(R.id.find_cls);
+        //init comoponents step 2
+        linearLayoutStep2 = v.findViewById(R.id.step2_form);
+        step2returnStep1Button = v.findViewById(R.id.step2_return_step1_btn);
+        step2FindClassificationButton = v.findViewById(R.id.step2_loading_koppen_btn);
+        step2AdresseFound1 = v.findViewById(R.id.step2_adresse_found1);
+        step2AdresseFound2 = v.findViewById(R.id.step2_adresse_found2);
 
-        linearLayoutGenerationCalendar.setVisibility(View.GONE);
+        //init comoponents step 3
+        linearLayoutStep3 = v.findViewById(R.id.step3_form);
+        step3SelectedClimatName = v.findViewById(R.id.step3_selected_climat_name);
+        step3SelectedClimatDesc = v.findViewById(R.id.step3_selected_climat_desc);
+        step3return3tep1Button = v.findViewById(R.id.step3_return_step2_btn);
+        step3goHomeButton = v.findViewById(R.id.step3_launch_home_btn);
+        //init Visible View
+        linearLayoutStep2.setVisibility(View.GONE);
+        linearLayoutStep3.setVisibility(View.GONE);
 
-        findClassificationButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    loadingForClassification();
-                } catch (IOException e) {
-                    Log.d("findClassification",e.getMessage());e.printStackTrace();
-                }
-            }
-        });
-
-        backToLocationButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                linearLayoutGenerationCalendar.setVisibility(View.GONE);
-                linearLayoutStartLocation.setVisibility(View.VISIBLE);
-            }
-        });
-
-        result1TextView = v.findViewById(R.id.result1);
-        result2TextView = v.findViewById(R.id.result2);
-        result3TextView = v.findViewById(R.id.result3);
-        result4TextView = v.findViewById(R.id.result4);
-
-        ;
-/*        spinnerChooseIsoCountry =(Spinner)  v.findViewById(R.id.iso_country_spinner);
-        List<Locale> locals = Arrays.asList(Locale.getAvailableLocales());
-        List<String> listIsoCountry = new ArrayList<String>();
-        for(Locale loc : locals){
-            listIsoCountry.add(loc.getDisplayLanguage()+" "+loc.getDisplayName());
-        }
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>((MainActivity) getActivity(),android.R.layout.simple_spinner_item,listIsoCountry);
-        spinnerChooseIsoCountry.setAdapter(spinnerAdapter);
-        spinnerChooseIsoCountry.setSelected(false);
-        spinnerChooseIsoCountry.setSelection(0,true);*/
-
-        //prepar geoloc
+        //Step 1
+            //prepar geoloc
         locationManager = (LocationManager) ((MainActivity) getActivity()).getSystemService(Context.LOCATION_SERVICE);
-
-        Button localiseButton = v.findViewById(R.id.localise);
         localiseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String status = "KO";
                 try {
-                    geolocalisation();
-                    linearLayoutStartLocation.setVisibility(View.GONE);
-                    linearLayoutGenerationCalendar.setVisibility(View.VISIBLE);
+                    status = geolocalisation();
+                    if("OK".equals(status)){
+                        linearLayoutStep1.setVisibility(View.GONE);
+                        linearLayoutStep2.setVisibility(View.VISIBLE);
+                    }
                 } catch (IOException e) {
                     Log.d("createView",e.getMessage());
                 }
@@ -174,30 +165,82 @@ public class ParametersFragment extends Fragment implements LocationListener {
                 inputTextCity = inputCity.getText().toString();
                 inputTextCountry = inputCountry.getText().toString();
 
-                //stop localisation if worked
-                //locationManager.removeUpdates(this);
-                // aller chercher une ville existante google? et sa localisation
-                UserInformations userInformations = vegetableCalendarDB.getUserInformations();
-                userInformations.setCity(inputTextCity);
-                vegetableCalendarDB.saveUserInformations(userInformations);
-
+                String status = "OK";
                 if (inputTextCountry==null||inputTextCountry.equals("")||inputTextCity==null||inputTextCity.equals("")){
-                    Toast toast = Toast.makeText(getContext(), "Entrez une ville et selectionnez votre pays", Toast.LENGTH_LONG);
+                    status = "KO";
+                }else{
+                    try {
+                        status = locationFinder(inputTextCity,inputTextCountry);
+                    } catch (IOException e) {
+                        //grpc failed low connection? vpn?
+                        status = "KO";
+                        Log.d("createView",e.getMessage());
+                    }
+                }
+                if("KO".equals(status)){
+                    Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.step1_validate_error), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                     toast.show();
                 }
-                try {
-                    locationFinder(inputTextCity,inputTextCountry);
-                } catch (IOException e) {
-                    Log.d("createView",e.getMessage());
+                if("OK".equals(status)){
+                    linearLayoutStep1.setVisibility(View.GONE);
+                    linearLayoutStep2.setVisibility(View.VISIBLE);
                 }
-                String result = testLocation(inputTextCity);
-
-                Toast toast = Toast.makeText(getContext(), " " + inputTextCity + " saved.", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.show();
             }
         });
+        //Step 2
+        step2FindClassificationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try {
+                    String cls = loadingForClassification();
+                    if(!"".equals(cls)){
+
+                        currentClassificationKoppen = vegetableCalendarDB.getClassificationByName(cls);
+                        if(currentClassificationKoppen!=null){
+                            step3SelectedClimatName.setText(currentClassificationKoppen.getName() +" - "+currentClassificationKoppen.getNameLong());
+                            step3SelectedClimatDesc.setText(currentClassificationKoppen.getDesc());
+                            linearLayoutStep2.setVisibility(View.GONE);
+                            linearLayoutStep3.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+
+                } catch (IOException e) {
+                    Log.d("findClassification",e.getMessage());e.printStackTrace();
+                }
+            }
+        });
+
+        step2returnStep1Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                linearLayoutStep2.setVisibility(View.GONE);
+                linearLayoutStep1.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //Step 3
+
+
+        vegetableCalendarDB = new VegetableCalendarDBHelper(getContext());
+        userInformations = vegetableCalendarDB.getUserInformations();
+
+        step3return3tep1Button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                linearLayoutStep3.setVisibility(View.GONE);
+                linearLayoutStep2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        step3goHomeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //todo enregistrer traces de choix
+                //todo charger le calendrier specifique
+                //fair 2 acces db pour ne pas réecrire les climats a chaque fois (ou un booleaen ?)
+
+                ((MainActivity) getActivity()).launchHomeFragment();
+            }
+        });
+
 
         return v;
     }
@@ -218,29 +261,67 @@ public class ParametersFragment extends Fragment implements LocationListener {
     ;
 
     public String geolocalisation() throws IOException {
+        String status = "KO";
 
+        // check permission 6 OS devices
         if ((ContextCompat.checkSelfPermission(((MainActivity) getActivity()), Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(((MainActivity) getActivity()), Manifest.permission.ACCESS_COARSE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED)) {
-/*            googleMap.setMyLocationEnabled(true);
-            googleMap.getUiSettings().setMyLocationButtonEnabled(true);*/
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            // already permission granted
+            status = "OK";
         } else {
+            // reuqest for permission
             ActivityCompat.requestPermissions(((MainActivity) getActivity()), new String[] {
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION },
                     TAG_CODE_PERMISSION_LOCATION);
 
             Toast.makeText(((MainActivity) getActivity()), R.string.common_signin_button_text, Toast.LENGTH_LONG).show();
+            status = "KO";
         }
-
-        return "KO";
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(((MainActivity) getActivity()), new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    userLatitudeGeo = location.getLatitude();
+                    userLongitudeGeo = location.getLongitude();
+                    Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoder.getFromLocation(userLatitudeGeo, userLongitudeGeo, 1);
+                    } catch (IOException e) {
+                        Log.d("geocoder",e.getMessage());
+                    }
+                    String adresse = addresses.get(0).getAddressLine(0);
+                    step2AdresseFound1.setText(adresse);
+                    step2AdresseFound2.setText(userLatitudeGeo + " , " +userLongitudeGeo);
+                }
+            }
+        });
+        return status;
     }
+
+/*    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1000: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Toast.makeText(((MainActivity) getActivity()), R.string.common_signin_button_text, Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }*/
 
     @Override
     public void onLocationChanged(Location location) {
-
+/*
         userLatitudeGeo = location.getLatitude();
         userLongitudeGeo = location.getLongitude();
         Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
@@ -252,7 +333,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
         }
         String adresse = addresses.get(0).getAddressLine(0);
         result3TextView.setText("Latitude:" + userLatitudeGeo + ", Longitude:" +userLongitudeGeo);
-        result4TextView.setText(adresse);
+        result4TextView.setText(adresse);*/
     }
 
     @Override
@@ -272,17 +353,13 @@ public class ParametersFragment extends Fragment implements LocationListener {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public String locationFinder(String city, String country) throws IOException {
-        result4TextView.setText(city+" "+country);
         Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
         List<Address> addresses = geocoder.getFromLocationName(city+" "+country,4);
-        result4TextView.setText("");
         if(addresses!=null&&addresses.size()>0){
             userLatitudeCity =addresses.get(0).getLatitude();
             userLongitudeCity = addresses.get(0).getLongitude();
-            linearLayoutStartLocation.setVisibility(View.GONE);
-            linearLayoutGenerationCalendar.setVisibility(View.VISIBLE);
-            result3TextView.setText("Latitude:" + userLatitudeCity + ", Longitude:" +userLongitudeCity);
-            result4TextView.setText(addresses.get(0).getAddressLine(0)+" "+ addresses.get(0).getPostalCode());
+            step2AdresseFound1.setText(addresses.get(0).getAddressLine(0));
+            step2AdresseFound2.setText(userLatitudeCity + " , " +userLongitudeCity);
             return "OK";
         }
        return "KO";
@@ -295,8 +372,8 @@ public class ParametersFragment extends Fragment implements LocationListener {
     }
 
 
-    public void loadingForClassification() throws IOException {
-
+    public String loadingForClassification() throws IOException {
+        String classification = "";
         InputStream inputStream2 = getResources().openRawResource(R.raw.koeppen_geiger_ascii);
         InputStreamReader streamReader = new InputStreamReader(inputStream2);
         BufferedReader bufferedReader = new BufferedReader(streamReader);
@@ -319,15 +396,17 @@ public class ParametersFragment extends Fragment implements LocationListener {
 
             if((marginLat>=-1&&marginLat<=1)&&(marginLong>=-1&&marginLong<=1)){
                 currentClassification = currentCls;
+                bufferedReader.close();
                 break;
             }
 
             //latitude -89.75 -> 83.75
             //longitude -179 -> 179.75
-            Log.d("load",currentLat+" "+currentLong+" "+marginLat+" "+marginLong );
+            //Log.d("load",currentLat+" "+currentLong+" "+marginLat+" "+marginLong );
         }
-        currentClassification = currentCls;
-        result1TextView.setText(currentClassification+" "+currentLat+" , "+currentLong);
+        bufferedReader.close();
+        //result1TextView.setText(currentClassification+" "+currentLat+" , "+currentLong);
+        return currentClassification;
     }
 
     public double getSelectedLatitude(){

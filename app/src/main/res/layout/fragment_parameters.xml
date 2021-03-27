@@ -14,17 +14,23 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical"
         android:id="@+id/parameters_layout"
+        android:background="@color/table_my_vegetable_garden_color_default_bright2"
         tools:context=".MainActivity">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/find_location_form">
+            android:id="@+id/step1_form">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title_1st_launch_parameter"/>
-
+                android:textColor="@color/colorPrimaryGreenDark"
+                android:text="@string/step1_form_title"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryGreenDark"
+                android:text="@string/step1_city_header"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -32,9 +38,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/input_city"
+                    android:id="@+id/step1_city_input"
                     android:inputType="textPostalAddress"
-                    android:hint="@string/title_1st_launch_parameter" />
+                    android:textColor="@color/colorPrimaryGreenDark"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/step1_city_input_txt" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
@@ -44,54 +52,91 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/input_country"
+                    android:id="@+id/step1_country_input"
                     android:inputType="textPostalAddress"
-                    android:hint="Entrez votre pays" />
+                    android:textColor="@color/colorPrimaryGreenDark"
+                    android:textColorHint="@color/colorPrimary"
+                    android:hint="@string/step1_country_input_txt" />
 
             </com.google.android.material.textfield.TextInputLayout>
             <Button
-                android:id="@+id/valide_city"
+                android:id="@+id/step1_valide_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/table_my_vegetable_garden_color_default_bright2"
                 android:text="@string/validate"/>
-            <Button
-                android:id="@+id/localise"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="localisation"/>
+                android:textColor="@color/colorPrimaryGreenDark"
+                android:text="@string/step1_geoloc_header"/>
+            <Button
+                android:id="@+id/step1_launch_localise"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_gps_fixed_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/form_generate_calendar"
+            android:id="@+id/step2_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <Button
-                android:id="@+id/back_to_loc"
+                android:id="@+id/step2_return_step1_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Retour"/>
+                android:text="@string/step2_header_adresse_found"/>
             <TextView
-                android:id="@+id/result1"
+                android:id="@+id/step2_adresse_found1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/result2"
+                android:id="@+id/step2_adresse_found2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <Button
-                android:id="@+id/find_cls"
+                android:id="@+id/step2_loading_koppen_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Load"/>
+                android:text="@string/step2_launch_loading_koppen_btn_txt"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/step3_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/step3_return_step2_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+                tools:ignore="VectorDrawableCompat" />
             <TextView
-                android:id="@+id/result3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/step3_header_txt"/>
+            <TextView
+                android:id="@+id/step3_selected_climat_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/result4"
+                android:id="@+id/step3_selected_climat_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/step3_launch_home_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/step3_launch_home_btn_txt"/>
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

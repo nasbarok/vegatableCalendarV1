@@ -86,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
     public void initDb(){
         //initiate db
         InputStream inputStream = getResources().openRawResource(R.raw.vegetable_calendar_db);
+        InputStream inputStreamDataKoppen = getResources().openRawResource(R.raw.vegetable_calendar_cls_details);
         vegetableCalendarDB = new VegetableCalendarDBHelper(this);
-        vegetableCalendarDB.createDB(inputStream);
+        vegetableCalendarDB.createDB(inputStreamDataKoppen,inputStream);
         vegetableCalendars = vegetableCalendarDB.getVegetableCalendars();
     }
 
