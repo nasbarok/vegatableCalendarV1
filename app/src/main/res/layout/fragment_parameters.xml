@@ -71,10 +71,12 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryGreenDark"
                 android:text="@string/step1_geoloc_header"/>
-            <Button
+
+            <ImageView
                 android:id="@+id/step1_launch_localise"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="52dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
                 android:background="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_gps_fixed_black_24dp"
                 tools:ignore="VectorDrawableCompat" />
@@ -85,10 +87,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/step2_return_step1_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="52dp"
+                android:layout_height="48dp"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp"
                 tools:ignore="VectorDrawableCompat" />
             <TextView
@@ -114,10 +118,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <Button
+            <ImageView
                 android:id="@+id/step3_return_step2_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="52dp"
+                android:layout_height="48dp"
+                android:layout_gravity="left"
+                android:background="@color/colorPrimary"
                 app:srcCompat="@drawable/ic_arrow_back_black_24dp"
                 tools:ignore="VectorDrawableCompat" />
             <TextView
@@ -130,6 +136,22 @@
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/step3_selected_climat_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/resultMoonSunTest1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/resultMoonSunTest2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/resultMoonSunTest3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/resultMoonSunTest4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <Button

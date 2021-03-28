@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,16 +40,20 @@ import com.google.android.gms.tasks.Task;
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.Classification;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
+import com.nasbarok.vegatablecalendarv1.utils.SunAndMoon;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 /**
@@ -69,6 +74,10 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private TextView step2AdresseFound2 = null;
     private TextView step3SelectedClimatName = null;
     private TextView step3SelectedClimatDesc = null;
+    private TextView resultMoonSunTest1 = null;
+    private TextView resultMoonSunTest2 = null;
+    private TextView resultMoonSunTest3 = null;
+    private TextView resultMoonSunTest4 = null;
     private double userLongitudeGeo = 0.0;
     private double userLatitudeGeo = 0.0;
     private double userLongitudeCity = 0.0;
@@ -79,9 +88,9 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private LinearLayout linearLayoutStep1;
     private LinearLayout linearLayoutStep2;
     private LinearLayout linearLayoutStep3;
-    private Button step2returnStep1Button;
+    private ImageView step2returnStep1Button;
     private Button step2FindClassificationButton;
-    private Button step3return3tep1Button;
+    private ImageView step3return3tep1Button;
     private Button step3goHomeButton;
     private String currentClassification;
     private Classification currentClassificationKoppen;
@@ -122,7 +131,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
         final EditText inputCity = (EditText) v.findViewById(R.id.step1_city_input);
         final EditText inputCountry = (EditText) v.findViewById(R.id.step1_country_input);
         Button valideCityButton = v.findViewById(R.id.step1_valide_city);
-        Button localiseButton = v.findViewById(R.id.step1_launch_localise);
+        ImageView localiseButton = v.findViewById(R.id.step1_launch_localise);
         linearLayoutStep1 = v.findViewById(R.id.step1_form);
 
         //init comoponents step 2
@@ -138,6 +147,10 @@ public class ParametersFragment extends Fragment implements LocationListener {
         step3SelectedClimatDesc = v.findViewById(R.id.step3_selected_climat_desc);
         step3return3tep1Button = v.findViewById(R.id.step3_return_step2_btn);
         step3goHomeButton = v.findViewById(R.id.step3_launch_home_btn);
+        resultMoonSunTest1 = v.findViewById(R.id.resultMoonSunTest1);
+        resultMoonSunTest2 = v.findViewById(R.id.resultMoonSunTest2);
+        resultMoonSunTest3 = v.findViewById(R.id.resultMoonSunTest3);
+        resultMoonSunTest4 = v.findViewById(R.id.resultMoonSunTest4);
         //init Visible View
         linearLayoutStep2.setVisibility(View.GONE);
         linearLayoutStep3.setVisibility(View.GONE);
@@ -232,12 +245,21 @@ public class ParametersFragment extends Fragment implements LocationListener {
         });
 
         step3goHomeButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(View v) {
                 //todo enregistrer traces de choix
                 //todo charger le calendrier specifique
                 //fair 2 acces db pour ne pas réecrire les climats a chaque fois (ou un booleaen ?)
+                ZonedDateTime currentDate = ZonedDateTime.now();
+                SunAndMoon sunAndMoon = new SunAndMoon(userLatitudeGeo,userLongitudeGeo,currentDate);
+                resultMoonSunTest1.setText("");
+                resultMoonSunTest2.setText("");
+                resultMoonSunTest3.setText("");
 
-                ((MainActivity) getActivity()).launchHomeFragment();
+
+
+
+                //((MainActivity) getActivity()).launchHomeFragment();
             }
         });
 
