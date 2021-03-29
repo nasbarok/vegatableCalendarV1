@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
+import com.nasbarok.vegatablecalendarv1.model.DayStats;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.model.VegetableCalendar;
 
@@ -34,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void launchSunAndMoonFragment(List<DayStats> dayStats,String seasonResult){
+        SunAndMoonCalendarFragment sunAndMoonFragment = SunAndMoonCalendarFragment.newInstance(dayStats,seasonResult);
+        FragmentManager sunAndMoonFragmentManager=getSupportFragmentManager();
+        FragmentTransaction sunAndMoonFragmentTransaction=sunAndMoonFragmentManager.beginTransaction();
+        sunAndMoonFragmentTransaction.replace(R.id.content_main,sunAndMoonFragment,"vegetable_calendar_fragment_tag").addToBackStack(null).commit();
+    }
 
     public void launchHomeFragment(){
         HomeVegetableCalendarFragment homeFragment = HomeVegetableCalendarFragment.newInstance();

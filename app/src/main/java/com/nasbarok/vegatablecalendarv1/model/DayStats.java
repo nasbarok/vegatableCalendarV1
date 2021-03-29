@@ -1,45 +1,33 @@
-package com.nasbarok.vegatablecalendarv1.utils;
+package com.nasbarok.vegatablecalendarv1.model;
 
-import org.shredzone.commons.suncalc.MoonIllumination;
-import org.shredzone.commons.suncalc.MoonPhase;
-import org.shredzone.commons.suncalc.MoonPosition;
-import org.shredzone.commons.suncalc.SunPosition;
-import org.shredzone.commons.suncalc.SunTimes;
+import com.nasbarok.vegatablecalendarv1.utils.SunAndMoon;
 
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SunAndMoon {
-    //Latitude. Valid values range from [-90, 90]
-    private double latitude;
-    //Longitude. Valid values range from [-180, 180]
-    private double longitude;
-    //Date used for calculations.
-    private Calendar calendar;
-    private Date startDate;
-    private ZonedDateTime dateTime ; // date, time and timezone of calculation
+public class DayStats {
+    private String day;
+    private int dayNumber;
+    private String month;
+    private String year;
+    private Date currentDay ; // date, time and timezone of calculation
+
+    //status sun
     private ZonedDateTime sunRise;
     private ZonedDateTime sunSet;
-    //soleil completement opposé
     private ZonedDateTime sunNadir;
-    //soleil au zenith
     private ZonedDateTime sunNoon;
     private double sunAltitude;
     private double sunAzimuth;
     private double sunDistance;
     private double sunParallacticAngle;
+
+    //status moon
     private double moonAltitude;
     private double moonAzimuth;
     private double moonDistance;
     private double moonParallacticAngle;
-    /*
-            Constant	Description	Angle
-            NEW_MOON	Moon is not illuminated (new moon). This is the default.	0°
-            FIRST_QUARTER	Half of the waxing moon is illuminated.	90°
-            FULL_MOON	Moon is fully illuminated.	180°
-            LAST_QUARTER	Half of the waning moon is illuminated.	270°
-     */
     private double moonIlluminationAngle;
     private double moonIlluminationFraction;
     private double moonIlluminationPhase;
@@ -47,84 +35,63 @@ public class SunAndMoon {
     private ZonedDateTime moonPhaseTime;
     private boolean moonPhaseIsMicroMoon;
     private boolean moonPhaseIsSuperMoon;
-    //Output
 
+    public DayStats(){}
 
-    public SunAndMoon(double latitude, double longitude, ZonedDateTime dateTime){
-        latitude = latitude;
-        longitude = longitude;
-
-        SunTimes sunTimes = SunTimes.compute()
-        .on(dateTime)   // set a date
-        .at(latitude, longitude)   // set a location
-        .execute();     // get the results
-        sunRise = sunTimes.getRise();
-        sunSet = sunTimes.getSet();
-        sunNadir = sunTimes.getNadir();
-        sunNoon = sunTimes.getNoon();
-
-        SunPosition sunPosition = SunPosition.compute().on(dateTime).at(latitude,longitude).execute();
-        sunAltitude = sunPosition.getAltitude();
-        sunAzimuth = sunPosition.getAzimuth();
-        sunParallacticAngle = sunPosition.getTrueAltitude();
-        sunDistance = sunPosition.getDistance();
-
-        MoonPosition moonPosition = MoonPosition.compute().on(dateTime).at(latitude,longitude).execute();
-        moonAltitude = moonPosition.getAltitude();
-        moonAzimuth = moonPosition.getAzimuth();
-        moonDistance = moonPosition.getDistance();
-        moonParallacticAngle = moonPosition.getParallacticAngle();
-
-        MoonIllumination moonIllumination = MoonIllumination.compute().on(dateTime).execute();
-        moonIlluminationAngle = moonIllumination.getAngle();
-        moonIlluminationFraction = moonIllumination.getFraction();
-        moonIlluminationPhase = moonIllumination.getPhase();
-
-        MoonPhase moonPhase = MoonPhase.compute().on(dateTime).execute();
-        moonPhaseDistance = moonPhase.getDistance();
-        moonPhaseTime = moonPhase.getTime();
-        moonPhaseIsMicroMoon = moonPhase.isMicroMoon();
-        moonPhaseIsSuperMoon = moonPhase.isSuperMoon();
+    public DayStats(SunAndMoon sunAndMoon,int dayNumber, Date currentDate){
+        dayNumber = dayNumber;
+        currentDay = currentDate;
+        sunRise = sunAndMoon.getSunRise();
+        sunSet = sunAndMoon.getSunSet();
+        sunNadir = sunAndMoon.getSunNadir();
+        sunNoon = sunAndMoon.getSunNoon();
+        sunAltitude = sunAndMoon.getSunAltitude();
+        sunAzimuth = sunAndMoon.getSunAzimuth();
+        sunDistance = sunAndMoon.getSunDistance();
+        sunParallacticAngle = sunAndMoon.getSunParallacticAngle();
+        moonAltitude = sunAndMoon.getMoonAltitude();
+        moonAzimuth = sunAndMoon.getMoonAzimuth();
+        moonDistance  = sunAndMoon.getMoonDistance();
+        moonParallacticAngle = sunAndMoon.getMoonParallacticAngle();
+        moonIlluminationAngle = sunAndMoon.getMoonIlluminationAngle();
+        moonIlluminationFraction = sunAndMoon.getMoonIlluminationFraction();
+        moonIlluminationPhase = sunAndMoon.getMoonIlluminationPhase();
+        moonPhaseDistance = sunAndMoon.getMoonPhaseDistance();
+        moonPhaseTime = sunAndMoon.getMoonPhaseTime();
+        moonPhaseIsMicroMoon = sunAndMoon.isMoonPhaseIsMicroMoon();
+        moonPhaseIsSuperMoon = sunAndMoon.isMoonPhaseIsMicroMoon();
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getDay() {
+        return day;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setDay(String day) {
+        this.day = day;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getMonth() {
+        return month;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setMonth(String month) {
+        this.month = month;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
+    public String getYear() {
+        return year;
     }
 
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
+    public void setYear(String year) {
+        this.year = year;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getCurrentDay() {
+        return currentDay;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public ZonedDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(ZonedDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setCurrentDay(Date currentDay) {
+        this.currentDay = currentDay;
     }
 
     public ZonedDateTime getSunRise() {
@@ -277,5 +244,13 @@ public class SunAndMoon {
 
     public void setMoonPhaseIsSuperMoon(boolean moonPhaseIsSuperMoon) {
         this.moonPhaseIsSuperMoon = moonPhaseIsSuperMoon;
+    }
+
+    public int getDayNumber() {
+        return dayNumber;
+    }
+
+    public void setDayNumber(int dayNumber) {
+        this.dayNumber = dayNumber;
     }
 }

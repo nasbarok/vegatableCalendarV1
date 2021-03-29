@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.nasbarok.vegatablecalendarv1.db.VegetableCalendarDBHelper;
 import com.nasbarok.vegatablecalendarv1.model.Classification;
+import com.nasbarok.vegatablecalendarv1.model.DayStats;
 import com.nasbarok.vegatablecalendarv1.model.UserInformations;
 import com.nasbarok.vegatablecalendarv1.utils.SunAndMoon;
 import com.nasbarok.vegatablecalendarv1.utils.Utils;
@@ -47,10 +48,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -74,7 +78,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
     private TextView step2AdresseFound2 = null;
     private TextView step3SelectedClimatName = null;
     private TextView step3SelectedClimatDesc = null;
-    private TextView resultMoonSunTest1 = null;
+    private String seasonResult = null;
     private TextView resultMoonSunTest2 = null;
     private TextView resultMoonSunTest3 = null;
     private TextView resultMoonSunTest4 = null;
@@ -147,7 +151,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
         step3SelectedClimatDesc = v.findViewById(R.id.step3_selected_climat_desc);
         step3return3tep1Button = v.findViewById(R.id.step3_return_step2_btn);
         step3goHomeButton = v.findViewById(R.id.step3_launch_home_btn);
-        resultMoonSunTest1 = v.findViewById(R.id.resultMoonSunTest1);
+
         resultMoonSunTest2 = v.findViewById(R.id.resultMoonSunTest2);
         resultMoonSunTest3 = v.findViewById(R.id.resultMoonSunTest3);
         resultMoonSunTest4 = v.findViewById(R.id.resultMoonSunTest4);
@@ -250,12 +254,13 @@ public class ParametersFragment extends Fragment implements LocationListener {
                 //todo enregistrer traces de choix
                 //todo charger le calendrier specifique
                 //fair 2 acces db pour ne pas réecrire les climats a chaque fois (ou un booleaen ?)
-                ZonedDateTime currentDate = ZonedDateTime.now();
-                SunAndMoon sunAndMoon = new SunAndMoon(userLatitudeGeo,userLongitudeGeo,currentDate);
-                resultMoonSunTest1.setText("");
-                resultMoonSunTest2.setText("");
-                resultMoonSunTest3.setText("");
 
+                List<DayStats> dayStats = makeListSunAndMoonCalendar();
+                ((MainActivity) getActivity()).launchSunAndMoonFragment(dayStats,seasonResult);
+               /* resultMoonSunTest1.setText("sunRise:"+sunAndMoon.getSunRise()+" ,sunSet:"+sunAndMoon.getSunSet()+" ,sunNadir"+ sunAndMoon.getSunNadir()+" ,sunNoon"+sunAndMoon.getSunNoon());
+                resultMoonSunTest2.setText("SunAltitude"+sunAndMoon.getSunAltitude()+", sunAzimuth :"+sunAndMoon.getSunAzimuth()+" sunDistance :"+sunAndMoon.getSunDistance()+" sunParallacticAngle :"+sunAndMoon.getSunParallacticAngle());
+                resultMoonSunTest3.setText("Moon");
+                resultMoonSunTest4.setText("");*/
 
 
 
@@ -266,21 +271,6 @@ public class ParametersFragment extends Fragment implements LocationListener {
 
         return v;
     }
-
-    public String testLocation(String City) {
-        Location location = new Location(City);
-        if (location != null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-
-            return latitude + " " + longitude;
-        } else {
-            return "KO";
-        }
-
-    }
-
-    ;
 
     public String geolocalisation() throws IOException {
         String status = "KO";
@@ -310,52 +300,33 @@ public class ParametersFragment extends Fragment implements LocationListener {
                     userLongitudeGeo = location.getLongitude();
                     Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
                     List<Address> addresses = null;
+                    boolean found = true;
                     try {
                         addresses = geocoder.getFromLocation(userLatitudeGeo, userLongitudeGeo, 1);
                     } catch (IOException e) {
                         Log.d("geocoder",e.getMessage());
+                        if("grpc failed".equals(e.getMessage())){
+                            found = false;
+                            Toast toast = Toast.makeText(getContext(), getResources().getString(R.string.error_no_internet), Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                            toast.show();
+                        }
                     }
-                    String adresse = addresses.get(0).getAddressLine(0);
-                    step2AdresseFound1.setText(adresse);
-                    step2AdresseFound2.setText(userLatitudeGeo + " , " +userLongitudeGeo);
+                    if(found){
+                        String adresse = addresses.get(0).getAddressLine(0);
+                        step2AdresseFound1.setText(adresse);
+                        step2AdresseFound2.setText(userLatitudeGeo + " , " +userLongitudeGeo);
+                    }
+
                 }
             }
         });
         return status;
     }
 
-/*    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case 1000: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-                    Toast.makeText(((MainActivity) getActivity()), R.string.common_signin_button_text, Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-        }
-    }*/
-
     @Override
     public void onLocationChanged(Location location) {
-/*
-        userLatitudeGeo = location.getLatitude();
-        userLongitudeGeo = location.getLongitude();
-        Geocoder geocoder = new Geocoder((MainActivity) getActivity(), Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(userLatitudeGeo, userLongitudeGeo, 1);
-        } catch (IOException e) {
-            Log.d("geocoder",e.getMessage());
-        }
-        String adresse = addresses.get(0).getAddressLine(0);
-        result3TextView.setText("Latitude:" + userLatitudeGeo + ", Longitude:" +userLongitudeGeo);
-        result4TextView.setText(adresse);*/
+
     }
 
     @Override
@@ -445,5 +416,81 @@ public class ParametersFragment extends Fragment implements LocationListener {
         }else{
             return Double.valueOf(userLongitudeGeo);
         }
+    }
+
+    public List<DayStats> makeListSunAndMoonCalendar(){
+
+        Date currentDate = new Date();
+        ZonedDateTime currentZonedDateTime = null;
+        double latitude = 0.0;
+        double longitude = 0.0;
+
+        if(userLongitudeCity!=0.0&&userLatitudeCity!=0.0){
+            latitude = userLatitudeCity;
+            longitude =  userLongitudeCity;
+        }else{
+            latitude = userLatitudeGeo;
+            longitude =  userLongitudeGeo;
+        }
+        List<DayStats> dayStats = new ArrayList<DayStats>();
+
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTime(currentDate);
+        calendar.set(Calendar.HOUR,12);
+        calendar.set(Calendar.MINUTE,0);
+        int cpt365 = 1;
+        String season = "toto";
+        //equinoxe de printemps;
+        boolean springEquinox = false;
+        boolean summerSolstice = false;
+        boolean autumnEquinox = false;
+        boolean winterSolstice = false;
+        double precSunAltitude =0.0;
+
+        //season searching
+        while(cpt365<=365){
+            currentZonedDateTime = currentDate.toInstant().atZone(ZoneId.systemDefault());
+            SunAndMoon sunAndMoon = new SunAndMoon(latitude,longitude,currentZonedDateTime);
+            DayStats stats = new DayStats(sunAndMoon,cpt365,currentDate);
+            dayStats.add(stats);
+
+            calendar = Calendar.getInstance(Locale.getDefault());
+            calendar.setTime(currentDate);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd:MM:yyyy");
+
+            boolean sunWalksAway = false;
+            if(precSunAltitude!=0.0){
+                if((sunAndMoon.getSunAltitude()-precSunAltitude)>0.0){
+                    sunWalksAway = true;
+                }
+                //info montante
+                if(!springEquinox&&sunAndMoon.getSunAltitude()>=31.0&&sunWalksAway){
+                    season = season + " springEquinox "+simpleDateFormat.format(currentDate);
+                    springEquinox=true;
+                }
+                if(!summerSolstice&&sunAndMoon.getSunAltitude()>=60.0){
+                    season = season + " summerSolstice "+simpleDateFormat.format(currentDate);
+                    summerSolstice=true;
+                }
+                //info descendante
+                if(!autumnEquinox&&sunAndMoon.getSunAltitude()>=38.0&&!sunWalksAway){
+                    season = season + " autumnEquinox "+simpleDateFormat.format(currentDate);
+                    autumnEquinox=true;
+                }
+                if(!winterSolstice&&sunAndMoon.getSunAltitude()>=15.0){
+                    season = season + " winterSolstice "+simpleDateFormat.format(currentDate);
+                    winterSolstice=true;
+                }
+            }
+
+            precSunAltitude = sunAndMoon.getSunAltitude();
+            calendar.add(Calendar.DATE, 1);
+            currentDate =calendar.getTime();
+            cpt365++;
+        }
+        seasonResult = season;
+
+
+        return dayStats;
     }
 }

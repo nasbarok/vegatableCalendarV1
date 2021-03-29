@@ -65,4 +65,5 @@
     <string name="step2_launch_loading_koppen_btn_txt">Rechercher la zone climatique assossiée à votre région</string>
     <string name="step3_header_txt">Votre région d\'après la classification de KÖPPEN-GEIGER correspond au climat suivant :</string>
     <string name="step3_launch_home_btn_txt">Charger le calendrier associé à ce climat</string>
+    <string name="error_no_internet">Pas d\'internet</string>
 </resources>

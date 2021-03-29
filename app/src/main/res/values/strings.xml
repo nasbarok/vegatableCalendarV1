@@ -64,4 +64,5 @@
     <string name="step2_launch_loading_koppen_btn_txt">Find the climatic zone associated with your region</string>
     <string name="step3_header_txt">Your region according to the KÖPPEN-GEIGER classification corresponds to the following climate:</string>
     <string name="step3_launch_home_btn_txt">Load the calendar associated with this climate</string>
+    <string name="error_no_internet">No internet</string>
 </resources>
