@@ -439,7 +439,7 @@ public class ParametersFragment extends Fragment implements LocationListener {
         calendar.set(Calendar.HOUR,12);
         calendar.set(Calendar.MINUTE,0);
         int cpt365 = 1;
-        String season = "toto";
+        String season = "";
         //equinoxe de printemps;
         boolean springEquinox = false;
         boolean summerSolstice = false;
@@ -464,21 +464,21 @@ public class ParametersFragment extends Fragment implements LocationListener {
                     sunWalksAway = true;
                 }
                 //info montante
-                if(!springEquinox&&sunAndMoon.getSunAltitude()>=31.0&&sunWalksAway){
-                    season = season + " springEquinox "+simpleDateFormat.format(currentDate);
+                if(!springEquinox&&sunAndMoon.getSunAltitude()>31.0&&sunWalksAway){
+                    season.concat(" springEquinox "+simpleDateFormat.format(currentDate));
                     springEquinox=true;
                 }
-                if(!summerSolstice&&sunAndMoon.getSunAltitude()>=60.0){
-                    season = season + " summerSolstice "+simpleDateFormat.format(currentDate);
+                if(!summerSolstice&&sunAndMoon.getSunAltitude()>60.0){
+                    season.concat(" summerSolstice "+simpleDateFormat.format(currentDate));
                     summerSolstice=true;
                 }
                 //info descendante
-                if(!autumnEquinox&&sunAndMoon.getSunAltitude()>=38.0&&!sunWalksAway){
-                    season = season + " autumnEquinox "+simpleDateFormat.format(currentDate);
+                if(!autumnEquinox&&sunAndMoon.getSunAltitude()>38.0&&!sunWalksAway){
+                    season.concat(" autumnEquinox "+simpleDateFormat.format(currentDate));
                     autumnEquinox=true;
                 }
-                if(!winterSolstice&&sunAndMoon.getSunAltitude()>=15.0){
-                    season = season + " winterSolstice "+simpleDateFormat.format(currentDate);
+                if(!winterSolstice&&sunAndMoon.getSunAltitude()>15.0){
+                    season.concat(" winterSolstice "+simpleDateFormat.format(currentDate));
                     winterSolstice=true;
                 }
             }
